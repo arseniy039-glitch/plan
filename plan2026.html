@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="МойПлан">
+<meta name="theme-color" content="#1D9E75">
+<title>План Арсений 2026</title>
+<link rel="manifest" href="manifest.json">
+<style>
+  :root {
+    --green: #1D9E75;
+    --red: #D85A30;
+    --blue: #378ADD;
+    --purple: #7F77DD;
+    --olive: #639922;
+    --orange: #BA7517;
+    --gold: #C9A227;
+    --bg: #F5F5F5;
+    --card: #FFFFFF;
+    --text: #1A1A1A;
+    --text2: #666;
+    --border: #E5E5E5;
+    --locked: #B0B0B0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+  /* HEADER */
+  .header { background: var(--green); color: white; padding: 52px 16px 16px; position: sticky; top: 0; z-index: 100; }
+  .header h1 { font-size: 18px; font-weight: 600; }
+  .header p { font-size: 12px; opacity: 0.8; margin-top: 2px; }
+  .overall-bar { background: rgba(255,255,255,0.25); border-radius: 4px; height: 5px; margin-top: 10px; overflow: hidden; }
+  .overall-fill { height: 5px; background: white; border-radius: 4px; transition: width 0.4s; }
+  .overall-pct { font-size: 11px; opacity: 0.8; margin-top: 4px; }
+
+  /* TABS */
+  .tabs { display: flex; overflow-x: auto; gap: 6px; padding: 12px 16px; background: white; border-bottom: 1px solid var(--border); scrollbar-width: none; }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tab { flex-shrink: 0; padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 500; border: 1.5px solid var(--border); color: var(--text2); background: white; cursor: pointer; position: relative; }
+  .tab.active { background: var(--text); color: white; border-color: var(--text); }
+  .tab-badge { position: absolute; top: -4px; right: -4px; background: var(--red); color: white; font-size: 9px; width: 16px; height: 16px; border-radius: 8px; display: flex; align-items: center; justify-content: center; }
+
+  /* PROGRESS SECTION */
+  .progress-section { padding: 12px 16px; }
+  .prog-row { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+  .prog-dot { width: 8px; height: 8px; border-radius: 4px; flex-shrink: 0; }
+  .prog-label { font-size: 12px; color: var(--text2); width: 100px; }
+  .prog-bg { flex: 1; height: 5px; border-radius: 3px; background: var(--border); overflow: hidden; }
+  .prog-fill { height: 5px; border-radius: 3px; transition: width 0.4s; }
+  .prog-pct { font-size: 11px; color: var(--text2); width: 28px; text-align: right; }
+
+  /* SECTION LABEL */
+  .section-title { font-size: 11px; font-weight: 600; color: var(--text2); letter-spacing: 0.06em; text-transform: uppercase; padding: 4px 16px 6px; }
+
+  /* TASK CARD */
+  .task-card { background: var(--card); margin: 0 12px 8px; border-radius: 14px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+  .task-card.locked-card { opacity: 0.5; }
+  .task-row { display: flex; align-items: flex-start; gap: 12px; padding: 14px; cursor: pointer; }
+  .task-card.locked-card .task-row { cursor: default; }
+  .check-circle { width: 24px; height: 24px; border-radius: 12px; border: 2px solid var(--border); flex-shrink: 0; display: flex; align-items: center; justify-content: center; transition: all 0.2s; margin-top: 1px; }
+  .check-circle.done { background: var(--green); border-color: var(--green); }
+  .check-circle.locked { background: var(--bg); border-color: var(--border); }
+  .check-icon { font-size: 13px; color: white; }
+  .lock-icon { font-size: 11px; color: var(--locked); }
+  .task-content { flex: 1; }
+  .task-text { font-size: 14px; line-height: 1.45; color: var(--text); }
+  .task-text.done { text-decoration: line-through; color: var(--text2); }
+  .task-text.locked { color: var(--text2); }
+  .task-footer { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 6px; align-items: center; }
+  .tag { font-size: 11px; padding: 2px 8px; border-radius: 10px; font-weight: 500; }
+  .unlock-text { font-size: 11px; color: var(--text2); }
+  .wait-hint { font-size: 11px; color: var(--text2); margin-top: 3px; }
+
+  /* ACHIEVEMENT BANNER */
+  .achievement { background: linear-gradient(135deg, #1D9E75, #157A5A); color: white; margin: 8px 12px; border-radius: 14px; padding: 14px; text-align: center; }
+  .achievement-icon { font-size: 28px; margin-bottom: 4px; }
+  .achievement h3 { font-size: 15px; font-weight: 600; }
+  .achievement p { font-size: 12px; opacity: 0.85; margin-top: 3px; }
+
+  /* STREAK */
+  .streak-card { background: var(--card); margin: 0 12px 8px; border-radius: 14px; padding: 14px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+  .streak-title { font-size: 13px; font-weight: 600; margin-bottom: 10px; }
+  .streak-grid { display: flex; gap: 5px; }
+  .streak-day { flex: 1; height: 32px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 500; }
+  .streak-day.done { background: var(--green); color: white; }
+  .streak-day.today { background: var(--border); color: var(--text); border: 2px solid var(--green); }
+  .streak-day.future { background: var(--border); color: var(--text2); }
+  .streak-count { font-size: 13px; color: var(--text2); margin-top: 8px; }
+
+  /* BOTTOM SPACE */
+  .bottom-space { height: 40px; }
+
+  /* CONFETTI ANIMATION */
+  @keyframes pop { 0%{transform:scale(0.8);opacity:0} 50%{transform:scale(1.1)} 100%{transform:scale(1);opacity:1} }
+  .pop { animation: pop 0.3s ease; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>🎯 План Арсений 2026</h1>
+  <p id="header-sub">Загрузка...</p>
+  <div class="overall-bar"><div class="overall-fill" id="overall-fill" style="width:0%"></div></div>
+  <div class="overall-pct" id="overall-pct"></div>
+</div>
+
+<div class="tabs" id="tabs"></div>
+
+<div id="content"></div>
+<div class="bottom-space"></div>
+
+<script>
+const BLOCKS = [
+  {id:'legal',  label:'Юридика',  color:'#D85A30'},
+  {id:'biz',    label:'Бизнес',   color:'#378ADD'},
+  {id:'ai',     label:'AI',       color:'#7F77DD'},
+  {id:'health', label:'Здоровье', color:'#639922'},
+  {id:'study',  label:'Учёба',    color:'#C9A227'},
+  {id:'family', label:'Семья',    color:'#BA7517'},
+];
+
+const TAG_STYLES = {
+  'срочно':      {bg:'#FAECE7', color:'#993C1D'},
+  'сегодня':     {bg:'#FAECE7', color:'#993C1D'},
+  'личный визит':{bg:'#FFF3CD', color:'#856404'},
+  'ожидание':    {bg:'#E6F1FB', color:'#185FA5'},
+  'следующий':   {bg:'#EEEDFE', color:'#3C3489'},
+  'техника':     {bg:'#EEEDFE', color:'#3C3489'},
+  'тест':        {bg:'#EEEDFE', color:'#3C3489'},
+  'режим':       {bg:'#EAF3DE', color:'#3B6D11'},
+  'ежедневно':   {bg:'#EAF3DE', color:'#3B6D11'},
+  'еженедельно': {bg:'#EAF3DE', color:'#3B6D11'},
+  'подготовка':  {bg:'#F5F5F5', color:'#555'},
+  'цель':        {bg:'#FFF3CD', color:'#856404'},
+  'финал':       {bg:'#D4EDDA', color:'#155724'},
+  'квест':       {bg:'#FAECE7', color:'#993C1D'},
+  'день':        {bg:'#EEEDFE', color:'#3C3489'},
+};
+
+function tagStyle(tag) {
+  for (const k in TAG_STYLES) { if (tag.includes(k)) return TAG_STYLES[k]; }
+  return {bg:'#F0F0F0', color:'#555'};
+}
+
+// ЭТАПЫ (day = 0..5)
+// day 0 = Сегодня, 1 = Эта неделя, 2 = 2 недели, 3 = 1 месяц, 4 = 3 месяца, 5 = Итог года
+const TASKS = [
+  // ===== ЮРИДИКА =====
+  {id:'sirene',    block:'legal', day:0, text:'Распечатать, подписать и отправить письмо в SIRENE через CTT (Лиссабон) + копия Título de Residência', tag:'срочно', unlocks:['sirene_track']},
+  {id:'ss_apt',    block:'legal', day:0, text:'Записаться на приём в Segurança Social в Портимале — рассрочка долга €9 816', tag:'срочно', unlocks:['ss_visit']},
+  {id:'aima_chk',  block:'legal', day:0, text:'Проверить почту — ответ от AIMA на письмо от 28 мая', tag:'сегодня', unlocks:['aima_followup']},
+
+  {id:'sirene_track',   block:'legal', day:1, req:['sirene'],   text:'Отслеживать трек CTT — письмо дошло до Лиссабона?', tag:'ожидание', unlocks:[]},
+  {id:'ss_visit',       block:'legal', day:1, req:['ss_apt'],   text:'Прийти на приём в SS — подписать рассрочку + взять справку «Em Regularização»', tag:'личный визит', unlocks:['ss_doc','ss_hist']},
+  {id:'aima_followup',  block:'legal', day:1, req:['aima_chk'], text:'Нет ответа от AIMA → позвонить или написать через форму contactenos.aima.gov.pt', tag:'следующий', unlocks:['aima_docs']},
+
+  {id:'ss_doc',    block:'legal', day:2, req:['ss_visit'], text:'Получить Declaração de Situação Contributiva из SS', tag:'после визита', unlocks:['aima_docs']},
+  {id:'ss_hist',   block:'legal', day:2, req:['ss_visit'], text:'Уточнить в SS историю платежей до 2025 — проверить данные от бывшей помощницы', tag:'после визита', unlocks:[]},
+  {id:'at_wait',   block:'legal', day:2, text:'Ждать конверт AT с паролем (~5 раб. дней) — следить за почтовым ящиком', tag:'ожидание', unlocks:['at_login']},
+  {id:'at_login',  block:'legal', day:3, req:['at_wait'], text:'Войти на Portal das Finanças → скачать certidão de não dívida', tag:'после конверта', unlocks:['aima_docs']},
+
+  {id:'aima_docs', block:'legal', day:3, req:['ss_doc','aima_followup'], text:'Собрать полный пакет для AIMA: SS справка + certidão Миланы + паспорт + at справка', tag:'подготовка', unlocks:['aima_visit']},
+  {id:'aima_visit',block:'legal', day:4, req:['aima_docs'], text:'Прийти на приём в AIMA с полным пакетом документов → получить новую резиденцию', tag:'личный визит', unlocks:['citizenship']},
+  {id:'citizenship',block:'legal',day:5, req:['aima_visit'], text:'🏆 Подать на гражданство — naturalização Artigo 6(8)', tag:'финал', unlocks:[]},
+
+  // ===== БИЗНЕС =====
+  {id:'posteo',    block:'biz', day:0, text:'Зарегистрировать немецкий email на Posteo.de (€1/мес, без телефона)', tag:'сегодня', unlocks:['berlin_check']},
+  {id:'artech_pdf',block:'biz', day:1, text:'Сделать 1-страничное портфолио Artech на немецком (PDF)', tag:'подготовка', unlocks:['de_list']},
+  {id:'berlin_check',block:'biz',day:1, req:['posteo'], text:'Проверить — какие письма отправлены в берлинские компании из Gmail', tag:'следующий', unlocks:['berlin_fu']},
+  {id:'berlin_fu', block:'biz', day:2, req:['berlin_check'], text:'Follow-up берлинским компаниям если нет ответа за 5 дней', tag:'эта неделя', unlocks:['de_list']},
+  {id:'de_list',   block:'biz', day:2, req:['berlin_fu','artech_pdf'], text:'Составить список 10+ немецких строительных компаний для рассылки', tag:'подготовка', unlocks:['de_talks']},
+  {id:'suppliers', block:'biz', day:2, text:'Проверить ответы от поставщиков: AM Okna, SAPOR, PARMAX, Sonarol, Okno-Pol', tag:'ожидание', unlocks:['supplier_deal']},
+  {id:'de_talks',  block:'biz', day:3, req:['de_list'], text:'Провести минимум 3 переговора с немецкими компаниями', tag:'переговоры', unlocks:['de_deal']},
+  {id:'supplier_deal',block:'biz',day:3,req:['suppliers'], text:'Выбрать 1-2 поставщика и провести переговоры по условиям', tag:'переговоры', unlocks:['pt_deal']},
+  {id:'de_deal',   block:'biz', day:4, req:['de_talks'], text:'Закрыть первый немецкий субподрядный контракт', tag:'цель', unlocks:['income']},
+  {id:'pt_deal',   block:'biz', day:4, req:['supplier_deal'], text:'Закрыть первую поставочную сделку в Португалии', tag:'цель', unlocks:['income']},
+  {id:'income',    block:'biz', day:5, req:['de_deal','pt_deal'], text:'🏆 Стабильный доход €3 000+/мес', tag:'финал', unlocks:[]},
+
+  // ===== AI =====
+  {id:'zadarma2',  block:'ai', day:0, text:'Купить второй номер Zadarma для Фрэнка (~€1.6/мес)', tag:'сегодня', unlocks:['frank_connect']},
+  {id:'frank_connect',block:'ai',day:1,req:['zadarma2'], text:'Переподключить агента Фрэнк с Twilio на новый номер Zadarma', tag:'техника', unlocks:['frank_test']},
+  {id:'frank_test',block:'ai', day:2, req:['frank_connect'], text:'Тестовый звонок через Фрэнка — проверить голос и сценарий', tag:'тест', unlocks:['kate_prep']},
+  {id:'kate_prep', block:'ai', day:2, req:['frank_test'], text:'Дождаться активации Zadarma +351 308 812 059 → подключить к Екатерине', tag:'техника', unlocks:['kate_test']},
+  {id:'kate_test', block:'ai', day:3, req:['kate_prep'], text:'Тест Екатерины: входящий звонок → резюме в Telegram', tag:'тест', unlocks:['kate_salon']},
+  {id:'kate_salon',block:'ai', day:4, req:['kate_test'], text:'Запустить Екатерину в знакомом салоне — первый кейс бесплатно', tag:'запуск', unlocks:['ai_clients']},
+  {id:'ai_clients',block:'ai', day:5, req:['kate_salon'], text:'🏆 Найти 2-3 платящих AI-клиента (€100-150/мес каждый)', tag:'финал', unlocks:[]},
+
+  // ===== ЗДОРОВЬЕ =====
+  {id:'scale',     block:'health', day:0, text:'Встать на весы — зафиксировать стартовый вес', tag:'сегодня', unlocks:[]},
+  {id:'rope',      block:'health', day:0, text:'Купить скакалку с подшипниками', tag:'сегодня', unlocks:['rope_start']},
+  {id:'no_alco_d1',block:'health', day:0, text:'🚫 День 1 без алкоголя — старт', tag:'квест', unlocks:['no_alco_d7']},
+  {id:'smoke_cut1',block:'health', day:0, text:'🚬 Сигареты: зафиксировать сколько сейчас в день → план сокращения', tag:'сегодня', unlocks:['smoke_cut2']},
+
+  {id:'rope_start',block:'health', day:1, req:['rope'], text:'Первая тренировка со скакалкой — 20 мин (раскатиться)', tag:'режим', unlocks:['rope_daily']},
+  {id:'smoke_cut2',block:'health', day:1, req:['smoke_cut1'], text:'🚬 Сигареты: сократить на 30% от стартового количества', tag:'режим', unlocks:['smoke_cut3']},
+
+  {id:'no_alco_d7',block:'health', day:1, req:['no_alco_d1'], text:'🏅 День 7 без алкоголя — первая неделя!', tag:'квест', unlocks:['no_alco_d30']},
+  {id:'rope_daily',block:'health', day:2, req:['rope_start'], text:'Скакалка стала ежедневной — 30 мин каждый вечер в 20:00', tag:'режим', unlocks:[]},
+  {id:'smoke_cut3',block:'health', day:2, req:['smoke_cut2'], text:'🚬 Сигареты: сократить ещё на 30% (итого минус 60%)', tag:'режим', unlocks:['smoke_stop']},
+  {id:'pool_3x',   block:'health', day:2, text:'Бассейн стабильно 3 раза в неделю без пропусков', tag:'режим', unlocks:[]},
+
+  {id:'no_alco_d30',block:'health',day:3,req:['no_alco_d7'], text:'🥇 День 30 без алкоголя — месяц!', tag:'квест', unlocks:['no_alco_d90']},
+  {id:'smoke_stop',block:'health', day:3, req:['smoke_cut3'], text:'🚬 Полный отказ от сигарет', tag:'цель', unlocks:['no_smoke_30']},
+  {id:'weight_5',  block:'health', day:3, text:'Контрольный вес — цель минус 5 кг от старта', tag:'цель', unlocks:[]},
+
+  {id:'no_alco_d90',block:'health',day:4,req:['no_alco_d30'], text:'🏆 День 90 без алкоголя — три месяца!', tag:'квест', unlocks:[]},
+  {id:'no_smoke_30',block:'health',day:4,req:['smoke_stop'], text:'🏅 30 дней без сигарет', tag:'квест', unlocks:[]},
+
+  // ===== УЧЁБА =====
+  {id:'iefp_check',block:'study', day:0, text:'Проверить письмо от Изабеллы — расписание курсов IEFP и суммы выплат', tag:'сегодня', unlocks:['iefp_start']},
+  {id:'eng_d1',    block:'study', day:0, text:'🇬🇧 День 1: 15 минут английского с Claude — написать как прошёл день', tag:'ежедневно', unlocks:['eng_w1']},
+
+  {id:'iefp_start',block:'study', day:1, req:['iefp_check'], text:'Начать посещать курсы IEFP согласно расписанию', tag:'режим', unlocks:['iefp_bolsa']},
+  {id:'eng_w1',    block:'study', day:1, req:['eng_d1'], text:'🇬🇧 Неделя 1 английского — 7 дней подряд по 15 мин', tag:'квест', unlocks:['eng_w4']},
+
+  {id:'iefp_bolsa',block:'study', day:2, req:['iefp_start'], text:'Получить первую болсу IEFP (~€85/мес)', tag:'ожидание', unlocks:[]},
+  {id:'eng_w4',    block:'study', day:3, req:['eng_w1'], text:'🇬🇧 Месяц английского — уровень вырос до B1', tag:'квест', unlocks:['eng_3m']},
+
+  {id:'eng_3m',    block:'study', day:4, req:['eng_w4'], text:'🇬🇧 3 месяца английского — можешь вести деловую переписку', tag:'цель', unlocks:['eng_biz']},
+  {id:'eng_biz',   block:'study', day:5, req:['eng_3m'], text:'🏆 Провести первые переговоры с немцами на английском', tag:'финал', unlocks:[]},
+
+  // ===== СЕМЬЯ =====
+  {id:'family_time',block:'family',day:0, text:'Минимум 1 час качественного времени с Миланой и Амелией — без телефона', tag:'ежедневно', unlocks:[]},
+  {id:'family_out', block:'family',day:1, text:'1 выезд с семьёй на этой неделе — пляж, парк или кафе', tag:'еженедельно', unlocks:[]},
+  {id:'housing',    block:'family',day:2, text:'Принять решение: аренда остаётся или ищем своё жильё — зафиксировать план', tag:'решение', unlocks:[]},
+];
+
+const TAB_LABELS = ['Сегодня','Неделя','2 нед','1 мес','3 мес','Итог'];
+const TAB_FULL   = ['Сегодня','Эта неделя','Через 2 недели','Через месяц','Через 3 месяца','Итог года'];
+
+let activeTab = 0;
+const KEY = 'plan2026_done_v2';
+const done = new Set(JSON.parse(localStorage.getItem(KEY) || '[]'));
+
+function save() { localStorage.setItem(KEY, JSON.stringify([...done])); }
+
+function isUnlocked(t) {
+  if (!t.req || t.req.length === 0) return true;
+  return t.req.every(r => done.has(r));
+}
+
+function getProgress() {
+  const res = {};
+  BLOCKS.forEach(b => {
+    const all = TASKS.filter(t => t.block === b.id);
+    res[b.id] = { total: all.length, done: all.filter(t => done.has(t.id)).length };
+  });
+  return res;
+}
+
+function totalProgress() {
+  const d = TASKS.filter(t => done.has(t.id)).length;
+  return { done: d, total: TASKS.length };
+}
+
+function renderTabs() {
+  const tabs = document.getElementById('tabs');
+  tabs.innerHTML = TAB_LABELS.map((l, i) => {
+    const cnt = TASKS.filter(t => t.day === i && !done.has(t.id) && isUnlocked(t)).length;
+    return `<button class="tab ${i === activeTab ? 'active' : ''}" onclick="setTab(${i})">
+      ${l}
+      ${cnt > 0 && i !== activeTab ? `<span class="tab-badge">${cnt}</span>` : ''}
+    </button>`;
+  }).join('');
+}
+
+function renderHeader() {
+  const {done: d, total} = totalProgress();
+  const pct = total ? Math.round(d / total * 100) : 0;
+  document.getElementById('overall-fill').style.width = pct + '%';
+  document.getElementById('overall-pct').textContent = `${pct}% выполнено · ${d} из ${total} задач`;
+  document.getElementById('header-sub').textContent = new Date().toLocaleDateString('ru-RU', {weekday:'long', day:'numeric', month:'long'});
+}
+
+function renderContent() {
+  const prog = getProgress();
+  const dayTasks = TASKS.filter(t => t.day === activeTab);
+  const unlocked = dayTasks.filter(t => isUnlocked(t));
+  const locked = dayTasks.filter(t => !isUnlocked(t));
+
+  let html = '';
+
+  // Progress bars
+  html += `<div class="progress-section">`;
+  BLOCKS.forEach(b => {
+    const p = prog[b.id];
+    const pct = p.total ? Math.round(p.done / p.total * 100) : 0;
+    html += `<div class="prog-row">
+      <div class="prog-dot" style="background:${b.color}"></div>
+      <span class="prog-label">${b.label}</span>
+      <div class="prog-bg"><div class="prog-fill" style="width:${pct}%;background:${b.color}"></div></div>
+      <span class="prog-pct">${pct}%</span>
+    </div>`;
+  });
+  html += `</div>`;
+
+  // Section title
+  html += `<div style="padding:4px 16px 2px;font-size:16px;font-weight:600;color:#1A1A1A">${TAB_FULL[activeTab]}</div>`;
+
+  if (unlocked.length === 0 && locked.length === 0) {
+    html += `<div style="text-align:center;padding:3rem 1rem;color:#888;font-size:14px">На этом этапе задач нет</div>`;
+  }
+
+  if (unlocked.length > 0) {
+    html += `<div class="section-title" style="margin-top:8px">Доступно</div>`;
+    unlocked.forEach(t => {
+      const isDone = done.has(t.id);
+      const blk = BLOCKS.find(b => b.id === t.block);
+      const ts = tagStyle(t.tag);
+      const unlockCount = (t.unlocks || []).length;
+      html += `<div class="task-card ${isDone ? '' : ''}" onclick="toggleTask('${t.id}')">
+        <div class="task-row">
+          <div class="check-circle ${isDone ? 'done' : ''}">
+            ${isDone ? '<span class="check-icon">✓</span>' : ''}
+          </div>
+          <div class="task-content">
+            <div class="task-text ${isDone ? 'done' : ''}">${t.text}</div>
+            <div class="task-footer">
+              <span class="tag" style="background:${isDone ? '#EAF3DE' : ts.bg};color:${isDone ? '#3B6D11' : ts.color}">${isDone ? 'готово' : t.tag}</span>
+              <span class="tag" style="background:${blk.color}22;color:${blk.color}">${blk.label}</span>
+              ${unlockCount > 0 && !isDone ? `<span class="unlock-text">→ откроет ${unlockCount} шаг${unlockCount > 1 ? 'а' : ''}</span>` : ''}
+            </div>
+          </div>
+        </div>
+      </div>`;
+    });
+  }
+
+  const allAvailableDone = unlocked.length > 0 && unlocked.every(t => done.has(t.id));
+  if (allAvailableDone) {
+    html += `<div class="achievement">
+      <div class="achievement-icon">🎉</div>
+      <h3>Все задачи выполнены!</h3>
+      <p>Переходи к следующему этапу</p>
+    </div>`;
+  }
+
+  if (locked.length > 0) {
+    html += `<div class="section-title" style="margin-top:12px">🔒 Заблокировано</div>`;
+    locked.forEach(t => {
+      const blk = BLOCKS.find(b => b.id === t.block);
+      const missing = (t.req || []).filter(r => !done.has(r));
+      const missingTask = TASKS.find(x => x.id === missing[0]);
+      html += `<div class="task-card locked-card">
+        <div class="task-row">
+          <div class="check-circle locked">
+            <span class="lock-icon">🔒</span>
+          </div>
+          <div class="task-content">
+            <div class="task-text locked">${t.text}</div>
+            <div class="task-footer">
+              <span class="tag" style="background:#F0F0F0;color:#888">${blk.label}</span>
+              ${missingTask ? `<span class="wait-hint">Сначала: ${missingTask.text.substring(0, 45)}…</span>` : ''}
+            </div>
+          </div>
+        </div>
+      </div>`;
+    });
+  }
+
+  document.getElementById('content').innerHTML = html;
+}
+
+function setTab(i) { activeTab = i; renderTabs(); renderContent(); window.scrollTo(0, 0); }
+
+function toggleTask(id) {
+  const t = TASKS.find(x => x.id === id);
+  if (!isUnlocked(t)) return;
+  if (done.has(id)) done.delete(id);
+  else done.add(id);
+  save();
+  renderHeader();
+  renderTabs();
+  renderContent();
+}
+
+function init() {
+  renderHeader();
+  renderTabs();
+  renderContent();
+}
+
+init();
+
+// Service Worker для offline
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js').catch(() => {});
+}
+</script>
+</body>
+</html>
