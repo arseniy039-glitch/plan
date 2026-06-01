@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="МойПлан">
+<meta name="theme-color" content="#1D9E75">
+<title>План Арсений 2026</title>
+<style>
+:root{--green:#1D9E75;--red:#D85A30;--blue:#378ADD;--purple:#7F77DD;--olive:#639922;--gold:#C9A227;--orange:#BA7517;--bg:#F2F2F7;--card:#FFFFFF;--text:#1A1A1A;--text2:#6C6C70;--border:#E5E5EA;}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding-bottom:80px;}
+
+.header{background:linear-gradient(135deg,#1D9E75,#157A5A);color:white;padding:50px 16px 20px;position:sticky;top:0;z-index:100;box-shadow:0 2px 10px rgba(0,0,0,0.15);}
+.header h1{font-size:20px;font-weight:700;letter-spacing:-0.3px;}
+.header-sub{font-size:12px;opacity:0.8;margin-top:2px;}
+.header-goal{font-size:11px;opacity:0.7;margin-top:1px;}
+.overall-bar{background:rgba(255,255,255,0.25);border-radius:4px;height:6px;margin-top:12px;overflow:hidden;}
+.overall-fill{height:6px;background:white;border-radius:4px;transition:width 0.5s;}
+.overall-pct{font-size:11px;opacity:0.75;margin-top:4px;}
+
+.tabs{display:flex;overflow-x:auto;gap:6px;padding:12px 16px;background:white;border-bottom:1px solid var(--border);scrollbar-width:none;position:sticky;top:98px;z-index:99;}
+.tabs::-webkit-scrollbar{display:none;}
+.tab{flex-shrink:0;padding:7px 16px;border-radius:20px;font-size:13px;font-weight:500;border:1.5px solid var(--border);color:var(--text2);background:white;cursor:pointer;position:relative;transition:all 0.15s;}
+.tab.active{background:var(--text);color:white;border-color:var(--text);}
+.tab-badge{position:absolute;top:-5px;right:-5px;background:var(--red);color:white;font-size:9px;width:17px;height:17px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-weight:700;}
+
+.content{padding:12px 0;}
+
+.progress-section{padding:12px 16px 4px;}
+.prog-row{display:flex;align-items:center;gap:8px;margin-bottom:7px;}
+.prog-dot{width:9px;height:9px;border-radius:5px;flex-shrink:0;}
+.prog-label{font-size:12px;color:var(--text2);width:95px;flex-shrink:0;}
+.prog-bg{flex:1;height:5px;border-radius:3px;background:var(--border);overflow:hidden;}
+.prog-fill{height:5px;border-radius:3px;transition:width 0.4s;}
+.prog-pct{font-size:11px;color:var(--text2);width:30px;text-align:right;}
+
+.section-title{font-size:11px;font-weight:600;color:var(--text2);letter-spacing:0.06em;text-transform:uppercase;padding:8px 16px 6px;}
+
+.task-card{background:var(--card);margin:0 12px 8px;border-radius:16px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,0.07);}
+.task-card.locked-card{opacity:0.45;}
+.task-row{display:flex;align-items:flex-start;gap:12px;padding:14px 14px;}
+.task-card:not(.locked-card) .task-row{cursor:pointer;}
+.task-card:not(.locked-card) .task-row:active{background:#F8F8F8;}
+
+.check-circle{width:26px;height:26px;border-radius:13px;border:2px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all 0.2s;margin-top:0px;}
+.check-circle.done{background:var(--green);border-color:var(--green);}
+.check-circle.locked-c{background:var(--bg);border-color:var(--border);}
+
+.task-content{flex:1;}
+.task-text{font-size:14px;line-height:1.45;color:var(--text);}
+.task-text.done{text-decoration:line-through;color:var(--text2);}
+.task-text.locked{color:var(--text2);}
+.task-footer{display:flex;flex-wrap:wrap;gap:5px;margin-top:7px;align-items:center;}
+.tag{font-size:11px;padding:3px 9px;border-radius:10px;font-weight:500;}
+.unlock-text{font-size:11px;color:var(--text2);}
+.wait-hint{font-size:11px;color:var(--text2);margin-top:4px;line-height:1.3;}
+
+.achievement{background:linear-gradient(135deg,#1D9E75,#157A5A);color:white;margin:8px 12px;border-radius:16px;padding:18px;text-align:center;}
+.achievement-icon{font-size:36px;margin-bottom:6px;}
+.achievement h3{font-size:16px;font-weight:700;}
+.achievement p{font-size:13px;opacity:0.85;margin-top:4px;}
+
+.money-card{background:white;margin:0 12px 8px;border-radius:16px;padding:14px;box-shadow:0 1px 4px rgba(0,0,0,0.07);}
+.money-title{font-size:13px;font-weight:600;color:var(--text2);margin-bottom:10px;text-transform:uppercase;letter-spacing:0.04em;}
+.money-row{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid var(--bg);}
+.money-row:last-child{border:none;}
+.money-label{font-size:13px;color:var(--text);}
+.money-amount{font-size:14px;font-weight:600;}
+.money-total{display:flex;justify-content:space-between;margin-top:8px;padding-top:8px;border-top:2px solid var(--border);}
+.money-total span{font-size:14px;font-weight:700;}
+
+.streak-card{background:white;margin:0 12px 8px;border-radius:16px;padding:14px;box-shadow:0 1px 4px rgba(0,0,0,0.07);}
+.streak-title{font-size:13px;font-weight:600;margin-bottom:10px;}
+.streak-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;}
+.streak-day{height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;}
+.streak-day.s-done{background:var(--green);color:white;}
+.streak-day.s-today{background:white;color:var(--text);border:2px solid var(--green);}
+.streak-day.s-future{background:var(--bg);color:var(--text2);}
+.streak-count{font-size:12px;color:var(--text2);margin-top:8px;text-align:center;}
+
+.empty-state{text-align:center;padding:3rem 1rem;color:var(--text2);}
+.empty-state div{font-size:40px;margin-bottom:12px;}
+.empty-state p{font-size:14px;}
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>🎯 План Арсений 2026</h1>
+  <div class="header-sub" id="hdate"></div>
+  <div class="header-goal">Цель: €5 000–10 000/мес к июню 2027</div>
+  <div class="overall-bar"><div class="overall-fill" id="ofill" style="width:0%"></div></div>
+  <div class="overall-pct" id="opct"></div>
+</div>
+<div class="tabs" id="tabs"></div>
+<div class="content" id="content"></div>
+
+<script>
+const BLOCKS=[
+  {id:'money', label:'💰 Деньги',  color:'#1D9E75'},
+  {id:'legal', label:'📋 Юридика', color:'#D85A30'},
+  {id:'biz',   label:'🏗 Бизнес',  color:'#378ADD'},
+  {id:'ai',    label:'🤖 AI',      color:'#7F77DD'},
+  {id:'health',label:'💪 Здоровье',color:'#639922'},
+  {id:'study', label:'📚 Учёба',   color:'#C9A227'},
+  {id:'family',label:'👨‍👩‍👧‍👧 Семья',  color:'#BA7517'},
+];
+
+// day: 0=Сегодня 1=Неделя 2=2недели 3=Месяц 4=3месяца 5=Годитог
+const TASKS=[
+  // ДЕНЬГИ - СРОЧНО
+  {id:'m1',block:'money',day:0,text:'Открыть artechportugalia@gmail.com — проверить все тёплые контакты по окнам (30-40 компаний)',tag:'срочно',tc:'#FAECE7',tt:'#993C1D',unlocks:['m2']},
+  {id:'m2',block:'money',day:0,req:['m1'],text:'Написать с Claude письмо на португальском: "Алюминий, цена за 24ч, пришлите размеры" — разослать всем 40',tag:'срочно',tc:'#FAECE7',tt:'#993C1D',unlocks:['m3']},
+  {id:'m3',block:'money',day:1,req:['m2'],text:'Обработать ответы из базы — квалифицировать кто реально интересуется',tag:'эта неделя',tc:'#E6F1FB',tt:'#185FA5',unlocks:['m4']},
+  {id:'m4',block:'money',day:1,req:['m3'],text:'Провести минимум 2 живых звонка с заинтересованными клиентами',tag:'звонки',tc:'#FAECE7',tt:'#993C1D',unlocks:['m5']},
+  {id:'m5',block:'money',day:2,req:['m4'],text:'Подготовить коммерческое предложение по алюминию для первого клиента',tag:'подготовка',tc:'#EAF3DE',tt:'#3B6D11',unlocks:['m6']},
+  {id:'m6',block:'money',day:2,req:['m5'],text:'Отправить КП → получить обратную связь → скорректировать',tag:'переговоры',tc:'#EEEDFE',tt:'#3C3489',unlocks:['m7']},
+  {id:'m7',block:'money',day:3,req:['m6'],text:'🏆 Закрыть первую сделку по алюминию в Португалии — получить депозит',tag:'ЦЕЛЬ',tc:'#D4EDDA',tt:'#155724',unlocks:['m8']},
+  {id:'m8',block:'money',day:3,req:['m7'],text:'Закрыть личный долг €5 000 из первых поступлений',tag:'долг',tc:'#FAECE7',tt:'#993C1D',unlocks:[]},
+  {id:'m_fred',block:'money',day:1,text:'Фредерик (Кассель) — ждём разрешение города на фасад. Не беспокоим. Как придёт — предоплата €10-12к',tag:'ожидание',tc:'#E6F1FB',tt:'#185FA5',unlocks:['m_fred2']},
+  {id:'m_fred2',block:'money',day:3,req:['m_fred'],text:'Фредерик подтвердил → оформить договор → получить предоплату €10-12к',tag:'Кассель',tc:'#D4EDDA',tt:'#155724',unlocks:['m_fred3']},
+  {id:'m_fred3',block:'money',day:3,req:['m_fred2'],text:'Предоплату Фредерика распределить: SS €3к + личный долг €5к + оборот €2-4к',tag:'распределение',tc:'#EAF3DE',tt:'#3B6D11',unlocks:[]},
+
+  // ЮРИДИКА
+  {id:'l1',block:'legal',day:0,text:'Распечатать, подписать и отправить письмо в SIRENE через CTT (Лиссабон) + копия Título de Residência',tag:'срочно',tc:'#FAECE7',tt:'#993C1D',unlocks:['l2']},
+  {id:'l2',block:'legal',day:0,text:'Записаться на приём в Segurança Social — рассрочка долга €9 816',tag:'срочно',tc:'#FAECE7',tt:'#993C1D',unlocks:['l3']},
+  {id:'l3',block:'legal',day:0,text:'Проверить почту — ответ от AIMA на письмо от 28 мая',tag:'сегодня',tc:'#FAECE7',tt:'#993C1D',unlocks:['l4']},
+  {id:'l4',block:'legal',day:1,req:['l2'],text:'Прийти на приём в SS — подписать рассрочку (~€100/мес) + взять справку «Em Regularização»',tag:'личный визит',tc:'#FFF3CD',tt:'#856404',unlocks:['l5','l6']},
+  {id:'l5',block:'legal',day:1,req:['l3'],text:'Нет ответа от AIMA → позвонить или написать через contactenos.aima.gov.pt',tag:'следующий шаг',tc:'#EEEDFE',tt:'#3C3489',unlocks:['l7']},
+  {id:'l6',block:'legal',day:2,req:['l4'],text:'Получить Declaração de Situação Contributiva из SS',tag:'после визита',tc:'#EAF3DE',tt:'#3B6D11',unlocks:['l7']},
+  {id:'l_at',block:'legal',day:2,text:'Ждать конверт AT с паролем (~5 раб. дней) → войти на Portal das Finanças → скачать certidão',tag:'ожидание',tc:'#E6F1FB',tt:'#185FA5',unlocks:['l7']},
+  {id:'l7',block:'legal',day:3,req:['l6','l5'],text:'Собрать полный пакет для AIMA: SS справка + certidão Миланы + паспорт + AT справка',tag:'подготовка',tc:'#EAF3DE',tt:'#3B6D11',unlocks:['l8']},
+  {id:'l8',block:'legal',day:4,req:['l7'],text:'Прийти на приём в AIMA → получить новую резиденцию',tag:'личный визит',tc:'#FFF3CD',tt:'#856404',unlocks:['l9','l_bmw']},
+  {id:'l_bmw',block:'legal',day:4,req:['l8'],text:'BMW X1 (Лиссабон, полиция) — после резиденции возобновить давление через PJ и SIRENE',tag:'BMW X1',tc:'#FAECE7',tt:'#993C1D',unlocks:['l_bmw2']},
+  {id:'l_bmw2',block:'legal',day:5,req:['l_bmw'],text:'🏆 BMW X1 возвращена → продать за €8-12к → закрыть долги компании',tag:'финал',tc:'#D4EDDA',tt:'#155724',unlocks:[]},
+  {id:'l9',block:'legal',day:5,req:['l8'],text:'🏆 Подать на гражданство — naturalização Artigo 6(8)',tag:'финал',tc:'#D4EDDA',tt:'#155724',unlocks:[]},
+
+  // БИЗНЕС
+  {id:'b1',block:'biz',day:0,text:'Зарегистрировать немецкий email на Posteo.de (€1/мес, без телефона)',tag:'сегодня',tc:'#FAECE7',tt:'#993C1D',unlocks:['b2']},
+  {id:'b2',block:'biz',day:1,req:['b1'],text:'Связаться с поставщиками алюминия: Reynaers, Cortizo, Schüco — запросить дилерские условия для Португалии',tag:'эта неделя',tc:'#E6F1FB',tt:'#185FA5',unlocks:['b3']},
+  {id:'b3',block:'biz',day:1,text:'Проверить ответы от поставщиков: AM Okna, SAPOR, PARMAX, Sonarol, Okno-Pol',tag:'ожидание',tc:'#E6F1FB',tt:'#185FA5',unlocks:['b4']},
+  {id:'b4',block:'biz',day:2,req:['b2'],text:'Выбрать одного алюминиевого поставщика — получить прайс и условия',tag:'решение',tc:'#EAF3DE',tt:'#3B6D11',unlocks:['b5']},
+  {id:'b5',block:'biz',day:2,req:['b4'],text:'Сделать 1-страничное портфолио Artech на португальском и немецком (PDF)',tag:'подготовка',tc:'#EAF3DE',tt:'#3B6D11',unlocks:['b6']},
+  {id:'b6',block:'biz',day:3,req:['b5'],text:'Германия: написать follow-up берлинским компаниям + расширить список до 15+ компаний',tag:'Германия',tc:'#EEEDFE',tt:'#3C3489',unlocks:['b7']},
+  {id:'b7',block:'biz',day:3,req:['b6'],text:'Провести 3 переговора с немецкими строительными компаниями по субподряду',tag:'переговоры',tc:'#EEEDFE',tt:'#3C3489',unlocks:['b8']},
+  {id:'b_ntv',block:'biz',day:1,text:'🏍 Мотоцикл NTV: заменить свечи и мелкий ремонт (~€200) — сделать как появятся первые €500',tag:'ремонт',tc:'#EAF3DE',tt:'#3B6D11',unlocks:[]},
+  {id:'b_x5',block:'biz',day:4,text:'🚗 BMW X5: ремонт €3-5к — делаем только при стабильном доходе от €3 000/мес',tag:'BMW X5',tc:'#E6F1FB',tt:'#185FA5',unlocks:[]},
+  {id:'b8',block:'biz',day:4,req:['b7'],text:'Закрыть первый немецкий субподрядный контракт',tag:'цель',tc:'#D4EDDA',tt:'#155724',unlocks:[]},
+  {id:'b_rec',block:'biz',day:3,text:'Рекрутинг строителей: оформить как платную услугу для немецких/польских компаний (€300-500/чел)',tag:'новое',tc:'#EEEDFE',tt:'#3C3489',unlocks:['b_rec2']},
+  {id:'b_rec2',block:'biz',day:4,req:['b_rec'],text:'Найти первого платящего клиента по рекрутингу — бригада 3-5 человек = €1 000-2 500',tag:'цель',tc:'#D4EDDA',tt:'#155724',unlocks:[]},
+
+  // AI
+  {id:'a1',block:'ai',day:0,text:'Купить второй номер Zadarma для Фрэнка (~€1.6/мес)',tag:'сегодня',tc:'#FAECE7',tt:'#993C1D',unlocks:['a2']},
+  {id:'a2',block:'ai',day:1,req:['a1'],text:'Переподключить агента Фрэнк с Twilio на новый номер Zadarma',tag:'техника',tc:'#EEEDFE',tt:'#3C3489',unlocks:['a3']},
+  {id:'a3',block:'ai',day:2,req:['a2'],text:'Дождаться активации Zadarma +351 308 812 059 → подключить к Екатерине',tag:'техника',tc:'#EEEDFE',tt:'#3C3489',unlocks:['a4']},
+  {id:'a4',block:'ai',day:2,req:['a3'],text:'Тестовый звонок — Екатерина отвечает → резюме приходит в Telegram',tag:'тест',tc:'#EAF3DE',tt:'#3B6D11',unlocks:['a5']},
+  {id:'a5',block:'ai',day:3,req:['a4'],text:'Запустить Екатерину в знакомом салоне Портимала — бесплатно 2 недели → кейс',tag:'запуск',tc:'#EAF3DE',tt:'#3B6D11',unlocks:['a6']},
+  {id:'a6',block:'ai',day:3,req:['a5'],text:'Упаковать предложение: €150/мес, настройка за 1 день — найти 3 платящих клиента',tag:'продажи',tc:'#EEEDFE',tt:'#3C3489',unlocks:['a7']},
+  {id:'a7',block:'ai',day:4,req:['a6'],text:'10 AI-клиентов = €1 500/мес пассивно',tag:'цель',tc:'#D4EDDA',tt:'#155724',unlocks:['a8']},
+  {id:'a8',block:'ai',day:5,req:['a7'],text:'🏆 25+ AI-клиентов = €3 500-4 000/мес без твоего участия',tag:'финал',tc:'#D4EDDA',tt:'#155724',unlocks:[]},
+
+  // ЗДОРОВЬЕ
+  {id:'h1',block:'health',day:0,text:'Встать на весы — зафиксировать стартовый вес',tag:'сегодня',tc:'#FAECE7',tt:'#993C1D',unlocks:[]},
+  {id:'h2',block:'health',day:0,text:'Купить скакалку с подшипниками',tag:'сегодня',tc:'#FAECE7',tt:'#993C1D',unlocks:['h3']},
+  {id:'h_alco1',block:'health',day:0,text:'🚫 АЛКОГОЛЬ — День 1. Старт полного отказа.',tag:'КВЕСТ',tc:'#FAECE7',tt:'#993C1D',unlocks:['h_alco7']},
+  {id:'h_smoke1',block:'health',day:0,text:'🚬 КУРЕНИЕ — зафиксировать сколько сигарет в день сейчас',tag:'старт',tc:'#FAECE7',tt:'#993C1D',unlocks:['h_smoke2']},
+  {id:'h3',block:'health',day:1,req:['h2'],text:'Первая тренировка со скакалкой — 20 мин (раскатиться)',tag:'режим',tc:'#EAF3DE',tt:'#3B6D11',unlocks:['h4']},
+  {id:'h_alco7',block:'health',day:1,req:['h_alco1'],text:'🏅 АЛКОГОЛЬ — День 7. Первая неделя без!',tag:'КВЕСТ',tc:'#EAF3DE',tt:'#3B6D11',unlocks:['h_alco30']},
+  {id:'h_smoke2',block:'health',day:1,req:['h_smoke1'],text:'🚬 Сократить курение на 30% от стартового',tag:'минус 30%',tc:'#EAF3DE',tt:'#3B6D11',unlocks:['h_smoke3']},
+  {id:'h4',block:'health',day:2,req:['h3'],text:'Скакалка каждый вечер 30 мин в 20:00 — войти в ритм',tag:'режим',tc:'#EAF3DE',tt:'#3B6D11',unlocks:[]},
+  {id:'h_smoke3',block:'health',day:2,req:['h_smoke2'],text:'🚬 Сократить курение ещё на 30% (итого минус 60%)',tag:'минус 60%',tc:'#EAF3DE',tt:'#3B6D11',unlocks:['h_smoke4']},
+  {id:'h_pool',block:'health',day:2,text:'Бассейн стабильно 3 раза в неделю без пропусков',tag:'режим',tc:'#EAF3DE',tt:'#3B6D11',unlocks:[]},
+  {id:'h_alco30',block:'health',day:3,req:['h_alco7'],text:'🥇 АЛКОГОЛЬ — День 30. Месяц без алкоголя!',tag:'КВЕСТ',tc:'#D4EDDA',tt:'#155724',unlocks:['h_alco90']},
+  {id:'h_smoke4',block:'health',day:3,req:['h_smoke3'],text:'🚬 Полный отказ от сигарет',tag:'финал',tc:'#D4EDDA',tt:'#155724',unlocks:['h_smoke30']},
+  {id:'h_w5',block:'health',day:3,text:'Контрольный вес — цель минус 5 кг от старта',tag:'цель',tc:'#EAF3DE',tt:'#3B6D11',unlocks:[]},
+  {id:'h_alco90',block:'health',day:4,req:['h_alco30'],text:'🏆 АЛКОГОЛЬ — День 90. Три месяца! Это уже новая жизнь.',tag:'КВЕСТ',tc:'#D4EDDA',tt:'#155724',unlocks:[]},
+  {id:'h_smoke30',block:'health',day:4,req:['h_smoke4'],text:'🏅 30 дней без сигарет — лёгкие начали восстанавливаться',tag:'КВЕСТ',tc:'#D4EDDA',tt:'#155724',unlocks:[]},
+
+  // УЧЁБА
+  {id:'s1',block:'study',day:0,text:'Проверить письмо от Изабеллы — расписание курсов IEFP и суммы выплат',tag:'сегодня',tc:'#FAECE7',tt:'#993C1D',unlocks:['s2']},
+  {id:'s_eng1',block:'study',day:0,text:'🇬🇧 День 1 английского с Claude — написать 3-5 предложений о сегодняшнем дне',tag:'ежедневно',tc:'#EAF3DE',tt:'#3B6D11',unlocks:['s_eng7']},
+  {id:'s2',block:'study',day:1,req:['s1'],text:'Начать посещать курсы IEFP согласно расписанию',tag:'режим',tc:'#EAF3DE',tt:'#3B6D11',unlocks:['s3']},
+  {id:'s_eng7',block:'study',day:1,req:['s_eng1'],text:'🇬🇧 Неделя 1 — 7 дней английского подряд по 15 минут',tag:'КВЕСТ',tc:'#EAF3DE',tt:'#3B6D11',unlocks:['s_eng30']},
+  {id:'s3',block:'study',day:2,req:['s2'],text:'Получить первую болсу IEFP (~€85/мес)',tag:'ожидание',tc:'#E6F1FB',tt:'#185FA5',unlocks:[]},
+  {id:'s_eng30',block:'study',day:3,req:['s_eng7'],text:'🇬🇧 Месяц английского — могу написать деловое письмо без ошибок',tag:'КВЕСТ',tc:'#D4EDDA',tt:'#155724',unlocks:['s_eng3m']},
+  {id:'s_eng3m',block:'study',day:4,req:['s_eng30'],text:'🇬🇧 3 месяца — первые переговоры с немцами на английском',tag:'цель',tc:'#D4EDDA',tt:'#155724',unlocks:['s_engbiz']},
+  {id:'s_engbiz',block:'study',day:5,req:['s_eng3m'],text:'🏆 Английский B1-B2 — веду бизнес на английском без переводчика',tag:'финал',tc:'#D4EDDA',tt:'#155724',unlocks:[]},
+
+  // СЕМЬЯ
+  {id:'f1',block:'family',day:0,text:'Минимум 1 час с Миланой и Амелией — без телефона, без отвлечений',tag:'ежедневно',tc:'#FAEEDA',tt:'#854F0B',unlocks:[]},
+  {id:'f2',block:'family',day:1,text:'Выезд с семьёй на этой неделе — пляж, парк или кафе',tag:'еженедельно',tc:'#FAEEDA',tt:'#854F0B',unlocks:[]},
+  {id:'f3',block:'family',day:2,text:'Принять решение по жилью: остаёмся в аренде или ищем своё — зафиксировать план',tag:'решение',tc:'#EAF3DE',tt:'#3B6D11',unlocks:[]},
+  {id:'f4',block:'family',day:5,text:'🏆 При доходе €8 000+/мес — начать разговор о покупке своего жилья в Алгарве',tag:'мечта',tc:'#D4EDDA',tt:'#155724',unlocks:[]},
+];
+
+const TABS=['Сегодня','Неделя','2 нед','1 мес','3 мес','Итог'];
+const TABS_FULL=['Сегодня — срочные задачи','Эта неделя','Через 2 недели','Через месяц','Через 3 месяца','Итог года — финансовая свобода'];
+
+let activeTab=0;
+const KEY='as_plan_v3';
+const done=new Set(JSON.parse(localStorage.getItem(KEY)||'[]'));
+function save(){localStorage.setItem(KEY,JSON.stringify([...done]));}
+
+function isUnlocked(t){
+  if(!t.req||!t.req.length)return true;
+  return t.req.every(r=>done.has(r));
+}
+
+function getProgress(){
+  const r={};
+  BLOCKS.forEach(b=>{
+    const all=TASKS.filter(t=>t.block===b.id);
+    r[b.id]={total:all.length,done:all.filter(t=>done.has(t.id)).length};
+  });
+  return r;
+}
+
+function renderHeader(){
+  const d=TASKS.filter(t=>done.has(t.id)).length;
+  const total=TASKS.length;
+  const pct=total?Math.round(d/total*100):0;
+  document.getElementById('ofill').style.width=pct+'%';
+  document.getElementById('opct').textContent=pct+'% выполнено · '+d+' из '+total+' задач';
+  const now=new Date();
+  document.getElementById('hdate').textContent=now.toLocaleDateString('ru-RU',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+}
+
+function renderTabs(){
+  document.getElementById('tabs').innerHTML=TABS.map((l,i)=>{
+    const cnt=TASKS.filter(t=>t.day===i&&!done.has(t.id)&&isUnlocked(t)).length;
+    return`<button class="tab ${i===activeTab?'active':''}" onclick="setTab(${i})">${l}${cnt>0&&i!==activeTab?`<span class="tab-badge">${cnt}</span>`:''}</button>`;
+  }).join('');
+}
+
+function renderContent(){
+  const prog=getProgress();
+  const dayTasks=TASKS.filter(t=>t.day===activeTab);
+  const unlocked=dayTasks.filter(t=>isUnlocked(t));
+  const locked=dayTasks.filter(t=>!isUnlocked(t));
+  let html='';
+
+  // Финансовая сводка на вкладке Сегодня
+  if(activeTab===0){
+    html+=`<div class="money-card">
+      <div class="money-title">Финансовая картина</div>
+      <div class="money-row"><span class="money-label">Минимум семье/мес</span><span class="money-amount" style="color:var(--red)">€4 400</span></div>
+      <div class="money-row"><span class="money-label">Долг SS</span><span class="money-amount" style="color:var(--red)">€9 816</span></div>
+      <div class="money-row"><span class="money-label">Долг личный</span><span class="money-amount" style="color:var(--red)">€5 000</span></div>
+      <div class="money-row"><span class="money-label">Долг компания</span><span class="money-amount" style="color:var(--red)">€10 500</span></div>
+      <div class="money-row"><span class="money-label">Фредерик (ожидание)</span><span class="money-amount" style="color:var(--green)">+€10-12к</span></div>
+      <div class="money-total"><span>Цель года</span><span style="color:var(--green)">€5 000-10 000/мес</span></div>
+    </div>`;
+  }
+
+  // Прогресс
+  html+=`<div class="progress-section">`;
+  BLOCKS.forEach(b=>{
+    const p=prog[b.id];
+    const pct=p.total?Math.round(p.done/p.total*100):0;
+    html+=`<div class="prog-row"><div class="prog-dot" style="background:${b.color}"></div><span class="prog-label">${b.label}</span><div class="prog-bg"><div class="prog-fill" style="width:${pct}%;background:${b.color}"></div></div><span class="prog-pct">${pct}%</span></div>`;
+  });
+  html+=`</div>`;
+
+  html+=`<div style="padding:4px 16px 2px;font-size:16px;font-weight:700;color:var(--text)">${TABS_FULL[activeTab]}</div>`;
+
+  if(!dayTasks.length){
+    html+=`<div class="empty-state"><div>✅</div><p>На этом этапе задач нет</p></div>`;
+  }
+
+  if(unlocked.length){
+    html+=`<div class="section-title">Доступно</div>`;
+    unlocked.forEach(t=>{
+      const isDone=done.has(t.id);
+      const blk=BLOCKS.find(b=>b.id===t.block);
+      const uc=(t.unlocks||[]).length;
+      html+=`<div class="task-card" onclick="toggleTask('${t.id}')">
+        <div class="task-row">
+          <div class="check-circle ${isDone?'done':''}">
+            ${isDone?'<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7l3.5 3.5L12 4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>':''}
+          </div>
+          <div class="task-content">
+            <div class="task-text ${isDone?'done':''}">${t.text}</div>
+            <div class="task-footer">
+              <span class="tag" style="background:${isDone?'#EAF3DE':t.tc};color:${isDone?'#3B6D11':t.tt}">${isDone?'✓ готово':t.tag}</span>
+              <span class="tag" style="background:${blk.color}18;color:${blk.color}">${blk.label}</span>
+              ${uc>0&&!isDone?`<span class="unlock-text">→ откроет ${uc} шаг${uc>1?'а':''}</span>`:''}
+            </div>
+          </div>
+        </div>
+      </div>`;
+    });
+  }
+
+  const allDone=unlocked.length>0&&unlocked.every(t=>done.has(t.id))&&!locked.length;
+  if(allDone){
+    html+=`<div class="achievement"><div class="achievement-icon">🎉</div><h3>Все задачи выполнены!</h3><p>Переходи к следующему этапу</p></div>`;
+  }
+
+  if(locked.length){
+    html+=`<div class="section-title" style="margin-top:10px">🔒 Откроется после выполнения предыдущих</div>`;
+    locked.forEach(t=>{
+      const blk=BLOCKS.find(b=>b.id===t.block);
+      const miss=TASKS.find(x=>x.id===(t.req||[]).find(r=>!done.has(r)));
+      html+=`<div class="task-card locked-card">
+        <div class="task-row">
+          <div class="check-circle locked-c">🔒</div>
+          <div class="task-content">
+            <div class="task-text locked">${t.text}</div>
+            <div class="task-footer">
+              <span class="tag" style="background:#F0F0F0;color:#888">${blk.label}</span>
+              ${miss?`<div class="wait-hint">Сначала: ${miss.text.substring(0,50)}…</div>`:''}
+            </div>
+          </div>
+        </div>
+      </div>`;
+    });
+  }
+
+  document.getElementById('content').innerHTML=html;
+}
+
+function setTab(i){activeTab=i;renderTabs();renderContent();window.scrollTo(0,120);}
+
+function toggleTask(id){
+  const t=TASKS.find(x=>x.id===id);
+  if(!t||!isUnlocked(t))return;
+  if(done.has(id))done.delete(id);
+  else done.add(id);
+  save();renderHeader();renderTabs();renderContent();
+}
+
+renderHeader();renderTabs();renderContent();
+</script>
+</body>
+</html>
