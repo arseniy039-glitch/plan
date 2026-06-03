@@ -9,81 +9,116 @@
 <meta name="theme-color" content="#1D9E75">
 <title>План Арсений 2026</title>
 <style>
-:root{--green:#1D9E75;--red:#D85A30;--blue:#378ADD;--purple:#7F77DD;--olive:#639922;--gold:#C9A227;--orange:#BA7517;--bg:#F2F2F7;--card:#FFFFFF;--text:#1A1A1A;--text2:#6C6C70;--border:#E5E5EA;}
+:root{--green:#1D9E75;--green2:#157A5A;--red:#D85A30;--blue:#378ADD;--purple:#7F77DD;--olive:#639922;--gold:#C9A227;--orange:#BA7517;--bg:#F2F2F7;--card:#FFF;--text:#1A1A1A;--text2:#6C6C70;--border:#E5E5EA;--carry:#F0A500;}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding-bottom:80px;}
-
-.header{background:linear-gradient(135deg,#1D9E75,#157A5A);color:white;padding:50px 16px 20px;position:sticky;top:0;z-index:100;box-shadow:0 2px 10px rgba(0,0,0,0.15);}
-.header h1{font-size:20px;font-weight:700;letter-spacing:-0.3px;}
-.header-sub{font-size:12px;opacity:0.8;margin-top:2px;}
-.header-goal{font-size:11px;opacity:0.7;margin-top:1px;}
-.overall-bar{background:rgba(255,255,255,0.25);border-radius:4px;height:6px;margin-top:12px;overflow:hidden;}
-.overall-fill{height:6px;background:white;border-radius:4px;transition:width 0.5s;}
-.overall-pct{font-size:11px;opacity:0.75;margin-top:4px;}
-
-.tabs{display:flex;overflow-x:auto;gap:6px;padding:12px 16px;background:white;border-bottom:1px solid var(--border);scrollbar-width:none;position:sticky;top:98px;z-index:99;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding-bottom:90px;}
+.header{background:linear-gradient(135deg,var(--green),var(--green2));color:white;padding:50px 16px 16px;position:sticky;top:0;z-index:100;box-shadow:0 2px 10px rgba(0,0,0,.15);}
+.header h1{font-size:19px;font-weight:700;}
+.header-sub{font-size:11px;opacity:.8;margin-top:2px;}
+.header-goal{font-size:11px;opacity:.7;margin-top:1px;}
+.overall-bar{background:rgba(255,255,255,.25);border-radius:4px;height:6px;margin-top:10px;overflow:hidden;}
+.overall-fill{height:6px;background:white;border-radius:4px;transition:width .5s;}
+.overall-pct{font-size:11px;opacity:.75;margin-top:4px;}
+.tabs{display:flex;overflow-x:auto;gap:6px;padding:10px 14px;background:white;border-bottom:1px solid var(--border);scrollbar-width:none;position:sticky;top:106px;z-index:99;}
 .tabs::-webkit-scrollbar{display:none;}
-.tab{flex-shrink:0;padding:7px 16px;border-radius:20px;font-size:13px;font-weight:500;border:1.5px solid var(--border);color:var(--text2);background:white;cursor:pointer;position:relative;transition:all 0.15s;}
+.tab{flex-shrink:0;padding:6px 14px;border-radius:20px;font-size:13px;font-weight:500;border:1.5px solid var(--border);color:var(--text2);background:white;cursor:pointer;position:relative;transition:all .15s;}
 .tab.active{background:var(--text);color:white;border-color:var(--text);}
 .tab-badge{position:absolute;top:-5px;right:-5px;background:var(--red);color:white;font-size:9px;width:17px;height:17px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-weight:700;}
-
-.content{padding:12px 0;}
-
-.progress-section{padding:12px 16px 4px;}
-.prog-row{display:flex;align-items:center;gap:8px;margin-bottom:7px;}
-.prog-dot{width:9px;height:9px;border-radius:5px;flex-shrink:0;}
-.prog-label{font-size:12px;color:var(--text2);width:95px;flex-shrink:0;}
-.prog-bg{flex:1;height:5px;border-radius:3px;background:var(--border);overflow:hidden;}
-.prog-fill{height:5px;border-radius:3px;transition:width 0.4s;}
-.prog-pct{font-size:11px;color:var(--text2);width:30px;text-align:right;}
-
-.section-title{font-size:11px;font-weight:600;color:var(--text2);letter-spacing:0.06em;text-transform:uppercase;padding:8px 16px 6px;}
-
-.task-card{background:var(--card);margin:0 12px 8px;border-radius:16px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,0.07);}
-.task-card.locked-card{opacity:0.45;}
-.task-row{display:flex;align-items:flex-start;gap:12px;padding:14px 14px;}
+.content{padding:10px 0 20px;}
+.section-title{font-size:11px;font-weight:600;color:var(--text2);letter-spacing:.06em;text-transform:uppercase;padding:10px 16px 6px;}
+.task-card{background:var(--card);margin:0 12px 8px;border-radius:16px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.07);}
+.task-card.locked-card{opacity:.4;}
+.task-card.carried-card{border-left:3px solid var(--carry);}
+.task-card.done-card{opacity:.55;}
+.task-row{display:flex;align-items:flex-start;gap:10px;padding:13px 13px 10px;}
 .task-card:not(.locked-card) .task-row{cursor:pointer;}
 .task-card:not(.locked-card) .task-row:active{background:#F8F8F8;}
-
-.check-circle{width:26px;height:26px;border-radius:13px;border:2px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all 0.2s;margin-top:0px;}
+.check-circle{width:26px;height:26px;border-radius:13px;border:2px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .2s;font-size:12px;}
 .check-circle.done{background:var(--green);border-color:var(--green);}
 .check-circle.locked-c{background:var(--bg);border-color:var(--border);}
-
-.task-content{flex:1;}
+.task-content{flex:1;min-width:0;}
 .task-text{font-size:14px;line-height:1.45;color:var(--text);}
 .task-text.done{text-decoration:line-through;color:var(--text2);}
 .task-text.locked{color:var(--text2);}
 .task-footer{display:flex;flex-wrap:wrap;gap:5px;margin-top:7px;align-items:center;}
 .tag{font-size:11px;padding:3px 9px;border-radius:10px;font-weight:500;}
-.unlock-text{font-size:11px;color:var(--text2);}
-.wait-hint{font-size:11px;color:var(--text2);margin-top:4px;line-height:1.3;}
-
-.achievement{background:linear-gradient(135deg,#1D9E75,#157A5A);color:white;margin:8px 12px;border-radius:16px;padding:18px;text-align:center;}
-.achievement-icon{font-size:36px;margin-bottom:6px;}
-.achievement h3{font-size:16px;font-weight:700;}
-.achievement p{font-size:13px;opacity:0.85;margin-top:4px;}
-
-.money-card{background:white;margin:0 12px 8px;border-radius:16px;padding:14px;box-shadow:0 1px 4px rgba(0,0,0,0.07);}
-.money-title{font-size:13px;font-weight:600;color:var(--text2);margin-bottom:10px;text-transform:uppercase;letter-spacing:0.04em;}
+.carry-btn{font-size:11px;padding:3px 9px;border-radius:10px;background:#FFF3CD;color:#856404;border:none;cursor:pointer;font-weight:500;}
+.carry-btn.is-carried{background:#EAF3DE;color:#3B6D11;}
+/* WEIGHT */
+.weight-card{background:white;margin:0 12px 8px;border-radius:16px;padding:14px;box-shadow:0 1px 4px rgba(0,0,0,.07);}
+.weight-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;}
+.weight-title{font-size:14px;font-weight:700;}
+.weight-meta{font-size:12px;color:var(--text2);margin-top:3px;}
+.weight-input-row{display:flex;gap:8px;align-items:center;margin-bottom:10px;}
+.weight-input{flex:1;border:1.5px solid var(--border);border-radius:12px;padding:10px 14px;font-size:16px;outline:none;-webkit-appearance:none;}
+.weight-input:focus{border-color:var(--green);}
+.weight-save-btn{background:var(--green);color:white;border:none;border-radius:12px;padding:10px 16px;font-size:14px;font-weight:600;cursor:pointer;}
+.weight-chart{height:80px;margin-top:4px;}
+.weight-chart svg{width:100%;height:100%;}
+.weight-entries{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin-top:8px;}
+.weight-entries::-webkit-scrollbar{display:none;}
+.weight-entry{flex-shrink:0;background:var(--bg);border-radius:10px;padding:6px 10px;text-align:center;}
+.weight-entry-kg{font-size:13px;font-weight:700;}
+.weight-entry-date{font-size:10px;color:var(--text2);margin-top:1px;}
+.weight-entry.best{background:#D4EDDA;}
+.weight-entry.best .weight-entry-kg{color:#155724;}
+/* WEEKLY */
+.weekly-card{background:linear-gradient(135deg,#1e3a5f,#2563eb);color:white;margin:0 12px 8px;border-radius:16px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.15);}
+.weekly-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;}
+.weekly-title{font-size:16px;font-weight:700;}
+.weekly-week{font-size:12px;opacity:.75;margin-top:2px;}
+.weekly-pct{font-size:32px;font-weight:800;}
+.weekly-pct-label{font-size:11px;opacity:.7;}
+.weekly-bar-bg{background:rgba(255,255,255,.2);border-radius:4px;height:6px;margin-bottom:12px;overflow:hidden;}
+.weekly-bar-fill{height:6px;background:white;border-radius:4px;transition:width .6s;}
+.weekly-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:14px;}
+.weekly-stat{background:rgba(255,255,255,.12);border-radius:10px;padding:8px;text-align:center;}
+.weekly-stat-n{font-size:20px;font-weight:700;}
+.weekly-stat-l{font-size:10px;opacity:.75;margin-top:1px;}
+/* REWARDS */
+.rewards-card{background:white;margin:0 12px 8px;border-radius:16px;padding:14px;box-shadow:0 1px 4px rgba(0,0,0,.07);}
+.rewards-title{font-size:14px;font-weight:700;margin-bottom:4px;}
+.rewards-sub{font-size:12px;color:var(--text2);margin-bottom:12px;}
+.reward-level{margin-bottom:14px;}
+.reward-level-header{display:flex;align-items:center;gap:8px;margin-bottom:6px;}
+.reward-level-pct{font-size:12px;font-weight:700;padding:3px 9px;border-radius:10px;}
+.reward-level-name{font-size:13px;font-weight:600;}
+.reward-locked-msg{font-size:12px;color:var(--text2);padding:8px 10px;background:var(--bg);border-radius:10px;}
+.reward-items{display:flex;flex-direction:column;gap:6px;}
+.reward-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;border:1.5px solid var(--border);cursor:pointer;transition:all .15s;}
+.reward-item.chosen{border-color:var(--green);background:#f0faf5;}
+.reward-item:active{background:#f8f8f8;}
+.reward-check{width:20px;height:20px;border-radius:10px;border:2px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .15s;}
+.reward-item.chosen .reward-check{background:var(--green);border-color:var(--green);}
+.reward-text{font-size:13px;line-height:1.35;}
+/* MISC */
+.money-card{background:white;margin:0 12px 8px;border-radius:16px;padding:14px;box-shadow:0 1px 4px rgba(0,0,0,.07);}
+.money-title{font-size:12px;font-weight:600;color:var(--text2);margin-bottom:10px;text-transform:uppercase;letter-spacing:.04em;}
 .money-row{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid var(--bg);}
 .money-row:last-child{border:none;}
 .money-label{font-size:13px;color:var(--text);}
 .money-amount{font-size:14px;font-weight:600;}
 .money-total{display:flex;justify-content:space-between;margin-top:8px;padding-top:8px;border-top:2px solid var(--border);}
 .money-total span{font-size:14px;font-weight:700;}
-
-.streak-card{background:white;margin:0 12px 8px;border-radius:16px;padding:14px;box-shadow:0 1px 4px rgba(0,0,0,0.07);}
-.streak-title{font-size:13px;font-weight:600;margin-bottom:10px;}
-.streak-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;}
-.streak-day{height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;}
-.streak-day.s-done{background:var(--green);color:white;}
-.streak-day.s-today{background:white;color:var(--text);border:2px solid var(--green);}
-.streak-day.s-future{background:var(--bg);color:var(--text2);}
-.streak-count{font-size:12px;color:var(--text2);margin-top:8px;text-align:center;}
-
-.empty-state{text-align:center;padding:3rem 1rem;color:var(--text2);}
-.empty-state div{font-size:40px;margin-bottom:12px;}
-.empty-state p{font-size:14px;}
+.progress-section{padding:10px 16px 4px;}
+.prog-row{display:flex;align-items:center;gap:8px;margin-bottom:6px;}
+.prog-dot{width:9px;height:9px;border-radius:5px;flex-shrink:0;}
+.prog-label{font-size:12px;color:var(--text2);width:100px;flex-shrink:0;}
+.prog-bg{flex:1;height:5px;border-radius:3px;background:var(--border);overflow:hidden;}
+.prog-fill{height:5px;border-radius:3px;transition:width .4s;}
+.prog-pct{font-size:11px;color:var(--text2);width:30px;text-align:right;}
+.tomorrow-banner{background:linear-gradient(135deg,#2563eb,#1d4ed8);color:white;margin:6px 12px 8px;border-radius:16px;padding:14px 16px;text-align:center;}
+.tomorrow-banner h3{font-size:15px;font-weight:700;margin-bottom:4px;}
+.tomorrow-banner p{font-size:12px;opacity:.85;}
+.tmr-btn{margin-top:10px;background:white;color:#1d4ed8;border:none;border-radius:10px;padding:10px 20px;font-size:14px;font-weight:600;cursor:pointer;}
+.empty-ok{text-align:center;padding:2rem 1rem;color:var(--text2);}
+.empty-ok div{font-size:36px;margin-bottom:8px;}
+.empty-ok p{font-size:14px;}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:200;display:flex;align-items:center;justify-content:center;padding:20px;}
+.modal{background:white;border-radius:20px;padding:26px;max-width:340px;width:100%;text-align:center;}
+.modal h2{font-size:22px;font-weight:700;margin-bottom:10px;}
+.modal p{font-size:14px;color:var(--text2);line-height:1.55;margin-bottom:20px;}
+.modal-btn{background:var(--green);color:white;border:none;border-radius:14px;padding:14px 32px;font-size:16px;font-weight:600;cursor:pointer;width:100%;}
 </style>
 </head>
 <body>
@@ -96,242 +131,242 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 </div>
 <div class="tabs" id="tabs"></div>
 <div class="content" id="content"></div>
-
+<div class="modal-overlay" id="startModal" style="display:none;">
+  <div class="modal">
+    <h2>🚀 Старт!</h2>
+    <p>Фиксируем сегодня как <strong>День 1</strong> твоего плана.<br>Каждый день будут открываться новые задачи автоматически.</p>
+    <button class="modal-btn" onclick="confirmStart()">Начать прямо сейчас</button>
+  </div>
+</div>
 <script>
 const BLOCKS=[
-  {id:'money', label:'💰 Деньги',  color:'#1D9E75'},
-  {id:'legal', label:'📋 Юридика', color:'#D85A30'},
-  {id:'biz',   label:'🏗 Бизнес',  color:'#378ADD'},
-  {id:'ai',    label:'🤖 AI',      color:'#7F77DD'},
-  {id:'health',label:'💪 Здоровье',color:'#639922'},
-  {id:'study', label:'📚 Учёба',   color:'#C9A227'},
-  {id:'family',label:'👨‍👩‍👧‍👧 Семья',  color:'#BA7517'},
+  {id:'money',label:'\u{1F4B0} \u0414\u0435\u043D\u044C\u0433\u0438',color:'#1D9E75'},
+  {id:'legal',label:'\u{1F4CB} \u042E\u0440\u0438\u0434\u0438\u043A\u0430',color:'#D85A30'},
+  {id:'biz',label:'\u{1F3D7} \u0411\u0438\u0437\u043D\u0435\u0441',color:'#378ADD'},
+  {id:'ai',label:'\u{1F916} AI',color:'#7F77DD'},
+  {id:'health',label:'\u{1F4AA} \u0417\u0434\u043E\u0440\u043E\u0432\u044C\u0435',color:'#639922'},
+  {id:'study',label:'\u{1F4DA} \u0423\u0447\u0451\u0431\u0430',color:'#C9A227'},
+  {id:'family',label:'\u{1F46A} \u0421\u0435\u043C\u044C\u044F',color:'#BA7517'},
 ];
-
-// day: 0=Сегодня 1=Неделя 2=2недели 3=Месяц 4=3месяца 5=Годитог
 const TASKS=[
-  // ДЕНЬГИ - СРОЧНО
-  {id:'m1',block:'money',day:0,text:'Открыть artechportugalia@gmail.com — проверить все тёплые контакты по окнам (30-40 компаний)',tag:'срочно',tc:'#FAECE7',tt:'#993C1D',unlocks:['m2']},
-  {id:'m2',block:'money',day:0,req:['m1'],text:'Написать с Claude письмо на португальском: "Алюминий, цена за 24ч, пришлите размеры" — разослать всем 40',tag:'срочно',tc:'#FAECE7',tt:'#993C1D',unlocks:['m3']},
-  {id:'m3',block:'money',day:1,req:['m2'],text:'Обработать ответы из базы — квалифицировать кто реально интересуется',tag:'эта неделя',tc:'#E6F1FB',tt:'#185FA5',unlocks:['m4']},
-  {id:'m4',block:'money',day:1,req:['m3'],text:'Провести минимум 2 живых звонка с заинтересованными клиентами',tag:'звонки',tc:'#FAECE7',tt:'#993C1D',unlocks:['m5']},
-  {id:'m5',block:'money',day:2,req:['m4'],text:'Подготовить коммерческое предложение по алюминию для первого клиента',tag:'подготовка',tc:'#EAF3DE',tt:'#3B6D11',unlocks:['m6']},
-  {id:'m6',block:'money',day:2,req:['m5'],text:'Отправить КП → получить обратную связь → скорректировать',tag:'переговоры',tc:'#EEEDFE',tt:'#3C3489',unlocks:['m7']},
-  {id:'m7',block:'money',day:3,req:['m6'],text:'🏆 Закрыть первую сделку по алюминию в Португалии — получить депозит',tag:'ЦЕЛЬ',tc:'#D4EDDA',tt:'#155724',unlocks:['m8']},
-  {id:'m8',block:'money',day:3,req:['m7'],text:'Закрыть личный долг €5 000 из первых поступлений',tag:'долг',tc:'#FAECE7',tt:'#993C1D',unlocks:[]},
-  {id:'m_fred',block:'money',day:1,text:'Фредерик (Кассель) — ждём разрешение города на фасад. Не беспокоим. Как придёт — предоплата €10-12к',tag:'ожидание',tc:'#E6F1FB',tt:'#185FA5',unlocks:['m_fred2']},
-  {id:'m_fred2',block:'money',day:3,req:['m_fred'],text:'Фредерик подтвердил → оформить договор → получить предоплату €10-12к',tag:'Кассель',tc:'#D4EDDA',tt:'#155724',unlocks:['m_fred3']},
-  {id:'m_fred3',block:'money',day:3,req:['m_fred2'],text:'Предоплату Фредерика распределить: SS €3к + личный долг €5к + оборот €2-4к',tag:'распределение',tc:'#EAF3DE',tt:'#3B6D11',unlocks:[]},
-
-  // ЮРИДИКА
-  {id:'l1',block:'legal',day:0,text:'Распечатать, подписать и отправить письмо в SIRENE через CTT (Лиссабон) + копия Título de Residência',tag:'срочно',tc:'#FAECE7',tt:'#993C1D',unlocks:['l2']},
-  {id:'l2',block:'legal',day:0,text:'Записаться на приём в Segurança Social — рассрочка долга €9 816',tag:'срочно',tc:'#FAECE7',tt:'#993C1D',unlocks:['l3']},
-  {id:'l3',block:'legal',day:0,text:'Проверить почту — ответ от AIMA на письмо от 28 мая',tag:'сегодня',tc:'#FAECE7',tt:'#993C1D',unlocks:['l4']},
-  {id:'l4',block:'legal',day:1,req:['l2'],text:'Прийти на приём в SS — подписать рассрочку (~€100/мес) + взять справку «Em Regularização»',tag:'личный визит',tc:'#FFF3CD',tt:'#856404',unlocks:['l5','l6']},
-  {id:'l5',block:'legal',day:1,req:['l3'],text:'Нет ответа от AIMA → позвонить или написать через contactenos.aima.gov.pt',tag:'следующий шаг',tc:'#EEEDFE',tt:'#3C3489',unlocks:['l7']},
-  {id:'l6',block:'legal',day:2,req:['l4'],text:'Получить Declaração de Situação Contributiva из SS',tag:'после визита',tc:'#EAF3DE',tt:'#3B6D11',unlocks:['l7']},
-  {id:'l_at',block:'legal',day:2,text:'Ждать конверт AT с паролем (~5 раб. дней) → войти на Portal das Finanças → скачать certidão',tag:'ожидание',tc:'#E6F1FB',tt:'#185FA5',unlocks:['l7']},
-  {id:'l7',block:'legal',day:3,req:['l6','l5'],text:'Собрать полный пакет для AIMA: SS справка + certidão Миланы + паспорт + AT справка',tag:'подготовка',tc:'#EAF3DE',tt:'#3B6D11',unlocks:['l8']},
-  {id:'l8',block:'legal',day:4,req:['l7'],text:'Прийти на приём в AIMA → получить новую резиденцию',tag:'личный визит',tc:'#FFF3CD',tt:'#856404',unlocks:['l9','l_bmw']},
-  {id:'l_bmw',block:'legal',day:4,req:['l8'],text:'BMW X1 (Лиссабон, полиция) — после резиденции возобновить давление через PJ и SIRENE',tag:'BMW X1',tc:'#FAECE7',tt:'#993C1D',unlocks:['l_bmw2']},
-  {id:'l_bmw2',block:'legal',day:5,req:['l_bmw'],text:'🏆 BMW X1 возвращена → продать за €8-12к → закрыть долги компании',tag:'финал',tc:'#D4EDDA',tt:'#155724',unlocks:[]},
-  {id:'l9',block:'legal',day:5,req:['l8'],text:'🏆 Подать на гражданство — naturalização Artigo 6(8)',tag:'финал',tc:'#D4EDDA',tt:'#155724',unlocks:[]},
-
-  // БИЗНЕС
-  {id:'b1',block:'biz',day:0,text:'Зарегистрировать немецкий email на Posteo.de (€1/мес, без телефона)',tag:'сегодня',tc:'#FAECE7',tt:'#993C1D',unlocks:['b2']},
-  {id:'b2',block:'biz',day:1,req:['b1'],text:'Связаться с поставщиками алюминия: Reynaers, Cortizo, Schüco — запросить дилерские условия для Португалии',tag:'эта неделя',tc:'#E6F1FB',tt:'#185FA5',unlocks:['b3']},
-  {id:'b3',block:'biz',day:1,text:'Проверить ответы от поставщиков: AM Okna, SAPOR, PARMAX, Sonarol, Okno-Pol',tag:'ожидание',tc:'#E6F1FB',tt:'#185FA5',unlocks:['b4']},
-  {id:'b4',block:'biz',day:2,req:['b2'],text:'Выбрать одного алюминиевого поставщика — получить прайс и условия',tag:'решение',tc:'#EAF3DE',tt:'#3B6D11',unlocks:['b5']},
-  {id:'b5',block:'biz',day:2,req:['b4'],text:'Сделать 1-страничное портфолио Artech на португальском и немецком (PDF)',tag:'подготовка',tc:'#EAF3DE',tt:'#3B6D11',unlocks:['b6']},
-  {id:'b6',block:'biz',day:3,req:['b5'],text:'Германия: написать follow-up берлинским компаниям + расширить список до 15+ компаний',tag:'Германия',tc:'#EEEDFE',tt:'#3C3489',unlocks:['b7']},
-  {id:'b7',block:'biz',day:3,req:['b6'],text:'Провести 3 переговора с немецкими строительными компаниями по субподряду',tag:'переговоры',tc:'#EEEDFE',tt:'#3C3489',unlocks:['b8']},
-  {id:'b_ntv',block:'biz',day:1,text:'🏍 Мотоцикл NTV: заменить свечи и мелкий ремонт (~€200) — сделать как появятся первые €500',tag:'ремонт',tc:'#EAF3DE',tt:'#3B6D11',unlocks:[]},
-  {id:'b_x5',block:'biz',day:4,text:'🚗 BMW X5: ремонт €3-5к — делаем только при стабильном доходе от €3 000/мес',tag:'BMW X5',tc:'#E6F1FB',tt:'#185FA5',unlocks:[]},
-  {id:'b8',block:'biz',day:4,req:['b7'],text:'Закрыть первый немецкий субподрядный контракт',tag:'цель',tc:'#D4EDDA',tt:'#155724',unlocks:[]},
-  {id:'b_rec',block:'biz',day:3,text:'Рекрутинг строителей: оформить как платную услугу для немецких/польских компаний (€300-500/чел)',tag:'новое',tc:'#EEEDFE',tt:'#3C3489',unlocks:['b_rec2']},
-  {id:'b_rec2',block:'biz',day:4,req:['b_rec'],text:'Найти первого платящего клиента по рекрутингу — бригада 3-5 человек = €1 000-2 500',tag:'цель',tc:'#D4EDDA',tt:'#155724',unlocks:[]},
-
-  // AI
-  {id:'a1',block:'ai',day:0,text:'Купить второй номер Zadarma для Фрэнка (~€1.6/мес)',tag:'сегодня',tc:'#FAECE7',tt:'#993C1D',unlocks:['a2']},
-  {id:'a2',block:'ai',day:1,req:['a1'],text:'Переподключить агента Фрэнк с Twilio на новый номер Zadarma',tag:'техника',tc:'#EEEDFE',tt:'#3C3489',unlocks:['a3']},
-  {id:'a3',block:'ai',day:2,req:['a2'],text:'Дождаться активации Zadarma +351 308 812 059 → подключить к Екатерине',tag:'техника',tc:'#EEEDFE',tt:'#3C3489',unlocks:['a4']},
-  {id:'a4',block:'ai',day:2,req:['a3'],text:'Тестовый звонок — Екатерина отвечает → резюме приходит в Telegram',tag:'тест',tc:'#EAF3DE',tt:'#3B6D11',unlocks:['a5']},
-  {id:'a5',block:'ai',day:3,req:['a4'],text:'Запустить Екатерину в знакомом салоне Портимала — бесплатно 2 недели → кейс',tag:'запуск',tc:'#EAF3DE',tt:'#3B6D11',unlocks:['a6']},
-  {id:'a6',block:'ai',day:3,req:['a5'],text:'Упаковать предложение: €150/мес, настройка за 1 день — найти 3 платящих клиента',tag:'продажи',tc:'#EEEDFE',tt:'#3C3489',unlocks:['a7']},
-  {id:'a7',block:'ai',day:4,req:['a6'],text:'10 AI-клиентов = €1 500/мес пассивно',tag:'цель',tc:'#D4EDDA',tt:'#155724',unlocks:['a8']},
-  {id:'a8',block:'ai',day:5,req:['a7'],text:'🏆 25+ AI-клиентов = €3 500-4 000/мес без твоего участия',tag:'финал',tc:'#D4EDDA',tt:'#155724',unlocks:[]},
-
-  // ЗДОРОВЬЕ
-  {id:'h1',block:'health',day:0,text:'Встать на весы — зафиксировать стартовый вес',tag:'сегодня',tc:'#FAECE7',tt:'#993C1D',unlocks:[]},
-  {id:'h2',block:'health',day:0,text:'Купить скакалку с подшипниками',tag:'сегодня',tc:'#FAECE7',tt:'#993C1D',unlocks:['h3']},
-  {id:'h_alco1',block:'health',day:0,text:'🚫 АЛКОГОЛЬ — День 1. Старт полного отказа.',tag:'КВЕСТ',tc:'#FAECE7',tt:'#993C1D',unlocks:['h_alco7']},
-  {id:'h_smoke1',block:'health',day:0,text:'🚬 КУРЕНИЕ — зафиксировать сколько сигарет в день сейчас',tag:'старт',tc:'#FAECE7',tt:'#993C1D',unlocks:['h_smoke2']},
-  {id:'h3',block:'health',day:1,req:['h2'],text:'Первая тренировка со скакалкой — 20 мин (раскатиться)',tag:'режим',tc:'#EAF3DE',tt:'#3B6D11',unlocks:['h4']},
-  {id:'h_alco7',block:'health',day:1,req:['h_alco1'],text:'🏅 АЛКОГОЛЬ — День 7. Первая неделя без!',tag:'КВЕСТ',tc:'#EAF3DE',tt:'#3B6D11',unlocks:['h_alco30']},
-  {id:'h_smoke2',block:'health',day:1,req:['h_smoke1'],text:'🚬 Сократить курение на 30% от стартового',tag:'минус 30%',tc:'#EAF3DE',tt:'#3B6D11',unlocks:['h_smoke3']},
-  {id:'h4',block:'health',day:2,req:['h3'],text:'Скакалка каждый вечер 30 мин в 20:00 — войти в ритм',tag:'режим',tc:'#EAF3DE',tt:'#3B6D11',unlocks:[]},
-  {id:'h_smoke3',block:'health',day:2,req:['h_smoke2'],text:'🚬 Сократить курение ещё на 30% (итого минус 60%)',tag:'минус 60%',tc:'#EAF3DE',tt:'#3B6D11',unlocks:['h_smoke4']},
-  {id:'h_pool',block:'health',day:2,text:'Бассейн стабильно 3 раза в неделю без пропусков',tag:'режим',tc:'#EAF3DE',tt:'#3B6D11',unlocks:[]},
-  {id:'h_alco30',block:'health',day:3,req:['h_alco7'],text:'🥇 АЛКОГОЛЬ — День 30. Месяц без алкоголя!',tag:'КВЕСТ',tc:'#D4EDDA',tt:'#155724',unlocks:['h_alco90']},
-  {id:'h_smoke4',block:'health',day:3,req:['h_smoke3'],text:'🚬 Полный отказ от сигарет',tag:'финал',tc:'#D4EDDA',tt:'#155724',unlocks:['h_smoke30']},
-  {id:'h_w5',block:'health',day:3,text:'Контрольный вес — цель минус 5 кг от старта',tag:'цель',tc:'#EAF3DE',tt:'#3B6D11',unlocks:[]},
-  {id:'h_alco90',block:'health',day:4,req:['h_alco30'],text:'🏆 АЛКОГОЛЬ — День 90. Три месяца! Это уже новая жизнь.',tag:'КВЕСТ',tc:'#D4EDDA',tt:'#155724',unlocks:[]},
-  {id:'h_smoke30',block:'health',day:4,req:['h_smoke4'],text:'🏅 30 дней без сигарет — лёгкие начали восстанавливаться',tag:'КВЕСТ',tc:'#D4EDDA',tt:'#155724',unlocks:[]},
-
-  // УЧЁБА
-  {id:'s1',block:'study',day:0,text:'Проверить письмо от Изабеллы — расписание курсов IEFP и суммы выплат',tag:'сегодня',tc:'#FAECE7',tt:'#993C1D',unlocks:['s2']},
-  {id:'s_eng1',block:'study',day:0,text:'🇬🇧 День 1 английского с Claude — написать 3-5 предложений о сегодняшнем дне',tag:'ежедневно',tc:'#EAF3DE',tt:'#3B6D11',unlocks:['s_eng7']},
-  {id:'s2',block:'study',day:1,req:['s1'],text:'Начать посещать курсы IEFP согласно расписанию',tag:'режим',tc:'#EAF3DE',tt:'#3B6D11',unlocks:['s3']},
-  {id:'s_eng7',block:'study',day:1,req:['s_eng1'],text:'🇬🇧 Неделя 1 — 7 дней английского подряд по 15 минут',tag:'КВЕСТ',tc:'#EAF3DE',tt:'#3B6D11',unlocks:['s_eng30']},
-  {id:'s3',block:'study',day:2,req:['s2'],text:'Получить первую болсу IEFP (~€85/мес)',tag:'ожидание',tc:'#E6F1FB',tt:'#185FA5',unlocks:[]},
-  {id:'s_eng30',block:'study',day:3,req:['s_eng7'],text:'🇬🇧 Месяц английского — могу написать деловое письмо без ошибок',tag:'КВЕСТ',tc:'#D4EDDA',tt:'#155724',unlocks:['s_eng3m']},
-  {id:'s_eng3m',block:'study',day:4,req:['s_eng30'],text:'🇬🇧 3 месяца — первые переговоры с немцами на английском',tag:'цель',tc:'#D4EDDA',tt:'#155724',unlocks:['s_engbiz']},
-  {id:'s_engbiz',block:'study',day:5,req:['s_eng3m'],text:'🏆 Английский B1-B2 — веду бизнес на английском без переводчика',tag:'финал',tc:'#D4EDDA',tt:'#155724',unlocks:[]},
-
-  // СЕМЬЯ
-  {id:'f1',block:'family',day:0,text:'Минимум 1 час с Миланой и Амелией — без телефона, без отвлечений',tag:'ежедневно',tc:'#FAEEDA',tt:'#854F0B',unlocks:[]},
-  {id:'f2',block:'family',day:1,text:'Выезд с семьёй на этой неделе — пляж, парк или кафе',tag:'еженедельно',tc:'#FAEEDA',tt:'#854F0B',unlocks:[]},
-  {id:'f3',block:'family',day:2,text:'Принять решение по жилью: остаёмся в аренде или ищем своё — зафиксировать план',tag:'решение',tc:'#EAF3DE',tt:'#3B6D11',unlocks:[]},
-  {id:'f4',block:'family',day:5,text:'🏆 При доходе €8 000+/мес — начать разговор о покупке своего жилья в Алгарве',tag:'мечта',tc:'#D4EDDA',tt:'#155724',unlocks:[]},
+  {id:'m1',block:'money',day:0,text:'\u041E\u0442\u043A\u0440\u044B\u0442\u044C artechportugalia@gmail.com \u2014 \u043F\u0440\u043E\u0432\u0435\u0440\u0438\u0442\u044C \u0442\u0451\u043F\u043B\u044B\u0435 \u043A\u043E\u043D\u0442\u0430\u043A\u0442\u044B \u043F\u043E \u043E\u043A\u043D\u0430\u043C (30-40 \u043A\u043E\u043C\u043F\u0430\u043D\u0438\u0439)',tag:'\u0441\u0440\u043E\u0447\u043D\u043E',tc:'#FAECE7',tt:'#993C1D'},
+  {id:'m2',block:'money',day:0,text:'\u041F\u0438\u0441\u044C\u043C\u043E \u043D\u0430 \u043F\u043E\u0440\u0442\u0443\u0433\u0430\u043B\u044C\u0441\u043A\u043E\u043C: "\u0410\u043B\u044E\u043C\u0438\u043D\u0438\u0439, \u0446\u0435\u043D\u0430 \u0437\u0430 24\u0447" \u2014 \u0440\u0430\u0437\u043E\u0441\u043B\u0430\u0442\u044C \u0432\u0441\u0435\u043C 40',tag:'\u0441\u0440\u043E\u0447\u043D\u043E',tc:'#FAECE7',tt:'#993C1D'},
+  {id:'m3',block:'money',day:7,text:'\u041E\u0431\u0440\u0430\u0431\u043E\u0442\u0430\u0442\u044C \u043E\u0442\u0432\u0435\u0442\u044B \u2014 \u043A\u0432\u0430\u043B\u0438\u0444\u0438\u0446\u0438\u0440\u043E\u0432\u0430\u0442\u044C \u043A\u0442\u043E \u0440\u0435\u0430\u043B\u044C\u043D\u043E \u0438\u043D\u0442\u0435\u0440\u0435\u0441\u0443\u0435\u0442\u0441\u044F',tag:'\u043D\u0435\u0434\u0435\u043B\u044F 1',tc:'#E6F1FB',tt:'#185FA5'},
+  {id:'m4',block:'money',day:7,text:'\u041F\u0440\u043E\u0432\u0435\u0441\u0442\u0438 \u043C\u0438\u043D\u0438\u043C\u0443\u043C 2 \u0437\u0432\u043E\u043D\u043A\u0430 \u0441 \u0437\u0430\u0438\u043D\u0442\u0435\u0440\u0435\u0441\u043E\u0432\u0430\u043D\u043D\u044B\u043C\u0438',tag:'\u0437\u0432\u043E\u043D\u043A\u0438',tc:'#FAECE7',tt:'#993C1D'},
+  {id:'m5',block:'money',day:14,text:'\u041F\u043E\u0434\u0433\u043E\u0442\u043E\u0432\u0438\u0442\u044C \u041A\u041F \u043F\u043E \u0430\u043B\u044E\u043C\u0438\u043D\u0438\u044E \u0434\u043B\u044F \u043F\u0435\u0440\u0432\u043E\u0433\u043E \u043A\u043B\u0438\u0435\u043D\u0442\u0430',tag:'\u043F\u043E\u0434\u0433\u043E\u0442\u043E\u0432\u043A\u0430',tc:'#EAF3DE',tt:'#3B6D11'},
+  {id:'m6',block:'money',day:14,text:'\u041E\u0442\u043F\u0440\u0430\u0432\u0438\u0442\u044C \u041A\u041F \u2192 \u043E\u0431\u0440\u0430\u0442\u043D\u0430\u044F \u0441\u0432\u044F\u0437\u044C \u2192 \u0441\u043A\u043E\u0440\u0440\u0435\u043A\u0442\u0438\u0440\u043E\u0432\u0430\u0442\u044C',tag:'\u043F\u0435\u0440\u0435\u0433\u043E\u0432\u043E\u0440\u044B',tc:'#EEEDFE',tt:'#3C3489'},
+  {id:'m7',block:'money',day:30,text:'\u{1F3C6} \u0417\u0430\u043A\u0440\u044B\u0442\u044C \u043F\u0435\u0440\u0432\u0443\u044E \u0441\u0434\u0435\u043B\u043A\u0443 \u043F\u043E \u0430\u043B\u044E\u043C\u0438\u043D\u0438\u044E \u2014 \u043F\u043E\u043B\u0443\u0447\u0438\u0442\u044C \u0434\u0435\u043F\u043E\u0437\u0438\u0442',tag:'\u0426\u0415\u041B\u042C',tc:'#D4EDDA',tt:'#155724'},
+  {id:'m8',block:'money',day:30,req:['m7'],text:'\u0417\u0430\u043A\u0440\u044B\u0442\u044C \u043B\u0438\u0447\u043D\u044B\u0439 \u0434\u043E\u043B\u0433 \u20AC5 000 \u0438\u0437 \u043F\u0435\u0440\u0432\u044B\u0445 \u043F\u043E\u0441\u0442\u0443\u043F\u043B\u0435\u043D\u0438\u0439',tag:'\u0434\u043E\u043B\u0433',tc:'#FAECE7',tt:'#993C1D'},
+  {id:'m_fred',block:'money',day:0,text:'\u0424\u0440\u0435\u0434\u0435\u0440\u0438\u043A (\u041A\u0430\u0441\u0441\u0435\u043B\u044C) \u2014 \u0441\u043B\u0435\u0434\u0438\u0442\u044C \u0441\u0442\u0430\u0442\u0443\u0441 \u0440\u0430\u0437\u0440\u0435\u0448\u0435\u043D\u0438\u044F \u0440\u0430\u0437 \u0432 \u043D\u0435\u0434\u0435\u043B\u044E',tag:'\u043E\u0436\u0438\u0434\u0430\u043D\u0438\u0435',tc:'#E6F1FB',tt:'#185FA5'},
+  {id:'m_fred2',block:'money',day:30,req:['m_fred'],text:'\u0424\u0440\u0435\u0434\u0435\u0440\u0438\u043A \u043F\u043E\u0434\u0442\u0432\u0435\u0440\u0434\u0438\u043B \u2192 \u0434\u043E\u0433\u043E\u0432\u043E\u0440 \u2192 \u043F\u0440\u0435\u0434\u043E\u043F\u043B\u0430\u0442\u0430 \u20AC10-12\u043A',tag:'\u041A\u0430\u0441\u0441\u0435\u043B\u044C',tc:'#D4EDDA',tt:'#155724'},
+  {id:'m_fred3',block:'money',day:30,req:['m_fred2'],text:'\u0420\u0430\u0441\u043F\u0440\u0435\u0434\u0435\u043B\u0438\u0442\u044C \u043F\u0440\u0435\u0434\u043E\u043F\u043B\u0430\u0442\u0443: SS \u20AC3\u043A + \u043B\u0438\u0447\u043D\u044B\u0439 \u0434\u043E\u043B\u0433 \u20AC5\u043A + \u043E\u0431\u043E\u0440\u043E\u0442 \u20AC2-4\u043A',tag:'\u0440\u0430\u0441\u043F\u0440\u0435\u0434\u0435\u043B\u0435\u043D\u0438\u0435',tc:'#EAF3DE',tt:'#3B6D11'},
+  {id:'l1',block:'legal',day:0,text:'\u041E\u0442\u043F\u0440\u0430\u0432\u0438\u0442\u044C \u043F\u0438\u0441\u044C\u043C\u043E \u0432 SIRENE \u0447\u0435\u0440\u0435\u0437 CTT + \u043A\u043E\u043F\u0438\u044F T\u00EDtulo de Resid\u00EAncia',tag:'\u0441\u0440\u043E\u0447\u043D\u043E',tc:'#FAECE7',tt:'#993C1D'},
+  {id:'l2',block:'legal',day:0,text:'\u0417\u0430\u043F\u0438\u0441\u0430\u0442\u044C\u0441\u044F \u0432 Seguran\u00E7a Social \u2014 \u0440\u0430\u0441\u0441\u0440\u043E\u0447\u043A\u0430 \u0434\u043E\u043B\u0433\u0430 \u20AC9 816',tag:'\u0441\u0440\u043E\u0447\u043D\u043E',tc:'#FAECE7',tt:'#993C1D'},
+  {id:'l3',block:'legal',day:0,text:'\u041F\u0440\u043E\u0432\u0435\u0440\u0438\u0442\u044C \u043F\u043E\u0447\u0442\u0443 \u2014 \u043E\u0442\u0432\u0435\u0442 \u043E\u0442 AIMA \u043D\u0430 \u043F\u0438\u0441\u044C\u043C\u043E \u043E\u0442 28 \u043C\u0430\u044F',tag:'\u0441\u0435\u0433\u043E\u0434\u043D\u044F',tc:'#FAECE7',tt:'#993C1D'},
+  {id:'l4',block:'legal',day:7,text:'\u041F\u0440\u0438\u0439\u0442\u0438 \u0432 SS \u2014 \u043F\u043E\u0434\u043F\u0438\u0441\u0430\u0442\u044C \u0440\u0430\u0441\u0441\u0440\u043E\u0447\u043A\u0443 (~\u20AC100/\u043C\u0435\u0441) + \u0441\u043F\u0440\u0430\u0432\u043A\u0430 \u00ABEm Regulariza\u00E7\u00E3o\u00BB',tag:'\u043B\u0438\u0447\u043D\u044B\u0439 \u0432\u0438\u0437\u0438\u0442',tc:'#FFF3CD',tt:'#856404'},
+  {id:'l5',block:'legal',day:7,text:'\u041D\u0435\u0442 \u043E\u0442\u0432\u0435\u0442\u0430 \u043E\u0442 AIMA \u2192 \u043F\u043E\u0437\u0432\u043E\u043D\u0438\u0442\u044C \u0438\u043B\u0438 \u043D\u0430\u043F\u0438\u0441\u0430\u0442\u044C \u0447\u0435\u0440\u0435\u0437 contactenos.aima.gov.pt',tag:'\u0441\u043B\u0435\u0434\u0443\u044E\u0449\u0438\u0439 \u0448\u0430\u0433',tc:'#EEEDFE',tt:'#3C3489'},
+  {id:'l6',block:'legal',day:14,text:'\u041F\u043E\u043B\u0443\u0447\u0438\u0442\u044C Declara\u00E7\u00E3o de Situa\u00E7\u00E3o Contributiva \u0438\u0437 SS',tag:'\u043F\u043E\u0441\u043B\u0435 \u0432\u0438\u0437\u0438\u0442\u0430',tc:'#EAF3DE',tt:'#3B6D11'},
+  {id:'l_at',block:'legal',day:14,text:'\u041A\u043E\u043D\u0432\u0435\u0440\u0442 AT \u0441 \u043F\u0430\u0440\u043E\u043B\u0435\u043C \u2192 Portal das Finan\u00E7as \u2192 \u0441\u043A\u0430\u0447\u0430\u0442\u044C certi\u0434\u00E3o',tag:'\u043E\u0436\u0438\u0434\u0430\u043D\u0438\u0435',tc:'#E6F1FB',tt:'#185FA5'},
+  {id:'l7',block:'legal',day:30,req:['l6'],text:'\u041F\u0430\u043A\u0435\u0442 \u0434\u043B\u044F AIMA: SS \u0441\u043F\u0440\u0430\u0432\u043A\u0430 + certi\u0434\u00E3o \u041C\u0438\u043B\u0430\u043D\u044B + \u043F\u0430\u0441\u043F\u043E\u0440\u0442 + AT',tag:'\u043F\u043E\u0434\u0433\u043E\u0442\u043E\u0432\u043A\u0430',tc:'#EAF3DE',tt:'#3B6D11'},
+  {id:'l8',block:'legal',day:60,req:['l7'],text:'\u041F\u0440\u0438\u0439\u0442\u0438 \u0432 AIMA \u2192 \u043F\u043E\u043B\u0443\u0447\u0438\u0442\u044C \u043D\u043E\u0432\u0443\u044E \u0440\u0435\u0437\u0438\u0434\u0435\u043D\u0446\u0438\u044E',tag:'\u043B\u0438\u0447\u043D\u044B\u0439 \u0432\u0438\u0437\u0438\u0442',tc:'#FFF3CD',tt:'#856404'},
+  {id:'l_bmw',block:'legal',day:60,req:['l8'],text:'BMW X1 \u2014 \u043F\u043E\u0441\u043B\u0435 \u0440\u0435\u0437\u0438\u0434\u0435\u043D\u0446\u0438\u0438 \u0432\u043E\u0437\u043E\u0431\u043D\u043E\u0432\u0438\u0442\u044C \u0434\u0430\u0432\u043B\u0435\u043D\u0438\u0435 \u0447\u0435\u0440\u0435\u0437 PJ \u0438 SIRENE',tag:'BMW X1',tc:'#FAECE7',tt:'#993C1D'},
+  {id:'l_bmw2',block:'legal',day:90,req:['l_bmw'],text:'\u{1F3C6} BMW X1 \u0432\u043E\u0437\u0432\u0440\u0430\u0449\u0435\u043D\u0430 \u2192 \u043F\u0440\u043E\u0434\u0430\u0442\u044C \u20AC8-12\u043A \u2192 \u0437\u0430\u043A\u0440\u044B\u0442\u044C \u0434\u043E\u043B\u0433\u0438',tag:'\u0444\u0438\u043D\u0430\u043B',tc:'#D4EDDA',tt:'#155724'},
+  {id:'l9',block:'legal',day:90,req:['l8'],text:'\u{1F3C6} \u041F\u043E\u0434\u0430\u0442\u044C \u043D\u0430 \u0433\u0440\u0430\u0436\u0434\u0430\u043D\u0441\u0442\u0432\u043E \u2014 naturaliza\u00E7\u00E3o Artigo 6(8)',tag:'\u0444\u0438\u043D\u0430\u043B',tc:'#D4EDDA',tt:'#155724'},
+  {id:'b1',block:'biz',day:0,text:'\u0417\u0430\u0440\u0435\u0433\u0438\u0441\u0442\u0440\u0438\u0440\u043E\u0432\u0430\u0442\u044C \u043D\u0435\u043C\u0435\u0446\u043A\u0438\u0439 email \u043D\u0430 Posteo.de (\u20AC1/\u043C\u0435\u0441)',tag:'\u0441\u0435\u0433\u043E\u0434\u043D\u044F',tc:'#FAECE7',tt:'#993C1D'},
+  {id:'b2',block:'biz',day:7,text:'Reynaers, Cortizo, Sch\u00FCco \u2014 \u0437\u0430\u043F\u0440\u043E\u0441\u0438\u0442\u044C \u0434\u0438\u043B\u0435\u0440\u0441\u043A\u0438\u0435 \u0443\u0441\u043B\u043E\u0432\u0438\u044F \u0434\u043B\u044F \u041F\u043E\u0440\u0442\u0443\u0433\u0430\u043B\u0438\u0438',tag:'\u043D\u0435\u0434\u0435\u043B\u044F 1',tc:'#E6F1FB',tt:'#185FA5'},
+  {id:'b3',block:'biz',day:7,text:'\u041F\u0440\u043E\u0432\u0435\u0440\u0438\u0442\u044C \u043E\u0442\u0432\u0435\u0442\u044B: AM Okna, SAPOR, PARMAX, Sonarol, Okno-Pol',tag:'\u043E\u0436\u0438\u0434\u0430\u043D\u0438\u0435',tc:'#E6F1FB',tt:'#185FA5'},
+  {id:'b4',block:'biz',day:14,text:'\u0412\u044B\u0431\u0440\u0430\u0442\u044C \u043E\u0434\u043D\u043E\u0433\u043E \u0430\u043B\u044E\u043C\u0438\u043D\u0438\u0435\u0432\u043E\u0433\u043E \u043F\u043E\u0441\u0442\u0430\u0432\u0449\u0438\u043A\u0430 \u2014 \u043F\u043E\u043B\u0443\u0447\u0438\u0442\u044C \u043F\u0440\u0430\u0439\u0441',tag:'\u0440\u0435\u0448\u0435\u043D\u0438\u0435',tc:'#EAF3DE',tt:'#3B6D11'},
+  {id:'b5',block:'biz',day:14,text:'1-\u0441\u0442\u0440\u0430\u043D\u0438\u0447\u043D\u043E\u0435 \u043F\u043E\u0440\u0442\u0444\u043E\u043B\u0438\u043E Artech \u043D\u0430 \u043F\u043E\u0440\u0442\u0443\u0433\u0430\u043B\u044C\u0441\u043A\u043E\u043C \u0438 \u043D\u0435\u043C\u0435\u0446\u043A\u043E\u043C (PDF)',tag:'\u043F\u043E\u0434\u0433\u043E\u0442\u043E\u0432\u043A\u0430',tc:'#EAF3DE',tt:'#3B6D11'},
+  {id:'b6',block:'biz',day:30,text:'\u0413\u0435\u0440\u043C\u0430\u043D\u0438\u044F: follow-up \u0431\u0435\u0440\u043B\u0438\u043D\u0441\u043A\u0438\u043C + \u0440\u0430\u0441\u0448\u0438\u0440\u0438\u0442\u044C \u0441\u043F\u0438\u0441\u043E\u043A \u0434\u043E 15+',tag:'\u0413\u0435\u0440\u043C\u0430\u043D\u0438\u044F',tc:'#EEEDFE',tt:'#3C3489'},
+  {id:'b7',block:'biz',day:30,text:'3 \u043F\u0435\u0440\u0435\u0433\u043E\u0432\u043E\u0440\u0430 \u0441 \u043D\u0435\u043C\u0435\u0446\u043A\u0438\u043C\u0438 \u0441\u0442\u0440\u043E\u0438\u0442\u0435\u043B\u044C\u043D\u044B\u043C\u0438 \u043A\u043E\u043C\u043F\u0430\u043D\u0438\u044F\u043C\u0438',tag:'\u043F\u0435\u0440\u0435\u0433\u043E\u0432\u043E\u0440\u044B',tc:'#EEEDFE',tt:'#3C3489'},
+  {id:'b_ntv',block:'biz',day:7,text:'\u{1F3CD} NTV: \u0441\u0432\u0435\u0447\u0438 \u0438 \u043C\u0435\u043B\u043A\u0438\u0439 \u0440\u0435\u043C\u043E\u043D\u0442 (~\u20AC200) \u2014 \u043A\u0430\u043A \u043F\u043E\u044F\u0432\u044F\u0442\u0441\u044F \u043F\u0435\u0440\u0432\u044B\u0435 \u20AC500',tag:'\u0440\u0435\u043C\u043E\u043D\u0442',tc:'#EAF3DE',tt:'#3B6D11'},
+  {id:'b_x5',block:'biz',day:90,text:'\u{1F697} BMW X5: \u0440\u0435\u043C\u043E\u043D\u0442 \u20AC3-5\u043A \u2014 \u0442\u043E\u043B\u044C\u043A\u043E \u043F\u0440\u0438 \u0434\u043E\u0445\u043E\u0434\u0435 \u043E\u0442 \u20AC3 000/\u043C\u0435\u0441',tag:'BMW X5',tc:'#E6F1FB',tt:'#185FA5'},
+  {id:'b8',block:'biz',day:60,req:['b7'],text:'\u0417\u0430\u043A\u0440\u044B\u0442\u044C \u043F\u0435\u0440\u0432\u044B\u0439 \u043D\u0435\u043C\u0435\u0446\u043A\u0438\u0439 \u0441\u0443\u0431\u043F\u043E\u0434\u0440\u044F\u0434\u043D\u044B\u0439 \u043A\u043E\u043D\u0442\u0440\u0430\u043A\u0442',tag:'\u0446\u0435\u043B\u044C',tc:'#D4EDDA',tt:'#155724'},
+  {id:'b_rec',block:'biz',day:30,text:'\u0420\u0435\u043A\u0440\u0443\u0442\u0438\u043D\u0433 \u0441\u0442\u0440\u043E\u0438\u0442\u0435\u043B\u0435\u0439: \u043E\u0444\u043E\u0440\u043C\u0438\u0442\u044C \u043A\u0430\u043A \u043F\u043B\u0430\u0442\u043D\u0443\u044E \u0443\u0441\u043B\u0443\u0433\u0443 (\u20AC300-500/\u0447\u0435\u043B)',tag:'\u043D\u043E\u0432\u043E\u0435',tc:'#EEEDFE',tt:'#3C3489'},
+  {id:'b_rec2',block:'biz',day:60,req:['b_rec'],text:'\u041F\u0435\u0440\u0432\u044B\u0439 \u043F\u043B\u0430\u0442\u044F\u0449\u0438\u0439 \u043A\u043B\u0438\u0435\u043D\u0442 \u043F\u043E \u0440\u0435\u043A\u0440\u0443\u0442\u0438\u043D\u0433\u0443 \u2014 \u0431\u0440\u0438\u0433\u0430\u0434\u0430 3-5 \u0447\u0435\u043B = \u20AC1 000-2 500',tag:'\u0446\u0435\u043B\u044C',tc:'#D4EDDA',tt:'#155724'},
+  {id:'a1',block:'ai',day:0,text:'\u041A\u0443\u043F\u0438\u0442\u044C \u0432\u0442\u043E\u0440\u043E\u0439 \u043D\u043E\u043C\u0435\u0440 Zadarma \u0434\u043B\u044F \u0424\u0440\u044D\u043D\u043A\u0430 (~\u20AC1.6/\u043C\u0435\u0441)',tag:'\u0441\u0435\u0433\u043E\u0434\u043D\u044F',tc:'#FAECE7',tt:'#993C1D'},
+  {id:'a2',block:'ai',day:7,req:['a1'],text:'\u041F\u0435\u0440\u0435\u043F\u043E\u0434\u043A\u043B\u044E\u0447\u0438\u0442\u044C \u0424\u0440\u044D\u043D\u043A \u0441 Twilio \u043D\u0430 Zadarma',tag:'\u0442\u0435\u0445\u043D\u0438\u043A\u0430',tc:'#EEEDFE',tt:'#3C3489'},
+  {id:'a3',block:'ai',day:14,req:['a2'],text:'\u0410\u043A\u0442\u0438\u0432\u0430\u0446\u0438\u044F Zadarma +351 308 812 059 \u2192 \u043F\u043E\u0434\u043A\u043B\u044E\u0447\u0438\u0442\u044C \u043A \u0415\u043A\u0430\u0442\u0435\u0440\u0438\u043D\u0435',tag:'\u0442\u0435\u0445\u043D\u0438\u043A\u0430',tc:'#EEEDFE',tt:'#3C3489'},
+  {id:'a4',block:'ai',day:14,req:['a3'],text:'\u0422\u0435\u0441\u0442\u043E\u0432\u044B\u0439 \u0437\u0432\u043E\u043D\u043E\u043A \u2014 \u0415\u043A\u0430\u0442\u0435\u0440\u0438\u043D\u0430 \u043E\u0442\u0432\u0435\u0447\u0430\u0435\u0442 \u2192 \u0440\u0435\u0437\u044E\u043C\u0435 \u0432 Telegram',tag:'\u0442\u0435\u0441\u0442',tc:'#EAF3DE',tt:'#3B6D11'},
+  {id:'a5',block:'ai',day:30,req:['a4'],text:'\u0417\u0430\u043F\u0443\u0441\u0442\u0438\u0442\u044C \u0415\u043A\u0430\u0442\u0435\u0440\u0438\u043D\u0443 \u0432 \u0441\u0430\u043B\u043E\u043D\u0435 \u041F\u043E\u0440\u0442\u0438\u043C\u0430\u043B\u0430 \u2014 \u0431\u0435\u0441\u043F\u043B\u0430\u0442\u043D\u043E 2 \u043D\u0435\u0434 \u2192 \u043A\u0435\u0439\u0441',tag:'\u0437\u0430\u043F\u0443\u0441\u043A',tc:'#EAF3DE',tt:'#3B6D11'},
+  {id:'a6',block:'ai',day:30,req:['a5'],text:'\u20AC150/\u043C\u0435\u0441, \u043D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0430 \u0437\u0430 1 \u0434\u0435\u043D\u044C \u2014 \u043D\u0430\u0439\u0442\u0438 3 \u043F\u043B\u0430\u0442\u044F\u0449\u0438\u0445 \u043A\u043B\u0438\u0435\u043D\u0442\u0430',tag:'\u043F\u0440\u043E\u0434\u0430\u0436\u0438',tc:'#EEEDFE',tt:'#3C3489'},
+  {id:'a7',block:'ai',day:60,req:['a6'],text:'10 AI-\u043A\u043B\u0438\u0435\u043D\u0442\u043E\u0432 = \u20AC1 500/\u043C\u0435\u0441 \u043F\u0430\u0441\u0441\u0438\u0432\u043D\u043E',tag:'\u0446\u0435\u043B\u044C',tc:'#D4EDDA',tt:'#155724'},
+  {id:'a8',block:'ai',day:90,req:['a7'],text:'\u{1F3C6} 25+ AI-\u043A\u043B\u0438\u0435\u043D\u0442\u043E\u0432 = \u20AC3 500-4 000/\u043C\u0435\u0441 \u0431\u0435\u0437 \u0443\u0447\u0430\u0441\u0442\u0438\u044F',tag:'\u0444\u0438\u043D\u0430\u043B',tc:'#D4EDDA',tt:'#155724'},
+  {id:'h1',block:'health',day:0,text:'\u0412\u0441\u0442\u0430\u0442\u044C \u043D\u0430 \u0432\u0435\u0441\u044B \u2014 \u0437\u0430\u0444\u0438\u043A\u0441\u0438\u0440\u043E\u0432\u0430\u0442\u044C \u0441\u0442\u0430\u0440\u0442\u043E\u0432\u044B\u0439 \u0432\u0435\u0441 (\u0432\u043F\u0438\u0441\u0430\u0442\u044C \u0432\u043E \u0432\u043A\u043B\u0430\u0434\u043A\u0435 \u{2696}\u{FE0F} \u041D\u0435\u0434\u0435\u043B\u044F)',tag:'\u0441\u0435\u0433\u043E\u0434\u043D\u044F',tc:'#FAECE7',tt:'#993C1D'},
+  {id:'h2',block:'health',day:0,text:'\u041A\u0443\u043F\u0438\u0442\u044C \u0441\u043A\u0430\u043A\u0430\u043B\u043A\u0443 \u0441 \u043F\u043E\u0434\u0448\u0438\u043F\u043D\u0438\u043A\u0430\u043C\u0438',tag:'\u0441\u0435\u0433\u043E\u0434\u043D\u044F',tc:'#FAECE7',tt:'#993C1D'},
+  {id:'h_alco1',block:'health',day:0,text:'\u{1F6AB} \u0410\u041B\u041A\u041E\u0413\u041E\u041B\u042C \u2014 \u0414\u0435\u043D\u044C 1. \u0421\u0442\u0430\u0440\u0442 \u043F\u043E\u043B\u043D\u043E\u0433\u043E \u043E\u0442\u043A\u0430\u0437\u0430.',tag:'\u041A\u0412\u0415\u0421\u0422',tc:'#FAECE7',tt:'#993C1D'},
+  {id:'h_smoke1',block:'health',day:0,text:'\u{1F6AC} \u041A\u0423\u0420\u0415\u041D\u0418\u0415 \u2014 \u0437\u0430\u0444\u0438\u043A\u0441\u0438\u0440\u043E\u0432\u0430\u0442\u044C \u0441\u043A\u043E\u043B\u044C\u043A\u043E \u0441\u0438\u0433\u0430\u0440\u0435\u0442 \u0432 \u0434\u0435\u043D\u044C \u0441\u0435\u0439\u0447\u0430\u0441',tag:'\u0441\u0442\u0430\u0440\u0442',tc:'#FAECE7',tt:'#993C1D'},
+  {id:'h3',block:'health',day:7,text:'\u041F\u0435\u0440\u0432\u0430\u044F \u0442\u0440\u0435\u043D\u0438\u0440\u043E\u0432\u043A\u0430 \u0441\u043E \u0441\u043A\u0430\u043A\u0430\u043B\u043A\u043E\u0439 \u2014 20 \u043C\u0438\u043D',tag:'\u0440\u0435\u0436\u0438\u043C',tc:'#EAF3DE',tt:'#3B6D11'},
+  {id:'h_alco7',block:'health',day:7,text:'\u{1F3C5} \u0410\u041B\u041A\u041E\u0413\u041E\u041B\u042C \u2014 \u0414\u0435\u043D\u044C 7. \u041F\u0435\u0440\u0432\u0430\u044F \u043D\u0435\u0434\u0435\u043B\u044F \u0431\u0435\u0437!',tag:'\u041A\u0412\u0415\u0421\u0422',tc:'#EAF3DE',tt:'#3B6D11'},
+  {id:'h_smoke2',block:'health',day:7,text:'\u{1F6AC} \u0421\u043E\u043A\u0440\u0430\u0442\u0438\u0442\u044C \u043A\u0443\u0440\u0435\u043D\u0438\u0435 \u043D\u0430 30% \u043E\u0442 \u0441\u0442\u0430\u0440\u0442\u043E\u0432\u043E\u0433\u043E',tag:'\u043C\u0438\u043D\u0443\u0441 30%',tc:'#EAF3DE',tt:'#3B6D11'},
+  {id:'h4',block:'health',day:14,text:'\u0421\u043A\u0430\u043A\u0430\u043B\u043A\u0430 \u043A\u0430\u0436\u0434\u044B\u0439 \u0432\u0435\u0447\u0435\u0440 30 \u043C\u0438\u043D \u0432 20:00 \u2014 \u0432\u043E\u0439\u0442\u0438 \u0432 \u0440\u0438\u0442\u043C',tag:'\u0440\u0435\u0436\u0438\u043C',tc:'#EAF3DE',tt:'#3B6D11'},
+  {id:'h_smoke3',block:'health',day:14,text:'\u{1F6AC} \u0415\u0449\u0451 \u043C\u0438\u043D\u0443\u0441 30% (\u0438\u0442\u043E\u0433\u043E \u043C\u0438\u043D\u0443\u0441 60%)',tag:'\u043C\u0438\u043D\u0443\u0441 60%',tc:'#EAF3DE',tt:'#3B6D11'},
+  {id:'h_pool',block:'health',day:14,text:'\u0411\u0430\u0441\u0441\u0435\u0439\u043D 3 \u0440\u0430\u0437\u0430 \u0432 \u043D\u0435\u0434\u0435\u043B\u044E \u0441\u0442\u0430\u0431\u0438\u043B\u044C\u043D\u043E',tag:'\u0440\u0435\u0436\u0438\u043C',tc:'#EAF3DE',tt:'#3B6D11'},
+  {id:'h_alco30',block:'health',day:30,text:'\u{1F947} \u0410\u041B\u041A\u041E\u0413\u041E\u041B\u042C \u2014 \u0414\u0435\u043D\u044C 30. \u041C\u0435\u0441\u044F\u0446 \u0431\u0435\u0437!',tag:'\u041A\u0412\u0415\u0421\u0422',tc:'#D4EDDA',tt:'#155724'},
+  {id:'h_smoke4',block:'health',day:30,text:'\u{1F6AC} \u041F\u043E\u043B\u043D\u044B\u0439 \u043E\u0442\u043A\u0430\u0437 \u043E\u0442 \u0441\u0438\u0433\u0430\u0440\u0435\u0442',tag:'\u0444\u0438\u043D\u0430\u043B',tc:'#D4EDDA',tt:'#155724'},
+  {id:'h_w5',block:'health',day:30,text:'\u041A\u043E\u043D\u0442\u0440\u043E\u043B\u044C\u043D\u044B\u0439 \u0432\u0435\u0441 \u2014 \u0446\u0435\u043B\u044C \u043C\u0438\u043D\u0443\u0441 5 \u043A\u0433 \u043E\u0442 \u0441\u0442\u0430\u0440\u0442\u0430',tag:'\u0446\u0435\u043B\u044C',tc:'#EAF3DE',tt:'#3B6D11'},
+  {id:'h_alco90',block:'health',day:90,text:'\u{1F3C6} \u0410\u041B\u041A\u041E\u0413\u041E\u041B\u042C \u2014 \u0414\u0435\u043D\u044C 90. \u0422\u0440\u0438 \u043C\u0435\u0441\u044F\u0446\u0430! \u041D\u043E\u0432\u0430\u044F \u0436\u0438\u0437\u043D\u044C.',tag:'\u041A\u0412\u0415\u0421\u0422',tc:'#D4EDDA',tt:'#155724'},
+  {id:'h_smoke30',block:'health',day:60,text:'\u{1F3C5} 30 \u0434\u043D\u0435\u0439 \u0431\u0435\u0437 \u0441\u0438\u0433\u0430\u0440\u0435\u0442 \u2014 \u043B\u0451\u0433\u043A\u0438\u0435 \u0432\u043E\u0441\u0441\u0442\u0430\u043D\u0430\u0432\u043B\u0438\u0432\u0430\u044E\u0442\u0441\u044F',tag:'\u041A\u0412\u0415\u0421\u0422',tc:'#D4EDDA',tt:'#155724'},
+  {id:'s1',block:'study',day:0,text:'\u041F\u0440\u043E\u0432\u0435\u0440\u0438\u0442\u044C \u043F\u0438\u0441\u044C\u043C\u043E \u043E\u0442 \u0418\u0437\u0430\u0431\u0435\u043B\u043B\u044B \u2014 \u0440\u0430\u0441\u043F\u0438\u0441\u0430\u043D\u0438\u0435 IEFP \u0438 \u0432\u044B\u043F\u043B\u0430\u0442\u044B',tag:'\u0441\u0435\u0433\u043E\u0434\u043D\u044F',tc:'#FAECE7',tt:'#993C1D'},
+  {id:'s_eng1',block:'study',day:0,text:'\u{1F1EC}\u{1F1E7} \u0414\u0435\u043D\u044C 1 \u0430\u043D\u0433\u043B\u0438\u0439\u0441\u043A\u043E\u0433\u043E \u0441 Claude \u2014 3-5 \u043F\u0440\u0435\u0434\u043B\u043E\u0436\u0435\u043D\u0438\u0439 \u043E \u0441\u0435\u0433\u043E\u0434\u043D\u044F\u0448\u043D\u0435\u043C \u0434\u043D\u0435',tag:'\u0435\u0436\u0435\u0434\u043D\u0435\u0432\u043D\u043E',tc:'#EAF3DE',tt:'#3B6D11'},
+  {id:'s2',block:'study',day:7,text:'\u041D\u0430\u0447\u0430\u0442\u044C \u043F\u043E\u0441\u0435\u0449\u0430\u0442\u044C \u043A\u0443\u0440\u0441\u044B IEFP \u043F\u043E \u0440\u0430\u0441\u043F\u0438\u0441\u0430\u043D\u0438\u044E',tag:'\u0440\u0435\u0436\u0438\u043C',tc:'#EAF3DE',tt:'#3B6D11'},
+  {id:'s_eng7',block:'study',day:7,text:'\u{1F1EC}\u{1F1E7} \u041D\u0435\u0434\u0435\u043B\u044F 1 \u2014 7 \u0434\u043D\u0435\u0439 \u0430\u043D\u0433\u043B\u0438\u0439\u0441\u043A\u043E\u0433\u043E \u043F\u043E\u0434\u0440\u044F\u0434 \u043F\u043E 15 \u043C\u0438\u043D',tag:'\u041A\u0412\u0415\u0421\u0422',tc:'#EAF3DE',tt:'#3B6D11'},
+  {id:'s3',block:'study',day:14,text:'\u041F\u043E\u043B\u0443\u0447\u0438\u0442\u044C \u043F\u0435\u0440\u0432\u0443\u044E \u0431\u043E\u043B\u0441\u0443 IEFP (~\u20AC85/\u043C\u0435\u0441)',tag:'\u043E\u0436\u0438\u0434\u0430\u043D\u0438\u0435',tc:'#E6F1FB',tt:'#185FA5'},
+  {id:'s_eng30',block:'study',day:30,text:'\u{1F1EC}\u{1F1E7} \u041C\u0435\u0441\u044F\u0446 \u2014 \u043C\u043E\u0433\u0443 \u043D\u0430\u043F\u0438\u0441\u0430\u0442\u044C \u0434\u0435\u043B\u043E\u0432\u043E\u0435 \u043F\u0438\u0441\u044C\u043C\u043E \u0431\u0435\u0437 \u043E\u0448\u0438\u0431\u043E\u043A',tag:'\u041A\u0412\u0415\u0421\u0422',tc:'#D4EDDA',tt:'#155724'},
+  {id:'s_eng3m',block:'study',day:90,text:'\u{1F1EC}\u{1F1E7} 3 \u043C\u0435\u0441\u044F\u0446\u0430 \u2014 \u043F\u0435\u0440\u0435\u0433\u043E\u0432\u043E\u0440\u044B \u0441 \u043D\u0435\u043C\u0446\u0430\u043C\u0438 \u043D\u0430 \u0430\u043D\u0433\u043B\u0438\u0439\u0441\u043A\u043E\u043C',tag:'\u0446\u0435\u043B\u044C',tc:'#D4EDDA',tt:'#155724'},
+  {id:'s_engbiz',block:'study',day:180,text:'\u{1F3C6} \u0410\u043D\u0433\u043B\u0438\u0439\u0441\u043A\u0438\u0439 B1-B2 \u2014 \u0431\u0438\u0437\u043D\u0435\u0441 \u0431\u0435\u0437 \u043F\u0435\u0440\u0435\u0432\u043E\u0434\u0447\u0438\u043A\u0430',tag:'\u0444\u0438\u043D\u0430\u043B',tc:'#D4EDDA',tt:'#155724'},
+  {id:'f1',block:'family',day:0,text:'\u041C\u0438\u043D\u0438\u043C\u0443\u043C 1 \u0447\u0430\u0441 \u0441 \u041C\u0438\u043B\u0430\u043D\u043E\u0439 \u0438 \u0410\u043C\u0435\u043B\u0438\u0435\u0439 \u2014 \u0431\u0435\u0437 \u0442\u0435\u043B\u0435\u0444\u043E\u043D\u0430',tag:'\u0435\u0436\u0435\u0434\u043D\u0435\u0432\u043D\u043E',tc:'#FAEEDA',tt:'#854F0B'},
+  {id:'f2',block:'family',day:7,text:'\u0412\u044B\u0435\u0437\u0434 \u0441 \u0441\u0435\u043C\u044C\u0451\u0439 \u2014 \u043F\u043B\u044F\u0436, \u043F\u0430\u0440\u043A \u0438\u043B\u0438 \u043A\u0430\u0444\u0435',tag:'\u0435\u0436\u0435\u043D\u0435\u0434\u0435\u043B\u044C\u043D\u043E',tc:'#FAEEDA',tt:'#854F0B'},
+  {id:'f3',block:'family',day:14,text:'\u0420\u0435\u0448\u0435\u043D\u0438\u0435 \u043F\u043E \u0436\u0438\u043B\u044C\u044E: \u0430\u0440\u0435\u043D\u0434\u0430 \u0438\u043B\u0438 \u0441\u0432\u043E\u0451 \u2014 \u0437\u0430\u0444\u0438\u043A\u0441\u0438\u0440\u043E\u0432\u0430\u0442\u044C \u043F\u043B\u0430\u043D',tag:'\u0440\u0435\u0448\u0435\u043D\u0438\u0435',tc:'#EAF3DE',tt:'#3B6D11'},
+  {id:'f4',block:'family',day:180,text:'\u{1F3C6} \u041F\u0440\u0438 \u20AC8 000+/\u043C\u0435\u0441 \u2014 \u0440\u0430\u0437\u0433\u043E\u0432\u043E\u0440 \u043E \u043F\u043E\u043A\u0443\u043F\u043A\u0435 \u0436\u0438\u043B\u044C\u044F \u0432 \u0410\u043B\u0433\u0430\u0440\u0432\u0435',tag:'\u043C\u0435\u0447\u0442\u0430',tc:'#D4EDDA',tt:'#155724'},
 ];
-
-const TABS=['Сегодня','Неделя','2 нед','1 мес','3 мес','Итог'];
-const TABS_FULL=['Сегодня — срочные задачи','Эта неделя','Через 2 недели','Через месяц','Через 3 месяца','Итог года — финансовая свобода'];
-
+const REWARDS={
+  50:[
+    {id:'r50_1',emoji:'\u2615',text:'\u0427\u0430\u0441 \u043B\u044E\u0431\u0438\u043C\u043E\u0433\u043E \u0441\u0435\u0440\u0438\u0430\u043B\u0430/\u0444\u0438\u043B\u044C\u043C\u0430 \u0431\u0435\u0437 \u0447\u0443\u0432\u0441\u0442\u0432\u0430 \u0432\u0438\u043D\u044B'},
+    {id:'r50_2',emoji:'\u{1F3A7}',text:'\u0414\u043B\u0438\u043D\u043D\u0430\u044F \u043F\u0440\u043E\u0433\u0443\u043B\u043A\u0430 \u0432 \u043E\u0434\u0438\u043D\u043E\u0447\u0435\u0441\u0442\u0432\u0435 \u0441 \u043C\u0443\u0437\u044B\u043A\u043E\u0439 \u0438\u043B\u0438 \u043F\u043E\u0434\u043A\u0430\u0441\u0442\u043E\u043C'},
+    {id:'r50_3',emoji:'\u2615',text:'\u0412\u043A\u0443\u0441\u043D\u044B\u0439 \u043A\u043E\u0444\u0435 \u0432 \u043A\u0430\u0444\u0435 \u0441 \u0443\u0442\u0440\u0430, \u043D\u0435 \u0434\u043E\u043C\u0430'},
+  ],
+  75:[
+    {id:'r75_1',emoji:'\u{1F3D6}',text:'\u041F\u043E\u0435\u0437\u0434\u043A\u0430 \u043D\u0430 \u043F\u043B\u044F\u0436 \u0441 \u0441\u0435\u043C\u044C\u0451\u0439 \u043D\u0430 \u043F\u043E\u043B\u0434\u043D\u044F'},
+    {id:'r75_2',emoji:'\u{1F486}',text:'\u041C\u0430\u0441\u0441\u0430\u0436 \u0432 \u041F\u043E\u0440\u0442\u0438\u043C\u0430\u043D\u0435 (~\u20AC30-40)'},
+    {id:'r75_3',emoji:'\u{1F4D6}',text:'\u041D\u043E\u0432\u0430\u044F \u043A\u043D\u0438\u0433\u0430 \u0438\u043B\u0438 \u0430\u0443\u0434\u0438\u043E\u043A\u043D\u0438\u0433\u0430 \u043A\u043E\u0442\u043E\u0440\u0443\u044E \u0434\u0430\u0432\u043D\u043E \u0445\u043E\u0442\u0435\u043B'},
+  ],
+  100:[
+    {id:'r100_1',emoji:'\u{1F37D}',text:'\u0423\u0436\u0438\u043D \u0432 \u0440\u0435\u0441\u0442\u043E\u0440\u0430\u043D\u0435 \u0432\u0434\u0432\u043E\u0451\u043C \u0441 \u041C\u0430\u0440\u0438\u043D\u043E\u0439 (\u0431\u0435\u0437 \u0434\u0435\u0442\u0435\u0439)'},
+    {id:'r100_2',emoji:'\u{1F4F5}',text:'\u0414\u0435\u043D\u044C \u043F\u043E\u043B\u043D\u043E\u0433\u043E \u043E\u0444\u043B\u0430\u0439\u043D\u0430 \u2014 \u0442\u0435\u043B\u0435\u0444\u043E\u043D \u0432\u044B\u043A\u043B\u044E\u0447\u0435\u043D, \u0442\u043E\u043B\u044C\u043A\u043E \u0441\u0435\u043C\u044C\u044F'},
+    {id:'r100_3',emoji:'\u{1F3CD}',text:'\u041A\u0430\u0442\u0430\u043D\u0438\u0435 \u043D\u0430 NTV \u043A\u0443\u0434\u0430 \u0445\u043E\u0447\u0435\u0448\u044C \u043D\u0430 \u043D\u0435\u0441\u043A\u043E\u043B\u044C\u043A\u043E \u0447\u0430\u0441\u043E\u0432'},
+  ]
+};
+const K_DONE='as_plan_done_v4',K_CARRY='as_plan_carry_v4',K_START='as_plan_start_v4',K_PREVIEW='as_plan_preview_v4',K_WEIGHT='as_plan_weight_v4',K_REWARD='as_plan_reward_v4';
+let done=new Set(JSON.parse(localStorage.getItem(K_DONE)||'[]'));
+let carried=new Set(JSON.parse(localStorage.getItem(K_CARRY)||'[]'));
+let startTs=localStorage.getItem(K_START)?parseInt(localStorage.getItem(K_START)):null;
+let previewOn=localStorage.getItem(K_PREVIEW)==='1';
+let weightData=JSON.parse(localStorage.getItem(K_WEIGHT)||'{"entries":[]}');
+let rewardData=JSON.parse(localStorage.getItem(K_REWARD)||'{}');
+function saveAll(){localStorage.setItem(K_DONE,JSON.stringify([...done]));localStorage.setItem(K_CARRY,JSON.stringify([...carried]));}
+function saveWeight(){localStorage.setItem(K_WEIGHT,JSON.stringify(weightData));}
+function saveReward(){localStorage.setItem(K_REWARD,JSON.stringify(rewardData));}
+function dayN(){return startTs?Math.floor((Date.now()-startTs)/86400000):0;}
+function isOpen(t){const d=dayN();if(t.day<=d)return true;if(previewOn&&t.day===d+1)return true;return false;}
+function reqOk(t){return!t.req||t.req.every(r=>done.has(r));}
+function isMonday(){return new Date().getDay()===1;}
+function weekKey(ts){const d=new Date(ts||Date.now()),j=new Date(d.getFullYear(),0,1),w=Math.ceil(((d-j)/86400000+j.getDay()+1)/7);return d.getFullYear()+'-'+String(w).padStart(2,'0');}
 let activeTab=0;
-const KEY='as_plan_v3';
-const done=new Set(JSON.parse(localStorage.getItem(KEY)||'[]'));
-function save(){localStorage.setItem(KEY,JSON.stringify([...done]));}
-
-function isUnlocked(t){
-  if(!t.req||!t.req.length)return true;
-  return t.req.every(r=>done.has(r));
+function checkSvg(){return '<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7l3.5 3.5L12 4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';}
+function cardHtml(t,showCarry){
+  const isDone=done.has(t.id),isCarried=carried.has(t.id)&&!isDone,locked=!reqOk(t);
+  const blk=BLOCKS.find(b=>b.id===t.block);
+  let cls='task-card';
+  if(locked)cls+=' locked-card';if(isCarried)cls+=' carried-card';if(isDone)cls+=' done-card';
+  const cc=isDone?'done':(locked?'locked-c':'');
+  const ci=isDone?checkSvg():(locked?'🔒':'');
+  const carryBtn=(showCarry&&!isDone&&!locked)?`<button class="carry-btn ${isCarried?'is-carried':''}" onclick="doCarry(event,'${t.id}')">${isCarried?'🔄 перенесён':'→ перенести'}</button>`:'';
+  const miss=locked?TASKS.find(x=>(t.req||[]).includes(x.id)&&!done.has(x.id)):null;
+  const rh=miss?`<span style="font-size:11px;color:var(--text2)">⏳ сначала: ${miss.text.substring(0,48)}…</span>`:'';
+  return `<div class="${cls}" onclick="tap('${t.id}')"><div class="task-row"><div class="check-circle ${cc}">${ci}</div><div class="task-content"><div class="task-text ${isDone?'done':''} ${locked?'locked':''}">${isCarried?'🔄 ':''}${t.text}</div><div class="task-footer"><span class="tag" style="background:${isDone?'#EAF3DE':t.tc};color:${isDone?'#3B6D11':t.tt}">${isDone?'✓ готово':t.tag}</span><span class="tag" style="background:${blk.color}18;color:${blk.color}">${blk.label}</span>${carryBtn}${rh}</div></div></div></div>`;
 }
-
-function getProgress(){
-  const r={};
-  BLOCKS.forEach(b=>{
-    const all=TASKS.filter(t=>t.block===b.id);
-    r[b.id]={total:all.length,done:all.filter(t=>done.has(t.id)).length};
+function weightHtml(){
+  const e=weightData.entries,sk=e.length?e[0].kg:null,lk=e.length?e[e.length-1].kg:null,mk=e.length?Math.min(...e.map(x=>x.kg)):null;
+  const diff=(sk&&lk)?(lk-sk).toFixed(1):null,ds=diff?(diff>0?'+'+diff:diff)+' кг':'—',dc=diff&&diff<0?'var(--green)':'var(--red)';
+  let chart='';
+  if(e.length>=2){
+    const vals=e.map(x=>x.kg),mn=Math.min(...vals)-1,mx=Math.max(...vals)+1,rng=mx-mn||1,W=300,H=80,pad=16;
+    const pts=vals.map((v,i)=>`${pad+(i/(vals.length-1))*(W-2*pad)},${H-pad-((v-mn)/rng)*(H-2*pad)}`).join(' ');
+    const lp=pts.split(' ').pop().split(',');
+    chart=`<div class="weight-chart"><svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none"><polyline points="${pts}" fill="none" stroke="var(--green)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="${lp[0]}" cy="${lp[1]}" r="4" fill="var(--green)"/></svg></div>`;
+  }
+  const recent=e.slice(-8).reverse();
+  const entries=recent.map(x=>{const ib=x.kg===mk,d=new Date(x.date),lb=d.toLocaleDateString('ru-RU',{day:'numeric',month:'short'});return`<div class="weight-entry ${ib?'best':''}"><div class="weight-entry-kg">${x.kg}</div><div class="weight-entry-date">${lb}</div></div>`;}).join('');
+  const mb=isMonday()?'<div style="margin-bottom:10px"><span style="background:#FAECE7;color:#993C1D;font-size:11px;padding:3px 10px;border-radius:8px;font-weight:600">⚖️ Понедельник — взвешивание!</span></div>':'';
+  return `<div class="weight-card"><div class="weight-header"><div><div class="weight-title">⚖️ Динамика веса</div><div class="weight-meta">Старт: ${sk||'—'} кг &nbsp;·&nbsp; Сейчас: <b>${lk||'—'} кг</b> &nbsp;·&nbsp; Итог: <span style="color:${dc};font-weight:700">${ds}</span></div></div></div>${mb}<div class="weight-input-row"><input class="weight-input" type="number" step="0.1" placeholder="Введи вес, кг" id="wInput" inputmode="decimal"><button class="weight-save-btn" onclick="saveW()">Сохранить</button></div>${chart}${e.length?`<div class="weight-entries">${entries}</div>`:''}</div>`;
+}
+function saveW(){
+  const inp=document.getElementById('wInput');
+  const v=parseFloat(inp.value.replace(',','.'));
+  if(!v||v<30||v>300){inp.style.borderColor='var(--red)';return;}
+  const today=new Date().toISOString().split('T')[0];
+  const idx=weightData.entries.findIndex(x=>x.date===today);
+  if(idx>=0)weightData.entries[idx].kg=v;else weightData.entries.push({kg:v,date:today});
+  saveWeight();render();
+}
+function weeklySummaryHtml(){
+  const opened=TASKS.filter(t=>isOpen(t)),total=opened.length,dc=opened.filter(t=>done.has(t.id)).length,cc=opened.filter(t=>carried.has(t.id)&&!done.has(t.id)).length,pct=total?Math.round(dc/total*100):0;
+  const wk=weekKey();const cr=rewardData[wk]||null;
+  const level=pct>=100?100:pct>=75?75:pct>=50?50:0;
+  const msg=pct>=100?'🔥 Идеальная неделя! Ты сделал всё. Выбирай заслуженную награду!':pct>=75?'💪 Отличная неделя! Большинство сделано. Награда заработана — выбирай!':pct>=50?'👍 Половина выполнена. Тяни до 75% — откроется следующий уровень!':pct>=25?'🚀 Давай ещё! 50% задач откроют первые награды.':'⚡ День 1 всегда самый трудный. Начни с одной задачи прямо сейчас.';
+  let rh='';
+  [50,75,100].forEach(lvl=>{
+    const ul=pct>=lvl,items=REWARDS[lvl];
+    const nm={50:'Базовая награда',75:'Хорошая неделя',100:'Идеальная неделя'};
+    const bg={50:'#FFF3CD',75:'#D4EDDA',100:'#D4EDDA'};
+    const tc={50:'#856404',75:'#155724',100:'#1D9E75'};
+    rh+=`<div class="reward-level"><div class="reward-level-header"><span class="reward-level-pct" style="background:${bg[lvl]};color:${tc[lvl]}">${lvl}%+</span><span class="reward-level-name">${nm[lvl]}</span></div>`;
+    if(!ul){rh+=`<div class="reward-locked-msg">🔒 Выполни ${lvl}% задач недели чтобы разблокировать</div>`;}
+    else{rh+=`<div class="reward-items">`;items.forEach(r=>{const ch=cr===r.id;rh+=`<div class="reward-item ${ch?'chosen':''}" onclick="pickReward('${wk}','${r.id}')"><div class="reward-check">${ch?checkSvg():''}</div><div class="reward-text">${r.emoji} ${r.text}</div></div>`;});rh+=`</div>`;}
+    rh+=`</div>`;
   });
-  return r;
+  return `<div class="weekly-card"><div class="weekly-top"><div><div class="weekly-title">📊 Сводка недели</div><div class="weekly-week">${new Date().toLocaleDateString('ru-RU',{day:'numeric',month:'long',year:'numeric'})}</div></div><div style="text-align:right"><div class="weekly-pct">${pct}%</div><div class="weekly-pct-label">выполнено</div></div></div><div class="weekly-bar-bg"><div class="weekly-bar-fill" style="width:${pct}%"></div></div><div class="weekly-stats"><div class="weekly-stat"><div class="weekly-stat-n">${dc}</div><div class="weekly-stat-l">сделано</div></div><div class="weekly-stat"><div class="weekly-stat-n">${cc}</div><div class="weekly-stat-l">перенесено</div></div><div class="weekly-stat"><div class="weekly-stat-n">${total-dc-cc}</div><div class="weekly-stat-l">в работе</div></div></div><div style="font-size:13px;line-height:1.5;margin-bottom:0">${msg}</div></div><div class="rewards-card"><div class="rewards-title">🎁 Награды недели</div><div class="rewards-sub">Выбери одну и выполни её в эти выходные</div>${rh}</div>`;
 }
-
+function pickReward(wk,rid){rewardData[wk]=rid;saveReward();renderContent();}
 function renderHeader(){
-  const d=TASKS.filter(t=>done.has(t.id)).length;
-  const total=TASKS.length;
-  const pct=total?Math.round(d/total*100):0;
+  const d=TASKS.filter(t=>done.has(t.id)).length,total=TASKS.length,pct=Math.round(d/total*100);
   document.getElementById('ofill').style.width=pct+'%';
   document.getElementById('opct').textContent=pct+'% выполнено · '+d+' из '+total+' задач';
-  const now=new Date();
-  document.getElementById('hdate').textContent=now.toLocaleDateString('ru-RU',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  document.getElementById('hdate').textContent=new Date().toLocaleDateString('ru-RU',{weekday:'long',day:'numeric',month:'long'});
 }
-
 function renderTabs(){
-  document.getElementById('tabs').innerHTML=TABS.map((l,i)=>{
-    const cnt=TASKS.filter(t=>t.day===i&&!done.has(t.id)&&isUnlocked(t)).length;
-    return`<button class="tab ${i===activeTab?'active':''}" onclick="setTab(${i})">${l}${cnt>0&&i!==activeTab?`<span class="tab-badge">${cnt}</span>`:''}</button>`;
+  const tabs=[{label:'📋 Сегодня'},...BLOCKS,{label:'📊 Неделя'}];
+  document.getElementById('tabs').innerHTML=tabs.map((t,i)=>{
+    const ts=i===0?TASKS:i===tabs.length-1?[]:TASKS.filter(x=>x.block===BLOCKS[i-1].id);
+    const cnt=ts.filter(x=>isOpen(x)&&!done.has(x.id)&&!carried.has(x.id)&&reqOk(x)).length;
+    return`<button class="tab ${i===activeTab?'active':''}" onclick="setTab(${i})">${t.label}${cnt>0&&i!==activeTab?`<span class="tab-badge">${cnt}</span>`:''}</button>`;
   }).join('');
 }
-
 function renderContent(){
-  const prog=getProgress();
-  const dayTasks=TASKS.filter(t=>t.day===activeTab);
-  const unlocked=dayTasks.filter(t=>isUnlocked(t));
-  const locked=dayTasks.filter(t=>!isUnlocked(t));
-  let html='';
-
-  // Финансовая сводка на вкладке Сегодня
-  if(activeTab===0){
-    html+=`<div class="money-card">
-      <div class="money-title">Финансовая картина</div>
-      <div class="money-row"><span class="money-label">Минимум семье/мес</span><span class="money-amount" style="color:var(--red)">€4 400</span></div>
-      <div class="money-row"><span class="money-label">Долг SS</span><span class="money-amount" style="color:var(--red)">€9 816</span></div>
-      <div class="money-row"><span class="money-label">Долг личный</span><span class="money-amount" style="color:var(--red)">€5 000</span></div>
-      <div class="money-row"><span class="money-label">Долг компания</span><span class="money-amount" style="color:var(--red)">€10 500</span></div>
-      <div class="money-row"><span class="money-label">Фредерик (ожидание)</span><span class="money-amount" style="color:var(--green)">+€10-12к</span></div>
-      <div class="money-total"><span>Цель года</span><span style="color:var(--green)">€5 000-10 000/мес</span></div>
-    </div>`;
+  const d=dayN();let html='';
+  const wt=BLOCKS.length+1;
+  if(activeTab===wt){
+    html+=weeklySummaryHtml();html+=weightHtml();
+  } else if(activeTab===0){
+    html+=`<div class="money-card"><div class="money-title">Финансовая картина</div><div class="money-row"><span class="money-label">Минимум семье/мес</span><span class="money-amount" style="color:var(--red)">€4 400</span></div><div class="money-row"><span class="money-label">Долг SS</span><span class="money-amount" style="color:var(--red)">€9 816</span></div><div class="money-row"><span class="money-label">Долг личный</span><span class="money-amount" style="color:var(--red)">€5 000</span></div><div class="money-row"><span class="money-label">Долг компания</span><span class="money-amount" style="color:var(--red)">€10 500</span></div><div class="money-row"><span class="money-label">Фредерик (ожидание)</span><span class="money-amount" style="color:var(--green)">+€10-12к</span></div><div class="money-total"><span>Цель года</span><span style="color:var(--green)">€5 000-10 000/мес</span></div></div>`;
+    html+=`<div class="progress-section">`;
+    BLOCKS.forEach(b=>{const all=TASKS.filter(t=>t.block===b.id),dc2=all.filter(t=>done.has(t.id)).length,pct2=all.length?Math.round(dc2/all.length*100):0;html+=`<div class="prog-row"><div class="prog-dot" style="background:${b.color}"></div><span class="prog-label">${b.label}</span><div class="prog-bg"><div class="prog-fill" style="width:${pct2}%;background:${b.color}"></div></div><span class="prog-pct">${pct2}%</span></div>`;});
+    html+=`</div>`;
+    if(isMonday())html+=`<div style="background:#FFF3CD;margin:0 12px 8px;border-radius:14px;padding:12px 14px;border-left:3px solid var(--gold)"><div style="font-size:13px;font-weight:600;color:#856404">⚖️ Понедельник — день взвешивания!</div><div style="font-size:12px;color:#856404;margin-top:3px">Открой вкладку 📊 Неделя — вписать вес и посмотреть сводку</div></div>`;
+    const ct=TASKS.filter(t=>carried.has(t.id)&&!done.has(t.id)&&isOpen(t)&&reqOk(t));
+    if(ct.length){html+=`<div class="section-title">🔄 Переносы</div>`;ct.forEach(t=>{html+=cardHtml(t,true);});}
+    const at=TASKS.filter(t=>isOpen(t)&&t.day<=d&&!done.has(t.id)&&!carried.has(t.id)&&reqOk(t));
+    if(at.length){html+=`<div class="section-title">Активные задачи</div>`;at.forEach(t=>{html+=cardHtml(t,true);});}
+    const dl=TASKS.filter(t=>done.has(t.id)&&isOpen(t));
+    if(dl.length){html+=`<div class="section-title">✅ Выполнено</div>`;dl.forEach(t=>{html+=cardHtml(t,false);});}
+    const ll=TASKS.filter(t=>isOpen(t)&&!reqOk(t)&&!done.has(t.id));
+    if(ll.length){html+=`<div class="section-title">🔒 Ждут предыдущих</div>`;ll.forEach(t=>{html+=cardHtml(t,false);});}
+    const cur=TASKS.filter(t=>isOpen(t)&&t.day<=d&&reqOk(t));
+    const ah=cur.length>0&&cur.every(t=>done.has(t.id)||carried.has(t.id));
+    const hn=TASKS.some(t=>t.day===d+1&&reqOk(t));
+    if(ah&&hn&&!previewOn)html+=`<div class="tomorrow-banner"><h3>🎉 Всё сделано на сегодня!</h3><p>Хочешь уже сейчас увидеть задачи на завтра?</p><button class="tmr-btn" onclick="doPreview()">Показать задачи завтра 👀</button></div>`;
+    if(previewOn){const tmr=TASKS.filter(t=>t.day===d+1&&reqOk(t)&&!done.has(t.id));if(tmr.length){html+=`<div class="section-title" style="color:#2563eb">👀 Завтра (предпросмотр)</div>`;tmr.forEach(t=>{html+=cardHtml(t,false);});}}
+    if(!ct.length&&!at.length&&!dl.length)html+=`<div class="empty-ok"><div>🚀</div><p>День 1 начинается.<br>Задачи открываются автоматически.</p></div>`;
+  } else {
+    const blk=BLOCKS[activeTab-1],bt=TASKS.filter(t=>t.block===blk.id);
+    const av=bt.filter(t=>isOpen(t)&&reqOk(t)&&!done.has(t.id)),db=bt.filter(t=>done.has(t.id)),lb=bt.filter(t=>isOpen(t)&&!reqOk(t)&&!done.has(t.id)),up=bt.filter(t=>!isOpen(t)&&!done.has(t.id));
+    if(av.length){html+=`<div class="section-title">Активные</div>`;av.forEach(t=>{html+=cardHtml(t,true);});}
+    if(lb.length){html+=`<div class="section-title">🔒 Ждут предыдущих</div>`;lb.forEach(t=>{html+=cardHtml(t,false);});}
+    if(up.length){html+=`<div class="section-title">📅 Впереди</div>`;up.forEach(t=>{const dl2=t.day-d;html+=`<div class="task-card locked-card"><div class="task-row"><div class="check-circle locked-c" style="font-size:11px">+${dl2}д</div><div class="task-content"><div class="task-text locked">${t.text}</div><div class="task-footer"><span class="tag" style="background:#F0F0F0;color:#888">${t.tag}</span></div></div></div></div>`;});}
+    if(db.length){html+=`<div class="section-title">✅ Выполнено</div>`;db.forEach(t=>{html+=cardHtml(t,false);});}
+    if(!bt.length)html+=`<div class="empty-ok"><div>📭</div><p>Задач нет</p></div>`;
   }
-
-  // Прогресс
-  html+=`<div class="progress-section">`;
-  BLOCKS.forEach(b=>{
-    const p=prog[b.id];
-    const pct=p.total?Math.round(p.done/p.total*100):0;
-    html+=`<div class="prog-row"><div class="prog-dot" style="background:${b.color}"></div><span class="prog-label">${b.label}</span><div class="prog-bg"><div class="prog-fill" style="width:${pct}%;background:${b.color}"></div></div><span class="prog-pct">${pct}%</span></div>`;
-  });
-  html+=`</div>`;
-
-  html+=`<div style="padding:4px 16px 2px;font-size:16px;font-weight:700;color:var(--text)">${TABS_FULL[activeTab]}</div>`;
-
-  if(!dayTasks.length){
-    html+=`<div class="empty-state"><div>✅</div><p>На этом этапе задач нет</p></div>`;
-  }
-
-  if(unlocked.length){
-    html+=`<div class="section-title">Доступно</div>`;
-    unlocked.forEach(t=>{
-      const isDone=done.has(t.id);
-      const blk=BLOCKS.find(b=>b.id===t.block);
-      const uc=(t.unlocks||[]).length;
-      html+=`<div class="task-card" onclick="toggleTask('${t.id}')">
-        <div class="task-row">
-          <div class="check-circle ${isDone?'done':''}">
-            ${isDone?'<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7l3.5 3.5L12 4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>':''}
-          </div>
-          <div class="task-content">
-            <div class="task-text ${isDone?'done':''}">${t.text}</div>
-            <div class="task-footer">
-              <span class="tag" style="background:${isDone?'#EAF3DE':t.tc};color:${isDone?'#3B6D11':t.tt}">${isDone?'✓ готово':t.tag}</span>
-              <span class="tag" style="background:${blk.color}18;color:${blk.color}">${blk.label}</span>
-              ${uc>0&&!isDone?`<span class="unlock-text">→ откроет ${uc} шаг${uc>1?'а':''}</span>`:''}
-            </div>
-          </div>
-        </div>
-      </div>`;
-    });
-  }
-
-  const allDone=unlocked.length>0&&unlocked.every(t=>done.has(t.id))&&!locked.length;
-  if(allDone){
-    html+=`<div class="achievement"><div class="achievement-icon">🎉</div><h3>Все задачи выполнены!</h3><p>Переходи к следующему этапу</p></div>`;
-  }
-
-  if(locked.length){
-    html+=`<div class="section-title" style="margin-top:10px">🔒 Откроется после выполнения предыдущих</div>`;
-    locked.forEach(t=>{
-      const blk=BLOCKS.find(b=>b.id===t.block);
-      const miss=TASKS.find(x=>x.id===(t.req||[]).find(r=>!done.has(r)));
-      html+=`<div class="task-card locked-card">
-        <div class="task-row">
-          <div class="check-circle locked-c">🔒</div>
-          <div class="task-content">
-            <div class="task-text locked">${t.text}</div>
-            <div class="task-footer">
-              <span class="tag" style="background:#F0F0F0;color:#888">${blk.label}</span>
-              ${miss?`<div class="wait-hint">Сначала: ${miss.text.substring(0,50)}…</div>`:''}
-            </div>
-          </div>
-        </div>
-      </div>`;
-    });
-  }
-
   document.getElementById('content').innerHTML=html;
 }
-
-function setTab(i){activeTab=i;renderTabs();renderContent();window.scrollTo(0,120);}
-
-function toggleTask(id){
-  const t=TASKS.find(x=>x.id===id);
-  if(!t||!isUnlocked(t))return;
-  if(done.has(id))done.delete(id);
-  else done.add(id);
-  save();renderHeader();renderTabs();renderContent();
-}
-
-renderHeader();renderTabs();renderContent();
+function tap(id){const t=TASKS.find(x=>x.id===id);if(!t||!reqOk(t))return;if(done.has(id))done.delete(id);else{done.add(id);carried.delete(id);}saveAll();if(done.has(id)){previewOn=false;localStorage.removeItem(K_PREVIEW);}render();}
+function doCarry(e,id){e.stopPropagation();if(carried.has(id))carried.delete(id);else carried.add(id);saveAll();render();}
+function doPreview(){previewOn=true;localStorage.setItem(K_PREVIEW,'1');renderContent();}
+function setTab(i){activeTab=i;renderTabs();renderContent();window.scrollTo(0,140);}
+function render(){renderHeader();renderTabs();renderContent();}
+function confirmStart(){startTs=Date.now();localStorage.setItem(K_START,startTs.toString());document.getElementById('startModal').style.display='none';render();}
+function init(){if(!startTs)document.getElementById('startModal').style.display='flex';render();}
+init();
 </script>
 </body>
 </html>
