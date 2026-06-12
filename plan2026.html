@@ -2,404 +2,546 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="МойПлан">
-<meta name="theme-color" content="#1D9E75">
-<title>План Арсений 2026</title>
+<meta name="apple-mobile-web-app-title" content="План 2026">
+<title>План 2026 · Ежедневник</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400&family=Caveat:wght@500;700&family=Oranienbaum&display=swap" rel="stylesheet">
 <style>
-:root{--green:#1D9E75;--green2:#157A5A;--red:#D85A30;--blue:#378ADD;--purple:#7F77DD;--olive:#639922;--gold:#C9A227;--orange:#BA7517;--bg:#F2F2F7;--card:#FFF;--text:#1A1A1A;--text2:#6C6C70;--border:#E5E5EA;--carry:#F0A500;}
-*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding-bottom:90px;}
-.header{background:linear-gradient(135deg,var(--green),var(--green2));color:white;padding:50px 16px 16px;position:sticky;top:0;z-index:100;box-shadow:0 2px 10px rgba(0,0,0,.15);}
-.header h1{font-size:19px;font-weight:700;}
-.header-sub{font-size:11px;opacity:.8;margin-top:2px;}
-.header-goal{font-size:11px;opacity:.7;margin-top:1px;}
-.overall-bar{background:rgba(255,255,255,.25);border-radius:4px;height:6px;margin-top:10px;overflow:hidden;}
-.overall-fill{height:6px;background:white;border-radius:4px;transition:width .5s;}
-.overall-pct{font-size:11px;opacity:.75;margin-top:4px;}
-.tabs{display:flex;overflow-x:auto;gap:6px;padding:10px 14px;background:white;border-bottom:1px solid var(--border);scrollbar-width:none;position:sticky;top:106px;z-index:99;}
-.tabs::-webkit-scrollbar{display:none;}
-.tab{flex-shrink:0;padding:6px 14px;border-radius:20px;font-size:13px;font-weight:500;border:1.5px solid var(--border);color:var(--text2);background:white;cursor:pointer;position:relative;transition:all .15s;}
-.tab.active{background:var(--text);color:white;border-color:var(--text);}
-.tab-badge{position:absolute;top:-5px;right:-5px;background:var(--red);color:white;font-size:9px;width:17px;height:17px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-weight:700;}
-.content{padding:10px 0 20px;}
-.section-title{font-size:11px;font-weight:600;color:var(--text2);letter-spacing:.06em;text-transform:uppercase;padding:10px 16px 6px;}
-.task-card{background:var(--card);margin:0 12px 8px;border-radius:16px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.07);}
-.task-card.locked-card{opacity:.4;}
-.task-card.carried-card{border-left:3px solid var(--carry);}
-.task-card.done-card{opacity:.55;}
-.task-row{display:flex;align-items:flex-start;gap:10px;padding:13px 13px 10px;}
-.task-card:not(.locked-card) .task-row{cursor:pointer;}
-.task-card:not(.locked-card) .task-row:active{background:#F8F8F8;}
-.check-circle{width:26px;height:26px;border-radius:13px;border:2px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .2s;font-size:12px;}
-.check-circle.done{background:var(--green);border-color:var(--green);}
-.check-circle.locked-c{background:var(--bg);border-color:var(--border);}
-.task-content{flex:1;min-width:0;}
-.task-text{font-size:14px;line-height:1.45;color:var(--text);}
-.task-text.done{text-decoration:line-through;color:var(--text2);}
-.task-text.locked{color:var(--text2);}
-.task-footer{display:flex;flex-wrap:wrap;gap:5px;margin-top:7px;align-items:center;}
-.tag{font-size:11px;padding:3px 9px;border-radius:10px;font-weight:500;}
-.carry-btn{font-size:11px;padding:3px 9px;border-radius:10px;background:#FFF3CD;color:#856404;border:none;cursor:pointer;font-weight:500;}
-.carry-btn.is-carried{background:#EAF3DE;color:#3B6D11;}
-/* WEIGHT */
-.weight-card{background:white;margin:0 12px 8px;border-radius:16px;padding:14px;box-shadow:0 1px 4px rgba(0,0,0,.07);}
-.weight-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;}
-.weight-title{font-size:14px;font-weight:700;}
-.weight-meta{font-size:12px;color:var(--text2);margin-top:3px;}
-.weight-input-row{display:flex;gap:8px;align-items:center;margin-bottom:10px;}
-.weight-input{flex:1;border:1.5px solid var(--border);border-radius:12px;padding:10px 14px;font-size:16px;outline:none;-webkit-appearance:none;}
-.weight-input:focus{border-color:var(--green);}
-.weight-save-btn{background:var(--green);color:white;border:none;border-radius:12px;padding:10px 16px;font-size:14px;font-weight:600;cursor:pointer;}
-.weight-chart{height:80px;margin-top:4px;}
-.weight-chart svg{width:100%;height:100%;}
-.weight-entries{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin-top:8px;}
-.weight-entries::-webkit-scrollbar{display:none;}
-.weight-entry{flex-shrink:0;background:var(--bg);border-radius:10px;padding:6px 10px;text-align:center;}
-.weight-entry-kg{font-size:13px;font-weight:700;}
-.weight-entry-date{font-size:10px;color:var(--text2);margin-top:1px;}
-.weight-entry.best{background:#D4EDDA;}
-.weight-entry.best .weight-entry-kg{color:#155724;}
-/* WEEKLY */
-.weekly-card{background:linear-gradient(135deg,#1e3a5f,#2563eb);color:white;margin:0 12px 8px;border-radius:16px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.15);}
-.weekly-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;}
-.weekly-title{font-size:16px;font-weight:700;}
-.weekly-week{font-size:12px;opacity:.75;margin-top:2px;}
-.weekly-pct{font-size:32px;font-weight:800;}
-.weekly-pct-label{font-size:11px;opacity:.7;}
-.weekly-bar-bg{background:rgba(255,255,255,.2);border-radius:4px;height:6px;margin-bottom:12px;overflow:hidden;}
-.weekly-bar-fill{height:6px;background:white;border-radius:4px;transition:width .6s;}
-.weekly-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:14px;}
-.weekly-stat{background:rgba(255,255,255,.12);border-radius:10px;padding:8px;text-align:center;}
-.weekly-stat-n{font-size:20px;font-weight:700;}
-.weekly-stat-l{font-size:10px;opacity:.75;margin-top:1px;}
-/* REWARDS */
-.rewards-card{background:white;margin:0 12px 8px;border-radius:16px;padding:14px;box-shadow:0 1px 4px rgba(0,0,0,.07);}
-.rewards-title{font-size:14px;font-weight:700;margin-bottom:4px;}
-.rewards-sub{font-size:12px;color:var(--text2);margin-bottom:12px;}
-.reward-level{margin-bottom:14px;}
-.reward-level-header{display:flex;align-items:center;gap:8px;margin-bottom:6px;}
-.reward-level-pct{font-size:12px;font-weight:700;padding:3px 9px;border-radius:10px;}
-.reward-level-name{font-size:13px;font-weight:600;}
-.reward-locked-msg{font-size:12px;color:var(--text2);padding:8px 10px;background:var(--bg);border-radius:10px;}
-.reward-items{display:flex;flex-direction:column;gap:6px;}
-.reward-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;border:1.5px solid var(--border);cursor:pointer;transition:all .15s;}
-.reward-item.chosen{border-color:var(--green);background:#f0faf5;}
-.reward-item:active{background:#f8f8f8;}
-.reward-check{width:20px;height:20px;border-radius:10px;border:2px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .15s;}
-.reward-item.chosen .reward-check{background:var(--green);border-color:var(--green);}
-.reward-text{font-size:13px;line-height:1.35;}
-/* MISC */
-.money-card{background:white;margin:0 12px 8px;border-radius:16px;padding:14px;box-shadow:0 1px 4px rgba(0,0,0,.07);}
-.money-title{font-size:12px;font-weight:600;color:var(--text2);margin-bottom:10px;text-transform:uppercase;letter-spacing:.04em;}
-.money-row{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid var(--bg);}
-.money-row:last-child{border:none;}
-.money-label{font-size:13px;color:var(--text);}
-.money-amount{font-size:14px;font-weight:600;}
-.money-total{display:flex;justify-content:space-between;margin-top:8px;padding-top:8px;border-top:2px solid var(--border);}
-.money-total span{font-size:14px;font-weight:700;}
-.progress-section{padding:10px 16px 4px;}
-.prog-row{display:flex;align-items:center;gap:8px;margin-bottom:6px;}
-.prog-dot{width:9px;height:9px;border-radius:5px;flex-shrink:0;}
-.prog-label{font-size:12px;color:var(--text2);width:100px;flex-shrink:0;}
-.prog-bg{flex:1;height:5px;border-radius:3px;background:var(--border);overflow:hidden;}
-.prog-fill{height:5px;border-radius:3px;transition:width .4s;}
-.prog-pct{font-size:11px;color:var(--text2);width:30px;text-align:right;}
-.tomorrow-banner{background:linear-gradient(135deg,#2563eb,#1d4ed8);color:white;margin:6px 12px 8px;border-radius:16px;padding:14px 16px;text-align:center;}
-.tomorrow-banner h3{font-size:15px;font-weight:700;margin-bottom:4px;}
-.tomorrow-banner p{font-size:12px;opacity:.85;}
-.tmr-btn{margin-top:10px;background:white;color:#1d4ed8;border:none;border-radius:10px;padding:10px 20px;font-size:14px;font-weight:600;cursor:pointer;}
-.empty-ok{text-align:center;padding:2rem 1rem;color:var(--text2);}
-.empty-ok div{font-size:36px;margin-bottom:8px;}
-.empty-ok p{font-size:14px;}
-.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:200;display:flex;align-items:center;justify-content:center;padding:20px;}
-.modal{background:white;border-radius:20px;padding:26px;max-width:340px;width:100%;text-align:center;}
-.modal h2{font-size:22px;font-weight:700;margin-bottom:10px;}
-.modal p{font-size:14px;color:var(--text2);line-height:1.55;margin-bottom:20px;}
-.modal-btn{background:var(--green);color:white;border:none;border-radius:14px;padding:14px 32px;font-size:16px;font-weight:600;cursor:pointer;width:100%;}
+:root{
+  --leather:#231A14; --leather2:#3A2A1E; --stitch:#6B5138;
+  --paper:#F4EEDF; --paper-dark:#EAE2CE; --rule:#D8CDB4; --margin:#C84B3A;
+  --ink:#2A2520; --ink-soft:#5C5347; --gold:#B98A2F; --green:#3F7A4F; --red:#A8372A;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{
+  font-family:'PT Serif',Georgia,serif;color:var(--ink);min-height:100vh;
+  background:
+    radial-gradient(ellipse at 30% 20%, rgba(255,255,255,.04), transparent 50%),
+    repeating-linear-gradient(115deg, rgba(0,0,0,.12) 0 2px, transparent 2px 7px),
+    linear-gradient(160deg, var(--leather2), var(--leather) 70%);
+  background-attachment:fixed;
+}
+#book{max-width:520px;margin:0 auto;padding:14px 10px calc(86px + env(safe-area-inset-bottom));min-height:100vh;
+  perspective:1400px}
+
+/* ---- обложка-шапка ---- */
+.cover{display:flex;justify-content:space-between;align-items:center;padding:6px 8px 14px;color:#D9C9A8}
+.cover .title{font-family:'Oranienbaum',serif;font-size:1.3rem;letter-spacing:.06em}
+.cover .title small{display:block;font-family:'Caveat',cursive;font-size:.95rem;color:#A98F63;letter-spacing:.02em}
+.cover .medal{font-family:'Caveat',cursive;font-size:1.05rem;text-align:right;line-height:1.25;color:#D9C9A8}
+
+/* ---- страница ---- */
+.page{
+  background:
+    repeating-linear-gradient(to bottom, transparent 0 27px, var(--rule) 27px 28px),
+    linear-gradient(95deg, var(--paper-dark), var(--paper) 12%);
+  border-radius:4px 14px 14px 4px;
+  box-shadow: -4px 0 0 #DCD2BB, -7px 0 0 #CFC4AA, 0 14px 34px rgba(0,0,0,.55);
+  padding:20px 16px 22px 38px; position:relative; min-height:62vh;
+  transform-origin:left center; transition:transform .38s ease, opacity .3s ease;
+}
+.page::before{ /* красное поле */
+  content:""; position:absolute; left:26px; top:0; bottom:0; width:1.5px; background:var(--margin); opacity:.55;
+}
+.page.flip-out{transform:rotateY(-78deg); opacity:.15}
+.page-head{display:flex;justify-content:space-between;align-items:baseline;border-bottom:2px solid var(--ink);
+  padding-bottom:6px;margin-bottom:12px}
+.page-date{font-family:'Oranienbaum',serif;font-size:1.32rem;letter-spacing:.02em}
+.page-no{font-family:'Caveat',cursive;color:var(--ink-soft);font-size:1rem}
+.page-sub{font-family:'Caveat',cursive;font-size:1.15rem;color:var(--ink-soft);margin:-6px 0 10px}
+
+/* листание */
+.pager{display:flex;justify-content:space-between;align-items:center;margin-top:14px}
+.pager button{font-family:'PT Serif',serif;background:none;border:1.5px solid var(--ink-soft);color:var(--ink);
+  border-radius:8px;padding:8px 14px;font-size:.86rem;cursor:pointer}
+.pager button:disabled{opacity:.35}
+.pager .today-jump{font-family:'Caveat',cursive;font-size:1.05rem;color:var(--gold);background:none;border:none;cursor:pointer}
+
+/* ---- прогресс пером ---- */
+.daymeter{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.daymeter .track{flex:1;height:8px;background:rgba(0,0,0,.08);border-radius:4px;overflow:hidden}
+.daymeter .track>div{height:100%;background:linear-gradient(90deg,var(--gold),#D8B45E);transition:width .3s}
+.daymeter .pct{font-family:'Oranienbaum',serif;font-size:1.05rem;min-width:44px;text-align:right}
+.reward-line{font-family:'Caveat',cursive;font-size:1.08rem;color:var(--ink-soft);margin:-4px 0 10px;min-height:1.2em}
+
+/* ---- записи (задачи) ---- */
+.entry-h{font-family:'Oranienbaum',serif;font-size:1.02rem;margin:14px 0 4px;display:flex;align-items:baseline;gap:8px}
+.entry-h .cnt{font-family:'Caveat',cursive;font-size:.95rem;color:var(--ink-soft);margin-left:auto}
+.entry{border-bottom:1px dotted rgba(0,0,0,.14)}
+.entry-row{display:flex;gap:11px;align-items:flex-start;padding:8px 0;cursor:pointer}
+.box{width:21px;height:21px;min-width:21px;border:1.8px solid var(--ink);border-radius:3px;margin-top:1px;
+  display:flex;align-items:center;justify-content:center;font-size:1rem;color:var(--green);
+  background:rgba(255,255,255,.4)}
+.entry.done .box::after{content:"✗";font-weight:700;font-family:'Caveat',cursive;font-size:1.25rem;line-height:1}
+.entry.done .e-title{text-decoration:line-through;color:var(--ink-soft)}
+.e-title{flex:1;font-size:.95rem;line-height:1.4}
+.e-meta{font-family:'Caveat',cursive;font-size:.95rem;color:var(--ink-soft)}
+.e-meta .urgent{color:var(--red);font-weight:700}
+.e-flip{color:var(--ink-soft);font-size:.85rem;padding-top:3px;transition:transform .2s}
+.entry.open .e-flip{transform:rotate(90deg)}
+.e-detail{display:none;padding:2px 0 12px 32px}
+.entry.open .e-detail{display:block}
+.note-hint{font-family:'Caveat',cursive;font-size:1.12rem;line-height:1.45;color:#473E33;
+  background:rgba(185,138,47,.08);border-left:3px solid var(--gold);padding:8px 11px;border-radius:0 6px 6px 0;
+  white-space:pre-line}
+.note-hint b{color:var(--margin)}
+.step{display:flex;gap:9px;padding:6px 0 0;cursor:pointer;font-size:.89rem;line-height:1.35;align-items:flex-start}
+.step .sbox{width:16px;height:16px;min-width:16px;border:1.6px solid var(--ink-soft);border-radius:3px;margin-top:2px;
+  display:flex;align-items:center;justify-content:center}
+.step.sdone{color:var(--ink-soft);text-decoration:line-through}
+.step.sdone .sbox::after{content:"✗";font-family:'Caveat',cursive;color:var(--green);font-size:1rem;line-height:1}
+
+/* фильтры-вкладки в миссиях */
+.tags{display:flex;gap:6px;overflow-x:auto;padding:2px 0 10px;scrollbar-width:none}
+.tags::-webkit-scrollbar{display:none}
+.tag{white-space:nowrap;font-family:'Caveat',cursive;font-size:1.02rem;border:1.5px solid var(--ink-soft);
+  background:none;color:var(--ink-soft);border-radius:16px;padding:4px 12px;cursor:pointer}
+.tag.on{border-color:var(--margin);color:var(--margin);font-weight:700}
+
+/* финансовая выписка */
+.ledger{border:1.5px solid var(--ink);border-radius:6px;padding:10px 12px;margin:6px 0 14px;background:rgba(255,255,255,.35)}
+.ledger h4{font-family:'Oranienbaum',serif;font-size:.98rem;margin-bottom:6px}
+.ledger .lrow{display:flex;justify-content:space-between;font-size:.86rem;padding:3.5px 0;border-bottom:1px dotted rgba(0,0,0,.15)}
+.ledger .lrow:last-child{border:none}
+.lrow .lv{font-weight:700}
+.lv.p{color:var(--green)} .lv.m{color:var(--red)} .lv.g{color:var(--gold)}
+
+/* вес/график */
+svg.chart{width:100%;height:160px;background:rgba(255,255,255,.4);border:1px solid var(--rule);border-radius:6px;margin-top:8px}
+.w-input{display:flex;gap:8px;margin:10px 0 4px}
+input,textarea{font-family:'PT Serif',serif;background:rgba(255,255,255,.55);border:1.5px solid var(--ink-soft);
+  border-radius:6px;color:var(--ink);padding:10px;font-size:.95rem;width:100%}
+textarea{min-height:64px;line-height:1.45;resize:vertical}
+.btn{font-family:'PT Serif',serif;font-weight:700;border:none;border-radius:7px;padding:11px 16px;cursor:pointer;font-size:.9rem}
+.btn-ink{background:var(--ink);color:var(--paper)}
+.btn-gold{background:var(--gold);color:#fff}
+.btn-line{background:none;border:1.5px solid var(--ink-soft);color:var(--ink)}
+
+/* недельный отчёт */
+.q-label{font-family:'Oranienbaum',serif;font-size:.96rem;margin:13px 0 5px}
+.q-sub{font-family:'Caveat',cursive;font-size:1rem;color:var(--ink-soft);margin:-3px 0 5px}
+.addtask-row{display:flex;gap:8px;margin-top:6px}
+.custom-del{font-family:'Caveat',cursive;color:var(--red);background:none;border:none;font-size:1rem;cursor:pointer;padding-top:5px}
+
+/* тост-печать */
+.stamp{position:fixed;left:50%;bottom:100px;transform:translateX(-50%) rotate(-3deg);
+  border:2.5px solid var(--margin);color:var(--margin);font-family:'Oranienbaum',serif;
+  padding:7px 16px;border-radius:6px;background:rgba(244,238,223,.96);font-size:.95rem;letter-spacing:.05em;
+  opacity:0;pointer-events:none;transition:opacity .25s;z-index:60;box-shadow:0 6px 18px rgba(0,0,0,.35);white-space:nowrap}
+.stamp.show{opacity:1}
+
+/* ---- закладки-ленты ---- */
+.ribbons{position:fixed;bottom:0;left:0;right:0;z-index:20;display:flex;justify-content:center;gap:8px;
+  padding:9px 8px max(10px, env(safe-area-inset-bottom));
+  background:linear-gradient(to top, rgba(20,14,10,.97), rgba(20,14,10,.85));border-top:1px solid #4A382A}
+.ribbon{
+  font-family:'Oranienbaum',serif;font-size:.8rem;letter-spacing:.04em;
+  color:#C9B58E;background:linear-gradient(180deg,#4A382A,#37281D);border:1px solid #5C4630;border-bottom:none;
+  border-radius:6px 6px 0 0;padding:9px 13px 11px;cursor:pointer;position:relative;top:0;transition:top .15s, color .15s}
+.ribbon.on{color:#F3E2BC;top:-4px;background:linear-gradient(180deg,#6B4F33,#4A382A);border-color:var(--gold)}
+.screen{display:none}.screen.on{display:block}
+.empty{font-family:'Caveat',cursive;text-align:center;color:var(--ink-soft);font-size:1.1rem;padding:18px}
+@media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
 </style>
 </head>
 <body>
-<div class="header">
-  <h1>🎯 План Арсений 2026</h1>
-  <div class="header-sub" id="hdate"></div>
-  <div class="header-goal">Цель: €25 000-30 000/мес · Минимум €10к через 6 мес</div>
-  <div class="overall-bar"><div class="overall-fill" id="ofill" style="width:0%"></div></div>
-  <div class="overall-pct" id="opct"></div>
-</div>
-<div class="tabs" id="tabs"></div>
-<div class="content" id="content"></div>
-<div class="modal-overlay" id="startModal" style="display:none;">
-  <div class="modal">
-    <h2>🚀 Старт!</h2>
-    <p>Фиксируем сегодня как <strong>День 1</strong> твоего плана.<br>Каждый день будут открываться новые задачи автоматически.</p>
-    <button class="modal-btn" onclick="confirmStart()">Начать прямо сейчас</button>
+<div id="book">
+  <div class="cover">
+    <div class="title">ПЛАН · 2026<small>ежедневник Арсения</small></div>
+    <div class="medal">серия: <span id="b-streak">0</span> 🔥<br>опыт: <span id="b-xp">0</span> ✦</div>
+  </div>
+
+  <!-- СТРАНИЦА ДНЯ -->
+  <div class="screen on" id="s-day">
+    <div class="page" id="day-page"></div>
+  </div>
+
+  <!-- МИССИИ -->
+  <div class="screen" id="s-missions">
+    <div class="page">
+      <div class="page-head"><div class="page-date">Миссии года</div><div class="page-no">реестр</div></div>
+      <div class="ledger">
+        <h4>Выписка по финансам</h4>
+        <div class="lrow"><span>Цель: доход в месяц</span><span class="lv g">€10k → €25–30k</span></div>
+        <div class="lrow"><span>Frederik (Кассель), предоплата</span><span class="lv p">+€10–12k ожид.</span></div>
+        <div class="lrow"><span>Ford Transit — продажа</span><span class="lv p">+€2.5–3k</span></div>
+        <div class="lrow"><span>Долг Segurança Social</span><span class="lv m">−€9 816</span></div>
+        <div class="lrow"><span>Личный долг</span><span class="lv m">−€5 000</span></div>
+      </div>
+      <div class="tags" id="tags"></div>
+      <div id="mission-list"></div>
+    </div>
+  </div>
+
+  <!-- ВЕС -->
+  <div class="screen" id="s-weight">
+    <div class="page">
+      <div class="page-head"><div class="page-date">Вес и форма</div><div class="page-no">130 → 110</div></div>
+      <div class="page-sub">взвешивание — каждый понедельник, натощак</div>
+      <div class="w-input">
+        <input type="number" inputmode="decimal" step="0.1" id="w-val" placeholder="Вес, кг">
+        <button class="btn btn-ink" onclick="addWeight()">Вписать</button>
+      </div>
+      <svg class="chart" id="w-chart" viewBox="0 0 340 160" preserveAspectRatio="none"></svg>
+      <div class="q-sub" id="w-last"></div>
+      <div class="entry-h" style="margin-top:18px">Квест трезвости</div>
+      <div class="q-sub">этапы 1 → 7 → 30 → 90 · отметка — на странице дня</div>
+      <div style="font-family:'Oranienbaum',serif;font-size:1.15rem" id="sober-count">Серия: 0 дней</div>
+    </div>
+  </div>
+
+  <!-- НЕДЕЛЯ -->
+  <div class="screen" id="s-week">
+    <div class="page" id="week-page"></div>
+  </div>
+
+  <div class="stamp" id="stamp"></div>
+
+  <div class="ribbons">
+    <button class="ribbon on" id="r-day" onclick="show('day')">День</button>
+    <button class="ribbon" id="r-missions" onclick="show('missions')">Миссии</button>
+    <button class="ribbon" id="r-weight" onclick="show('weight')">Вес</button>
+    <button class="ribbon" id="r-week" onclick="show('week')">Неделя</button>
   </div>
 </div>
 <script>
-const BLOCKS=[
-  {id:'sales',label:'💰 Продажи',color:'#1D9E75'},
-  {id:'legal',label:'⚖️ Юридические',color:'#D85A30'},
-  {id:'ai',label:'🤖 AI проекты',color:'#7F77DD'},
-  {id:'health',label:'💪 Здоровье',color:'#639922'},
-  {id:'study',label:'📚 Учёба',color:'#C9A227'},
-  {id:'family',label:'👨‍👩‍👧‍👧 Семья',color:'#BA7517'},
-];
-const TASKS=[
-  {id:'s1',block:'sales',day:0,text:'Открыть список 12 контактов — отправить письмо-представление первым 6 компаниям (составить с Claude)',tag:'письма',tc:'#FAECE7',tt:'#993C1D'},
-  {id:'s2',block:'sales',day:0,text:'Отправить письмо-представление оставшимся 6 компаниям из списка',tag:'письма',tc:'#FAECE7',tt:'#993C1D'},
-  {id:'s3',block:'sales',day:0,text:'Связаться с Вадимом — договориться о звонке для обсуждения рекламы окон',tag:'Вадим',tc:'#FAECE7',tt:'#993C1D'},
-  {id:'l1',block:'legal',day:0,text:'Отправить письмо в SIRENE через CTT + копия Título de Residência',tag:'срочно',tc:'#FAECE7',tt:'#993C1D'},
-  {id:'l2',block:'legal',day:0,text:'Позвонить в Segurança Social — записаться на приём по рассрочке долга €9 816',tag:'срочно',tc:'#FAECE7',tt:'#993C1D'},
-  {id:'h1',block:'health',day:0,text:'Встать на весы — записать стартовый вес во вкладке Неделя',tag:'старт',tc:'#FFF3CD',tt:'#856404'},
-  {id:'h2',block:'health',day:0,text:'🚫 АЛКОГОЛЬ — День 1. Старт полного отказа.',tag:'КВЕСТ',tc:'#FAECE7',tt:'#993C1D'},
-  {id:'h3',block:'health',day:0,text:'🚬 КУРЕНИЕ — записать сколько сигарет в день сейчас',tag:'старт',tc:'#FFF3CD',tt:'#856404'},
-  {id:'e1',block:'study',day:0,text:'🇬🇧 Английский день 1 — написать Claude 5 предложений о сегодняшнем дне',tag:'ежедневно',tc:'#EAF3DE',tt:'#3B6D11'},
-  {id:'f1',block:'family',day:0,text:'1 час с Миланой и Амелией — без телефона, без отвлечений',tag:'ежедневно',tc:'#FAEEDA',tt:'#854F0B'},
-  {id:'s4',block:'sales',day:1,text:'Позвонить 3 компаниям из вчерашней рассылки — получили ли письмо, есть ли интерес',tag:'звонки',tc:'#FAECE7',tt:'#993C1D'},
-  {id:'s5',block:'sales',day:1,text:'Позвонить ещё 3 компаниям — скрипт: "Artech, алюминий и ПВХ, есть ли потребность?"',tag:'звонки',tc:'#FAECE7',tt:'#993C1D'},
-  {id:'s6',block:'sales',day:1,text:'Найти 5 новых контактов: строительные компании Португалии (LinkedIn + Google Maps)',tag:'поиск',tc:'#E6F1FB',tt:'#185FA5'},
-  {id:'s7',block:'sales',day:1,text:'Вадим — провести звонок: площадки, бюджет, условия оплаты после живого клиента',tag:'Вадим',tc:'#FAECE7',tt:'#993C1D'},
-  {id:'l3',block:'legal',day:1,text:'Проверить почту — ответ от AIMA на письмо от 28 мая',tag:'проверка',tc:'#FAECE7',tt:'#993C1D'},
-  {id:'h4',block:'health',day:1,text:'Прогулка 30 минут — утром или вечером',tag:'спорт',tc:'#EAF3DE',tt:'#3B6D11'},
-  {id:'e2',block:'study',day:1,text:'🇬🇧 Английский день 2 — перевести с Claude 5 бизнес-фраз на английский',tag:'ежедневно',tc:'#EAF3DE',tt:'#3B6D11'},
-  {id:'f2',block:'family',day:1,text:'1 час с детьми без телефона',tag:'ежедневно',tc:'#FAEEDA',tt:'#854F0B'},
-  {id:'s8',block:'sales',day:2,text:'Follow-up письмо всем 12 кто не ответил — "Хотел уточнить, получили ли письмо?"',tag:'follow-up',tc:'#FAECE7',tt:'#993C1D'},
-  {id:'s9',block:'sales',day:2,text:'Позвонить 3 новым контактам из расширенного списка',tag:'звонки',tc:'#FAECE7',tt:'#993C1D'},
-  {id:'s10',block:'sales',day:2,text:'Подготовить с Claude КП на алюминиевые конструкции — 1 страница PDF',tag:'КП',tc:'#E6F1FB',tt:'#185FA5'},
-  {id:'s11',block:'sales',day:2,text:'Найти 5 контактов: архитекторы и дизайнеры интерьеров Португалии',tag:'поиск',tc:'#E6F1FB',tt:'#185FA5'},
-  {id:'l4',block:'legal',day:2,text:'Нет ответа от AIMA → написать через contactenos.aima.gov.pt',tag:'AIMA',tc:'#E6F1FB',tt:'#185FA5'},
-  {id:'h5',block:'health',day:2,text:'Бассейн — первая тренировка недели, 30-45 минут',tag:'спорт',tc:'#EAF3DE',tt:'#3B6D11'},
-  {id:'e3',block:'study',day:2,text:'🇬🇧 Английский день 3 — выучить 10 бизнес-слов с Claude',tag:'ежедневно',tc:'#EAF3DE',tt:'#3B6D11'},
-  {id:'f3',block:'family',day:2,text:'1 час с детьми без телефона',tag:'ежедневно',tc:'#FAEEDA',tt:'#854F0B'},
-  {id:'s12',block:'sales',day:3,text:'Позвонить 4 компаниям — приоритет тем кто открыл письмо или ответил',tag:'звонки',tc:'#FAECE7',tt:'#993C1D'},
-  {id:'s13',block:'sales',day:3,text:'Отправить КП 3 самым заинтересованным контактам',tag:'КП',tc:'#FAECE7',tt:'#993C1D'},
-  {id:'s14',block:'sales',day:3,text:'Написать поставщикам Reynaers и Cortizo — запросить дилерские условия для Португалии',tag:'поставщики',tc:'#E6F1FB',tt:'#185FA5'},
-  {id:'a1',block:'ai',day:3,text:'AI — позвонить знакомому владельцу бизнеса: предложить Екатерину бесплатно на 2 недели',tag:'AI',tc:'#EEEDFE',tt:'#3C3489'},
-  {id:'l5',block:'legal',day:3,text:'Прийти в Segurança Social — подписать рассрочку + взять справку Em Regularização',tag:'визит',tc:'#FFF3CD',tt:'#856404'},
-  {id:'h6',block:'health',day:3,text:'Скакалка 20 минут вечером',tag:'спорт',tc:'#EAF3DE',tt:'#3B6D11'},
-  {id:'e4',block:'study',day:3,text:'🇬🇧 Английский день 4 — написать короткое деловое письмо на английском с Claude',tag:'ежедневно',tc:'#EAF3DE',tt:'#3B6D11'},
-  {id:'f4',block:'family',day:3,text:'1 час с детьми без телефона',tag:'ежедневно',tc:'#FAEEDA',tt:'#854F0B'},
-  {id:'s15',block:'sales',day:4,text:'Позвонить 4 компаниям — follow-up по КП отправленным вчера',tag:'звонки',tc:'#FAECE7',tt:'#993C1D'},
-  {id:'s16',block:'sales',day:4,text:'Расширить базу до 25 контактов — добавить испанские приграничные компании',tag:'поиск',tc:'#E6F1FB',tt:'#185FA5'},
-  {id:'s17',block:'sales',day:4,text:'Вадим — согласовать текст рекламного объявления и что нужно для запуска',tag:'Вадим',tc:'#FAECE7',tt:'#993C1D'},
-  {id:'s18',block:'sales',day:4,text:'Написать 5 новым контактам из расширенного списка',tag:'письма',tc:'#E6F1FB',tt:'#185FA5'},
-  {id:'h7',block:'health',day:4,text:'Бассейн — второй раз на этой неделе',tag:'спорт',tc:'#EAF3DE',tt:'#3B6D11'},
-  {id:'e5',block:'study',day:4,text:'🇬🇧 Английский день 5 — разговорная практика с Claude: 10 вопросов-ответов',tag:'ежедневно',tc:'#EAF3DE',tt:'#3B6D11'},
-  {id:'f5',block:'family',day:4,text:'1 час с детьми без телефона',tag:'ежедневно',tc:'#FAEEDA',tt:'#854F0B'},
-  {id:'s19',block:'sales',day:5,text:'Позвонить 3 компаниям у которых есть вопросы по КП — закрыть возражения',tag:'переговоры',tc:'#FAECE7',tt:'#993C1D'},
-  {id:'s20',block:'sales',day:5,text:'Написать 5 письмам новым контактам (архитекторы, дизайнеры)',tag:'письма',tc:'#E6F1FB',tt:'#185FA5'},
-  {id:'s21',block:'sales',day:5,text:'Рекрутинг — найти 3 немецкие компании которым нужны строители, отправить письмо',tag:'рекрутинг',tc:'#EEEDFE',tt:'#3C3489'},
-  {id:'a2',block:'ai',day:5,text:'AI — написать предложение 1 салону красоты в Портимане: €150/мес, тест 2 недели',tag:'AI',tc:'#EEEDFE',tt:'#3C3489'},
-  {id:'h8',block:'health',day:5,text:'Прогулка 45 минут',tag:'спорт',tc:'#EAF3DE',tt:'#3B6D11'},
-  {id:'e6',block:'study',day:5,text:'🇬🇧 Английский день 6 — перевести своё КП на английский с Claude',tag:'ежедневно',tc:'#EAF3DE',tt:'#3B6D11'},
-  {id:'f6',block:'family',day:5,text:'1 час с детьми без телефона',tag:'ежедневно',tc:'#FAEEDA',tt:'#854F0B'},
-  {id:'s22',block:'sales',day:6,text:'📊 Итог недели 1: письма / звонки / ответы / встречи — записать цифры',tag:'анализ',tc:'#FFF3CD',tt:'#856404'},
-  {id:'s23',block:'sales',day:6,text:'Позвонить 2 самым горячим контактам — попытка закрыть встречу или договор',tag:'звонки',tc:'#FAECE7',tt:'#993C1D'},
-  {id:'s24',block:'sales',day:6,text:'Ответить на все входящие письма от клиентов',tag:'ответы',tc:'#FAECE7',tt:'#993C1D'},
-  {id:'h9',block:'health',day:6,text:'🏅 АЛКОГОЛЬ — День 7. Первая неделя без! Отметить в приложении.',tag:'КВЕСТ',tc:'#D4EDDA',tt:'#155724'},
-  {id:'h10',block:'health',day:6,text:'Бассейн — третий раз за неделю',tag:'спорт',tc:'#EAF3DE',tt:'#3B6D11'},
-  {id:'e7',block:'study',day:6,text:'🇬🇧 Английский — 7 дней подряд! Первый квест выполнен.',tag:'КВЕСТ',tc:'#D4EDDA',tt:'#155724'},
-  {id:'f7',block:'family',day:6,text:'Выезд с семьёй — заслуженный отдых',tag:'выходные',tc:'#FAEEDA',tt:'#854F0B'},
-  {id:'w1',block:'health',day:7,text:'⚖️ ПОНЕДЕЛЬНИК — взвешивание! Открой вкладку Неделя и запиши вес.',tag:'вес',tc:'#FFF3CD',tt:'#856404'},
-  {id:'sc1',block:'study',day:7,text:'Школа IEFP — занятие в понедельник. Проверить расписание.',tag:'школа',tc:'#E6F1FB',tt:'#185FA5'},
-  {id:'s25',block:'sales',day:7,text:'Новая рассылка — написать 10 компаниям из расширенной базы',tag:'письма',tc:'#FAECE7',tt:'#993C1D'},
-  {id:'s26',block:'sales',day:7,text:'Позвонить 5 компаниям — ежедневная норма недели 2',tag:'звонки',tc:'#FAECE7',tt:'#993C1D'},
-  {id:'s27',block:'sales',day:7,text:'Вадим — проверить первые результаты рекламы',tag:'Вадим',tc:'#FAECE7',tt:'#993C1D'},
-  {id:'h11',block:'health',day:7,text:'Бассейн',tag:'спорт',tc:'#EAF3DE',tt:'#3B6D11'},
-  {id:'s28',block:'sales',day:8,text:'Позвонить 5 компаниям — фокус на тех кто открыл письмо',tag:'звонки',tc:'#FAECE7',tt:'#993C1D'},
-  {id:'s29',block:'sales',day:8,text:'Обработать лиды от Вадима — квалифицировать, расставить приоритеты',tag:'Вадим',tc:'#E6F1FB',tt:'#185FA5'},
-  {id:'a3',block:'ai',day:8,text:'AI — позвонить в 3 салона красоты Портимана с предложением Екатерины',tag:'AI',tc:'#EEEDFE',tt:'#3C3489'},
-  {id:'h12',block:'health',day:8,text:'Прогулка 45 мин + скакалка 20 мин',tag:'спорт',tc:'#EAF3DE',tt:'#3B6D11'},
-  {id:'s30',block:'sales',day:9,text:'Провести 2 живых переговора/zoom с клиентами — договориться о сделке',tag:'переговоры',tc:'#FAECE7',tt:'#993C1D'},
-  {id:'s31',block:'sales',day:9,text:'Написать 10 новым контактам — строительные компании Лиссабона и Порто',tag:'письма',tc:'#E6F1FB',tt:'#185FA5'},
-  {id:'s32',block:'sales',day:9,text:'Рекрутинг — 3 письма немецким компаниям с предложением подбора рабочих',tag:'рекрутинг',tc:'#EEEDFE',tt:'#3C3489'},
-  {id:'h13',block:'health',day:9,text:'Бассейн',tag:'спорт',tc:'#EAF3DE',tt:'#3B6D11'},
-  {id:'sc2',block:'study',day:10,text:'Школа IEFP — занятие в четверг.',tag:'школа',tc:'#E6F1FB',tt:'#185FA5'},
-  {id:'s33',block:'sales',day:10,text:'Позвонить 5 компаниям',tag:'звонки',tc:'#FAECE7',tt:'#993C1D'},
-  {id:'s34',block:'sales',day:10,text:'Follow-up всем кто не ответил за 2 недели — последнее письмо',tag:'follow-up',tc:'#E6F1FB',tt:'#185FA5'},
-  {id:'a4',block:'ai',day:10,text:'AI — провести демо Екатерины для заинтересованного салона',tag:'AI',tc:'#EEEDFE',tt:'#3C3489'},
-  {id:'h14',block:'health',day:10,text:'Прогулка 45 мин',tag:'спорт',tc:'#EAF3DE',tt:'#3B6D11'},
-  {id:'s35',block:'sales',day:11,text:'Позвонить 5 компаниям',tag:'звонки',tc:'#FAECE7',tt:'#993C1D'},
-  {id:'s36',block:'sales',day:11,text:'Подготовить шаблон договора на первую сделку с Claude',tag:'договор',tc:'#E6F1FB',tt:'#185FA5'},
-  {id:'s37',block:'sales',day:11,text:'Вадим — итог 2х недель рекламы: лиды, стоимость, план',tag:'Вадим',tc:'#E6F1FB',tt:'#185FA5'},
-  {id:'h15',block:'health',day:11,text:'Бассейн',tag:'спорт',tc:'#EAF3DE',tt:'#3B6D11'},
-  {id:'s38',block:'sales',day:12,text:'📊 Итог 2й недели: звонки / письма / ответы / встречи / деньги в трубе',tag:'анализ',tc:'#FFF3CD',tt:'#856404'},
-  {id:'s39',block:'sales',day:12,text:'🏆 Цель: закрыть первую сделку — договор + депозит',tag:'ЦЕЛЬ',tc:'#D4EDDA',tt:'#155724'},
-  {id:'h16',block:'health',day:12,text:'Скакалка 30 мин',tag:'спорт',tc:'#EAF3DE',tt:'#3B6D11'},
-  {id:'f8',block:'family',day:12,text:'Выезд с семьёй — заработанный отдых',tag:'выходные',tc:'#FAEEDA',tt:'#854F0B'},
-  {id:'w2',block:'health',day:14,text:'⚖️ ПОНЕДЕЛЬНИК — взвешивание! Фиксируем динамику.',tag:'вес',tc:'#FFF3CD',tt:'#856404'},
-  {id:'sc3',block:'study',day:14,text:'Школа IEFP — занятие в понедельник.',tag:'школа',tc:'#E6F1FB',tt:'#185FA5'},
-  {id:'s40',block:'sales',day:14,text:'Новая рассылка — 20 компаний Португалии + 5 испанских',tag:'письма',tc:'#FAECE7',tt:'#993C1D'},
-  {id:'s41',block:'sales',day:14,text:'Позвонить 5 компаниям',tag:'звонки',tc:'#FAECE7',tt:'#993C1D'},
-  {id:'h17',block:'health',day:14,text:'Бассейн',tag:'спорт',tc:'#EAF3DE',tt:'#3B6D11'},
-  {id:'w3',block:'health',day:21,text:'⚖️ ПОНЕДЕЛЬНИК — взвешивание!',tag:'вес',tc:'#FFF3CD',tt:'#856404'},
-  {id:'sc4',block:'study',day:21,text:'Школа IEFP — занятие в понедельник.',tag:'школа',tc:'#E6F1FB',tt:'#185FA5'},
-  {id:'s42',block:'sales',day:21,text:'Новая рассылка — 30 новых контактов',tag:'письма',tc:'#FAECE7',tt:'#993C1D'},
-  {id:'s43',block:'sales',day:21,text:'Позвонить 5 компаниям',tag:'звонки',tc:'#FAECE7',tt:'#993C1D'},
-  {id:'h18',block:'health',day:21,text:'Бассейн',tag:'спорт',tc:'#EAF3DE',tt:'#3B6D11'},
-  {id:'g1',block:'sales',day:30,text:'🏆 Цель месяца 1: минимум 1 закрытая сделка. €2 000-5 000 в кассе.',tag:'ЦЕЛЬ',tc:'#D4EDDA',tt:'#155724'},
-  {id:'g2',block:'legal',day:30,text:'Закрыть долг SS — первый платёж по рассрочке',tag:'долги',tc:'#FAECE7',tt:'#993C1D'},
-  {id:'g3',block:'health',day:30,text:'🥇 АЛКОГОЛЬ — 30 дней без! Заслужил награду.',tag:'КВЕСТ',tc:'#D4EDDA',tt:'#155724'},
-  {id:'g4',block:'health',day:30,text:'Контрольный вес — цель минус 3-4 кг от старта',tag:'вес',tc:'#FFF3CD',tt:'#856404'},
-  {id:'g5',block:'ai',day:30,text:'AI — минимум 1 платящий клиент Екатерина = €150/мес',tag:'AI',tc:'#EEEDFE',tt:'#3C3489'},
-  {id:'g6',block:'sales',day:60,text:'🏆 Цель месяца 2: €5 000-8 000/мес стабильно',tag:'ЦЕЛЬ',tc:'#D4EDDA',tt:'#155724'},
-  {id:'g7',block:'legal',day:60,text:'Закрыть личный долг €5 000 из поступлений',tag:'долги',tc:'#FAECE7',tt:'#993C1D'},
-  {id:'g8',block:'ai',day:60,text:'AI — 5 платящих клиентов = €750/мес пассивно',tag:'AI',tc:'#EEEDFE',tt:'#3C3489'},
-  {id:'g9',block:'sales',day:90,text:'🏆 Цель квартала: €10 000+/мес. Полпути к €25-30к.',tag:'ЦЕЛЬ',tc:'#D4EDDA',tt:'#155724'},
-  {id:'g10',block:'health',day:90,text:'🏆 АЛКОГОЛЬ — 90 дней! Три месяца новой жизни.',tag:'КВЕСТ',tc:'#D4EDDA',tt:'#155724'},
-  {id:'g11',block:'ai',day:90,text:'AI — 10 клиентов = €1 500/мес пассивно',tag:'AI',tc:'#EEEDFE',tt:'#3C3489'},
-  {id:'g12',block:'health',day:90,text:'Контрольный вес — цель минус 8-10 кг от старта',tag:'вес',tc:'#FFF3CD',tt:'#856404'},
-];
-const REWARDS={
-  50:[
-    {id:'r50_1',emoji:'\u2615',text:'\u0427\u0430\u0441 \u043B\u044E\u0431\u0438\u043C\u043E\u0433\u043E \u0441\u0435\u0440\u0438\u0430\u043B\u0430/\u0444\u0438\u043B\u044C\u043C\u0430 \u0431\u0435\u0437 \u0447\u0443\u0432\u0441\u0442\u0432\u0430 \u0432\u0438\u043D\u044B'},
-    {id:'r50_2',emoji:'\u{1F3A7}',text:'\u0414\u043B\u0438\u043D\u043D\u0430\u044F \u043F\u0440\u043E\u0433\u0443\u043B\u043A\u0430 \u0432 \u043E\u0434\u0438\u043D\u043E\u0447\u0435\u0441\u0442\u0432\u0435 \u0441 \u043C\u0443\u0437\u044B\u043A\u043E\u0439 \u0438\u043B\u0438 \u043F\u043E\u0434\u043A\u0430\u0441\u0442\u043E\u043C'},
-    {id:'r50_3',emoji:'\u2615',text:'\u0412\u043A\u0443\u0441\u043D\u044B\u0439 \u043A\u043E\u0444\u0435 \u0432 \u043A\u0430\u0444\u0435 \u0441 \u0443\u0442\u0440\u0430, \u043D\u0435 \u0434\u043E\u043C\u0430'},
-  ],
-  75:[
-    {id:'r75_1',emoji:'\u{1F3D6}',text:'\u041F\u043E\u0435\u0437\u0434\u043A\u0430 \u043D\u0430 \u043F\u043B\u044F\u0436 \u0441 \u0441\u0435\u043C\u044C\u0451\u0439 \u043D\u0430 \u043F\u043E\u043B\u0434\u043D\u044F'},
-    {id:'r75_2',emoji:'\u{1F486}',text:'\u041C\u0430\u0441\u0441\u0430\u0436 \u0432 \u041F\u043E\u0440\u0442\u0438\u043C\u0430\u043D\u0435 (~\u20AC30-40)'},
-    {id:'r75_3',emoji:'\u{1F4D6}',text:'\u041D\u043E\u0432\u0430\u044F \u043A\u043D\u0438\u0433\u0430 \u0438\u043B\u0438 \u0430\u0443\u0434\u0438\u043E\u043A\u043D\u0438\u0433\u0430 \u043A\u043E\u0442\u043E\u0440\u0443\u044E \u0434\u0430\u0432\u043D\u043E \u0445\u043E\u0442\u0435\u043B'},
-  ],
-  100:[
-    {id:'r100_1',emoji:'\u{1F37D}',text:'\u0423\u0436\u0438\u043D \u0432 \u0440\u0435\u0441\u0442\u043E\u0440\u0430\u043D\u0435 \u0432\u0434\u0432\u043E\u0451\u043C \u0441 \u041C\u0430\u0440\u0438\u043D\u043E\u0439 (\u0431\u0435\u0437 \u0434\u0435\u0442\u0435\u0439)'},
-    {id:'r100_2',emoji:'\u{1F4F5}',text:'\u0414\u0435\u043D\u044C \u043F\u043E\u043B\u043D\u043E\u0433\u043E \u043E\u0444\u043B\u0430\u0439\u043D\u0430 \u2014 \u0442\u0435\u043B\u0435\u0444\u043E\u043D \u0432\u044B\u043A\u043B\u044E\u0447\u0435\u043D, \u0442\u043E\u043B\u044C\u043A\u043E \u0441\u0435\u043C\u044C\u044F'},
-    {id:'r100_3',emoji:'\u{1F3CD}',text:'\u041A\u0430\u0442\u0430\u043D\u0438\u0435 \u043D\u0430 NTV \u043A\u0443\u0434\u0430 \u0445\u043E\u0447\u0435\u0448\u044C \u043D\u0430 \u043D\u0435\u0441\u043A\u043E\u043B\u044C\u043A\u043E \u0447\u0430\u0441\u043E\u0432'},
-  ]
+/* ============ ДАННЫЕ ============ days: 0=вс..6=сб */
+const BLOCKS = {
+  money:{ico:"💰",name:"Продажи и деньги"}, legal:{ico:"📋",name:"Юридика и документы"},
+  ai:{ico:"🤖",name:"AI · Aira"}, casas:{ico:"🏠",name:"Дома Carvoeiro"},
+  health:{ico:"❤️",name:"Здоровье"}, study:{ico:"📚",name:"Учёба"}, family:{ico:"👨‍👩‍👧‍👧",name:"Семья"}
 };
-const K_DONE='as_plan_done_v4',K_CARRY='as_plan_carry_v4',K_START='as_plan_start_v4',K_PREVIEW='as_plan_preview_v4',K_WEIGHT='as_plan_weight_v4',K_REWARD='as_plan_reward_v4';
-let done=new Set(JSON.parse(localStorage.getItem(K_DONE)||'[]'));
-let carried=new Set(JSON.parse(localStorage.getItem(K_CARRY)||'[]'));
-let startTs=localStorage.getItem(K_START)?parseInt(localStorage.getItem(K_START)):null;
-let previewOn=localStorage.getItem(K_PREVIEW)==='1';
-let weightData=JSON.parse(localStorage.getItem(K_WEIGHT)||'{"entries":[]}');
-let rewardData=JSON.parse(localStorage.getItem(K_REWARD)||'{}');
-function saveAll(){localStorage.setItem(K_DONE,JSON.stringify([...done]));localStorage.setItem(K_CARRY,JSON.stringify([...carried]));}
-function saveWeight(){localStorage.setItem(K_WEIGHT,JSON.stringify(weightData));}
-function saveReward(){localStorage.setItem(K_REWARD,JSON.stringify(rewardData));}
-function dayN(){return startTs?Math.floor((Date.now()-startTs)/86400000):0;}
-function isOpen(t){const d=dayN();if(t.day<=d)return true;if(previewOn&&t.day===d+1)return true;return false;}
-function reqOk(t){return!t.req||t.req.every(r=>done.has(r));}
-function isMonday(){return new Date().getDay()===1;}
-function weekKey(ts){const d=new Date(ts||Date.now()),j=new Date(d.getFullYear(),0,1),w=Math.ceil(((d-j)/86400000+j.getDay()+1)/7);return d.getFullYear()+'-'+String(w).padStart(2,'0');}
-let activeTab=0;
-function checkSvg(){return '<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7l3.5 3.5L12 4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';}
-function cardHtml(t,showCarry){
-  const isDone=done.has(t.id),isCarried=carried.has(t.id)&&!isDone,locked=!reqOk(t);
-  const blk=BLOCKS.find(b=>b.id===t.block);
-  let cls='task-card';
-  if(locked)cls+=' locked-card';if(isCarried)cls+=' carried-card';if(isDone)cls+=' done-card';
-  const cc=isDone?'done':(locked?'locked-c':'');
-  const ci=isDone?checkSvg():(locked?'🔒':'');
-  const carryBtn=(showCarry&&!isDone&&!locked)?`<button class="carry-btn ${isCarried?'is-carried':''}" onclick="doCarry(event,'${t.id}')">${isCarried?'🔄 перенесён':'→ перенести'}</button>`:'';
-  const miss=locked?TASKS.find(x=>(t.req||[]).includes(x.id)&&!done.has(x.id)):null;
-  const rh=miss?`<span style="font-size:11px;color:var(--text2)">⏳ сначала: ${miss.text.substring(0,48)}…</span>`:'';
-  return `<div class="${cls}" onclick="tap('${t.id}')"><div class="task-row"><div class="check-circle ${cc}">${ci}</div><div class="task-content"><div class="task-text ${isDone?'done':''} ${locked?'locked':''}">${isCarried?'🔄 ':''}${t.text}</div><div class="task-footer"><span class="tag" style="background:${isDone?'#EAF3DE':t.tc};color:${isDone?'#3B6D11':t.tt}">${isDone?'✓ готово':t.tag}</span><span class="tag" style="background:${blk.color}18;color:${blk.color}">${blk.label}</span>${carryBtn}${rh}</div></div></div></div>`;
+const DAILY = [
+{id:"d-sales", block:"money", title:"Продажи Artech: 4–6 действий (звонки, письма, follow-up)", xp:25,
+ hint:"<b>Минимум 4, лучше 6.</b> База: Clientes_Artech_CLEAN.xlsx (~77 компаний), строители Алгарве, новые запросы. Приоритет: первая сделка по алюминию в Португалии. Каждое действие — шаг к €10k/мес."},
+{id:"d-trakaj", block:"money", title:"Trakaj (Литва): статус с Jan Jezierski / SAPOR", days:[1,4], xp:10,
+ hint:"Письмо или звонок jan.jezierski@sapor.pl: статус производства, сроки, оплаты. Пн и Чт."},
+{id:"d-frederik", block:"money", title:"Frederik (Кассель): чек разрешения на фасад", days:[3], xp:10,
+ hint:"Среда, мягко: «Hallo Frederik, gibt es Neuigkeiten zur Genehmigung?» На кону €10–12k предоплаты — не давим, но не пропадаем."},
+{id:"d-ekaterina", block:"ai", title:"Екатерина: один шаг из списка недоделок", xp:15,
+ hint:"Очередь: 1) Schedule только 10:00/17:30 → 2) запись в Calendar голосом → 3) почта голосом → 4) PWA → 5) WhatsApp/Telegram.\n<b>API-first.</b> n8n: NODE_FUNCTION_ALLOW_BUILTIN=crypto NODE_FUNCTION_ALLOW_EXTERNAL=axios npx n8n start"},
+{id:"d-pq", block:"study", title:"Português Quest: квест дня (15–20 мин)", xp:15,
+ hint:"Плитки-азулежу, хардкор без подсказок. Стрик не рвём."},
+{id:"d-aula", block:"study", title:"Aula португальского с Клодом (60 мин)", days:[2,5,6], xp:20,
+ hint:"Вт — жизнь, Пт — бизнес, Сб — разговорный час. В проекте «Português»: пиши aula N."},
+{id:"d-iefp", block:"study", title:"IEFP: PLA 253, 18:30 (Elisabete)", days:[1,4], xp:15,
+ hint:"Пн и Чт. За 5 минут до выхода — повторить слова прошлого урока."},
+{id:"d-eng", block:"study", title:"Английский с Клодом (10–15 мин)", xp:10,
+ hint:"Короткий живой диалог. A2 тянем вверх практикой, не теорией."},
+{id:"d-swim", block:"health", title:"Бассейн или прогулка (по графику)", xp:15,
+ hint:"Бассейн 3×/нед + прогулки 3×/нед + домашний комплекс 1×. Прогулку совмещай с «Домами Carvoeiro» — два дела сразу."},
+{id:"d-meds", block:"health", title:"Лекарства от давления (вечер)", xp:5,
+ hint:"Каждый вечер, без пропусков. База, на которой держится всё."},
+{id:"d-sober", block:"health", title:"Трезвый день ✊", xp:10,
+ hint:"Квест 1 → 7 → 30 → 90. Серия — на странице «Вес». Сорвался — без самоедства, новая серия с утра."},
+{id:"d-casas", block:"casas", title:"Дома Carvoeiro: 1–3 адреса на прогулке", days:[2,4,6], xp:10,
+ hint:"Приложение doma-carvoeiro: адрес, признаки пустоты, страна владельца, номер машины. Немцам — записка в ящик."},
+{id:"d-family", block:"family", title:"Время с Мариной и девочками (без телефона)", xp:10,
+ hint:"30–60 минут полного присутствия. Это то, ради чего весь план."},
+{id:"d-review", block:"family", title:"Вечерний итог: пролистать страницу, дописать заметку", xp:5,
+ hint:"Внизу страницы дня — поле заметки. Воскресенье — большой отчёт на ленте «Неделя»."}
+];
+
+const MISSIONS = [
+{id:"m-irs", block:"legal", title:"IRS Марины — подать до 30 июня", due:"2026-06-30", xp:80,
+ hint:"<b>СРОЧНО.</b> Подача бесплатна. Адреса разные → подаёт Марина одна, твоя senha не нужна. Девочки — dependentes (нужны их NIF).",
+ steps:["Проверить senha Марины к Portal das Finanças","portaldasfinancas.gov.pt → IRS → Entregar Declaração (2025)","Есть Declaração Automática? Проверить доход, dependentes, IBAN → подтвердить","Нет: Modelo 3 = Rosto + Anexo A + Anexo H","Simulação → Validar → Submeter → сохранить подтверждение"]},
+{id:"m-herencia", block:"legal", title:"Наследство Марины и Миланы (Испания)", xp:90,
+ hint:"<b>Испанская процедура наследования (herencia).</b> Ключевой срок: налог Impuesto de Sucesiones — 6 месяцев с даты смерти (можно запросить продление ещё на 6 в первые 5 месяцев). Без NIE никакие действия невозможны.\nДетали разберём вместе — открой чат и напиши «наследство Испания».",
+ steps:["Собрать базу: certificado de defunción + certificado de últimas voluntades (Мин. юстиции Испании)","Получить копию завещания у нотариуса (copia autorizada) или установить наследников по закону","Оформить NIE для Марины и для Миланы (консульство Испании в Лиссабоне или в Испании)","Опись наследства: недвижимость, счета, долги","Нотариус: escritura de aceptación de herencia","Оплатить/задекларировать Impuesto de Sucesiones (следить за сроком 6 мес!)","Перерегистрация: Registro de la Propiedad / банки"]},
+{id:"m-morada", block:"legal", title:"Сменить morada fiscal на Carvoeiro", xp:40,
+ hint:"После IRS Марины. Старый адрес = теряется почта AT, включая твою senha. Визит в Finanças Lagoa или Chave Móvel Digital.",
+ steps:["Выбрать путь: Lagoa лично или CMD","Сменить адрес","Повторно запросить senha на новый адрес"]},
+{id:"m-ford", block:"money", title:"Продать Ford Transit (Хемниц)", xp:60,
+ hint:"Без двигателя, 3 года простоя, литовская регистрация (UAB Jarava). <b>Старт €3 500 → цель €2 500–2 800 → ниже €1 800 не отдавать.</b>",
+ steps:["Назвать покупателю €3 500","Торг до €2 500–2 800","Проверить документы и передачу","Закрыть сделку, получить оплату"]},
+{id:"m-projects", block:"ai", title:"Загрузить проекты в Claude до 22 июня", due:"2026-06-22", xp:50,
+ hint:"<b>До конца пробного Fable 5.</b> Упаковать контекст в файлы — потом Sonnet/Opus работают по готовым инструкциям.",
+ steps:["«Português»: curso-portugues-arseniy.md","«Aira»: EKATERINA_SETUP.md + промпт v6.0 + конфиги n8n","«План»: plan2026.html + стратегии","Аренда/NRAU: стратегия + шаблоны писем","BMW: статус-файл"]},
+{id:"m-video", block:"ai", title:"Демо-видео Aira для бухгалтеров", xp:60,
+ hint:"Сценарий 70 сек готов (AIRA_VIDEO_scenario_IRS.md). Сцены 1,4 — AI-кино (Veo/Kling), сцены 2,3 — реальная Екатерина.",
+ steps:["Сгенерировать AI-сцены по готовым промптам","Записать демо-звонок Екатерине (OBS)","Сборка в CapCut + субтитры","База бухгалтеров OCC: Lagoa, Portimão, Lagos, Albufeira","Рассылка + обзвон Екатериной"]},
+{id:"m-david", block:"ai", title:"Давид/Артмонта: пилот → 30 клиентов к концу лета", xp:70,
+ hint:"Первый клиент Aira. Архитектура: клиент сам вводит конфиденциальные данные в изолированной среде.",
+ steps:["Закрыть правки по пилоту","Письменная обратная связь от Давида","Условия за приведённых клиентов","Onboarding-схема для потока"]},
+{id:"m-sirene", block:"legal", title:"BMW: заказное письмо CTT в SIRENE (пауза)", xp:30,
+ hint:"<b>Имя: Arseniy Lepekhin</b> (только дело BMW). Av. Defensores de Chaves 6, 1049-063 Lisboa + копия Título de Residência. Активировать при первой финансовой возможности.",
+ steps:["Распечатать письмо + копию Título","CTT: registado com aviso de receção","Сохранить трек","Через 2–3 недели тишины — follow-up email"]},
+{id:"m-ss", block:"legal", title:"Segurança Social: рассрочка €9 816 (пауза)", xp:40,
+ hint:"Execução fiscal 2019–2020. Личный визит для plano prestacional. Чем дольше — тем хуже.",
+ steps:["Визит в SS Portimão","Запросить plano prestacional","График платежей письменно"]},
+{id:"m-aima", block:"legal", title:"AIMA: смена основания ВНЖ (ждём)", xp:30,
+ hint:"Письмо 28.05 на geral@aima.gov.pt (Lei 37/2006). ВНЖ до августа 2026.",
+ steps:["Чек почты раз в неделю","28.06: месяц тишины — follow-up","Копии документов наготове"]},
+{id:"m-macbook", block:"ai", title:"MacBook: Flexgate, ремонт в Лиссабоне", xp:20,
+ hint:"Алгарве не делает. 2–3 сервиса в Лиссабоне, цена по модели. Совместить с поездкой (SIRENE?).",
+ steps:["Найти сервисы, запросить цены","Записаться","Совместить поездку"]},
+{id:"m-weight", block:"health", title:"Вес: 130 → 110 кг к концу года", xp:100,
+ hint:"−0.5 кг/нед — честный темп. Бассейн 3× + прогулки 3× + комплекс 1×. На Amel 60 идём в форме.",
+ steps:["−5 кг (125)","−10 кг (120)","−15 кг (115)","−20 кг (110) 🏆"]}
+];
+const REWARDS=[[50,"50% — кофе у океана заработан"],[75,"75% — вечером серия сериала"],[100,"100% — день закрыт. WoT без угрызений"]];
+/* ============ STORAGE: Claude-артефакт или GitHub Pages ============ */
+const store = {
+  async get(k){ if(window.storage&&window.storage.get){try{const r=await window.storage.get(k);return r?r.value:null}catch(e){return null}}
+    try{return localStorage.getItem(k)}catch(e){return null} },
+  async set(k,v){ if(window.storage&&window.storage.set){try{await window.storage.set(k,v);return}catch(e){}}
+    try{localStorage.setItem(k,v)}catch(e){} }
+};
+let S={xp:0,streak:0,lastFullDay:null,daily:{},mSteps:{},mDone:{},weights:[],soberStart:null,soberBest:0,notes:{},weekly:{},custom:[],startDate:null};
+const ds=d=>d.toISOString().slice(0,10);
+const today=()=>ds(new Date());
+const WD=["Воскресенье","Понедельник","Вторник","Среда","Четверг","Пятница","Суббота"];
+const MON=["января","февраля","марта","апреля","мая","июня","июля","августа","сентября","октября","ноября","декабря"];
+let viewDate = today();          // какая страница открыта
+let filterBlock='all';
+
+async function load(){
+  const raw=await store.get('plan2026v3');
+  if(raw){try{S=Object.assign(S,JSON.parse(raw))}catch(e){}}
+  if(!S.startDate) S.startDate=today();
+  renderAll();
 }
-function weightHtml(){
-  const e=weightData.entries,sk=e.length?e[0].kg:null,lk=e.length?e[e.length-1].kg:null,mk=e.length?Math.min(...e.map(x=>x.kg)):null;
-  const diff=(sk&&lk)?(lk-sk).toFixed(1):null,ds=diff?(diff>0?'+'+diff:diff)+' кг':'—',dc=diff&&diff<0?'var(--green)':'var(--red)';
-  let chart='';
-  if(e.length>=2){
-    const vals=e.map(x=>x.kg),mn=Math.min(...vals)-1,mx=Math.max(...vals)+1,rng=mx-mn||1,W=300,H=80,pad=16;
-    const pts=vals.map((v,i)=>`${pad+(i/(vals.length-1))*(W-2*pad)},${H-pad-((v-mn)/rng)*(H-2*pad)}`).join(' ');
-    const lp=pts.split(' ').pop().split(',');
-    chart=`<div class="weight-chart"><svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none"><polyline points="${pts}" fill="none" stroke="var(--green)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="${lp[0]}" cy="${lp[1]}" r="4" fill="var(--green)"/></svg></div>`;
+async function save(){await store.set('plan2026v3',JSON.stringify(S))}
+
+/* ============ СТРАНИЦА ДНЯ (с листанием) ============ */
+function tasksFor(dateStr){
+  const wd=new Date(dateStr+"T12:00:00").getDay();
+  const base=DAILY.filter(t=>!t.days||t.days.includes(wd));
+  const custom=(S.custom||[]).filter(c=>!c.done || c.doneDate===dateStr);
+  return base.concat(custom.map(c=>({id:c.id,block:c.block||'money',title:c.title,xp:c.xp||15,hint:c.hint||'Задача добавлена в недельном отчёте.',custom:true})));
+}
+const isDoneOn=(d,id)=>!!(S.daily[d]&&S.daily[d][id]);
+function pctFor(d){const ts=tasksFor(d);const n=ts.filter(t=>isDoneOn(d,t.id)).length;return ts.length?Math.round(n/ts.length*100):0}
+function pageNo(d){return Math.max(1,Math.round((new Date(d)-new Date(S.startDate))/86400000)+1)}
+function fmtDate(d){const x=new Date(d+"T12:00:00");return WD[x.getDay()]+", "+x.getDate()+" "+MON[x.getMonth()]}
+
+function renderDay(){
+  const el=document.getElementById('day-page');
+  const d=viewDate, isToday=d===today(), past=d<today();
+  const ts=tasksFor(d), p=pctFor(d);
+  const urgent=isToday?MISSIONS.filter(m=>m.due&&!S.mDone[m.id]&&daysTo(m.due)<=7):[];
+  let html='<div class="page-head"><div class="page-date">'+fmtDate(d)+'</div><div class="page-no">стр. '+pageNo(d)+'</div></div>';
+  html+='<div class="page-sub">'+(isToday?'сегодняшняя страница':'архив — прожитый день')+'</div>';
+  html+='<div class="daymeter"><div class="track"><div style="width:'+p+'%"></div></div><div class="pct">'+p+'%</div></div>';
+  const r=[...REWARDS].reverse().find(x=>p>=x[0]);
+  html+='<div class="reward-line">'+(r?'✒ '+r[1]:'награды: 50 · 75 · 100%')+'</div>';
+  if(urgent.length){ html+='<div class="entry-h">⏰ Горящие сроки</div>'; urgent.forEach(m=>html+=missionHTML(m)); }
+  const groups={};
+  ts.forEach(t=>{(groups[t.block]=groups[t.block]||[]).push(t)});
+  for(const b in groups){
+    const g=groups[b];
+    html+='<div class="entry-h">'+BLOCKS[b].ico+' '+BLOCKS[b].name+'<span class="cnt">'+g.filter(t=>isDoneOn(d,t.id)).length+'/'+g.length+'</span></div>';
+    g.forEach(t=>{
+      const done=isDoneOn(d,t.id);
+      html+='<div class="entry'+(done?' done':'')+'" id="e-'+t.id+'">'+
+        '<div class="entry-row">'+
+          '<div class="box" onclick="toggleTask(event,\''+t.id+'\','+t.xp+')"></div>'+
+          '<div style="flex:1" onclick="openE(\''+t.id+'\')"><div class="e-title">'+t.title+'</div>'+
+          '<div class="e-meta">+'+t.xp+' ✦'+(past&&!done?' · <span class="urgent">не сделано</span>':'')+'</div></div>'+
+          '<div class="e-flip" onclick="openE(\''+t.id+'\')">❯</div></div>'+
+        '<div class="e-detail"><div class="note-hint">'+t.hint+'</div></div></div>';
+    });
   }
-  const recent=e.slice(-8).reverse();
-  const entries=recent.map(x=>{const ib=x.kg===mk,d=new Date(x.date),lb=d.toLocaleDateString('ru-RU',{day:'numeric',month:'short'});return`<div class="weight-entry ${ib?'best':''}"><div class="weight-entry-kg">${x.kg}</div><div class="weight-entry-date">${lb}</div></div>`;}).join('');
-  const mb=isMonday()?'<div style="margin-bottom:10px"><span style="background:#FAECE7;color:#993C1D;font-size:11px;padding:3px 10px;border-radius:8px;font-weight:600">⚖️ Понедельник — взвешивание!</span></div>':'';
-  return `<div class="weight-card"><div class="weight-header"><div><div class="weight-title">⚖️ Динамика веса</div><div class="weight-meta">Старт: ${sk||'—'} кг &nbsp;·&nbsp; Сейчас: <b>${lk||'—'} кг</b> &nbsp;·&nbsp; Итог: <span style="color:${dc};font-weight:700">${ds}</span></div></div></div>${mb}<div class="weight-input-row"><input class="weight-input" type="number" step="0.1" placeholder="Введи вес, кг" id="wInput" inputmode="decimal"><button class="weight-save-btn" onclick="saveW()">Сохранить</button></div>${chart}${e.length?`<div class="weight-entries">${entries}</div>`:''}</div>`;
+  // заметка дня
+  html+='<div class="entry-h" style="margin-top:16px">✒ Заметка на полях</div>'+
+    '<textarea id="day-note" placeholder="Главное решение, мысль, событие дня...">'+(S.notes[d]||'')+'</textarea>'+
+    '<button class="btn btn-line" style="margin-top:7px" onclick="saveDayNote()">Сохранить заметку</button>';
+  // листание
+  const next=shiftDay(d,1);
+  html+='<div class="pager">'+
+    '<button onclick="flipTo(\''+shiftDay(d,-1)+'\')">‹ назад</button>'+
+    (isToday?'<span class="today-jump">— сегодня —</span>':'<button class="today-jump" onclick="flipTo(\''+today()+'\')">⤴ к сегодня</button>')+
+    '<button '+(next>today()?'disabled':'')+' onclick="flipTo(\''+next+'\')">вперёд ›</button></div>';
+  el.innerHTML=html;
 }
-function saveW(){
-  const inp=document.getElementById('wInput');
-  const v=parseFloat(inp.value.replace(',','.'));
-  if(!v||v<30||v>300){inp.style.borderColor='var(--red)';return;}
-  const today=new Date().toISOString().split('T')[0];
-  const idx=weightData.entries.findIndex(x=>x.date===today);
-  if(idx>=0)weightData.entries[idx].kg=v;else weightData.entries.push({kg:v,date:today});
-  saveWeight();render();
+function shiftDay(d,n){const x=new Date(d+"T12:00:00");x.setDate(x.getDate()+n);return ds(x)}
+function flipTo(d){
+  const pg=document.getElementById('day-page');
+  pg.classList.add('flip-out');
+  setTimeout(()=>{viewDate=d;renderDay();pg.classList.remove('flip-out')},340);
 }
-function weeklySummaryHtml(){
-  const opened=TASKS.filter(t=>isOpen(t)),total=opened.length,dc=opened.filter(t=>done.has(t.id)).length,cc=opened.filter(t=>carried.has(t.id)&&!done.has(t.id)).length,pct=total?Math.round(dc/total*100):0;
-  const wk=weekKey();const cr=rewardData[wk]||null;
-  const level=pct>=100?100:pct>=75?75:pct>=50?50:0;
-  const msg=pct>=100?'🔥 Идеальная неделя! Ты сделал всё. Выбирай заслуженную награду!':pct>=75?'💪 Отличная неделя! Большинство сделано. Награда заработана — выбирай!':pct>=50?'👍 Половина выполнена. Тяни до 75% — откроется следующий уровень!':pct>=25?'🚀 Давай ещё! 50% задач откроют первые награды.':'⚡ День 1 всегда самый трудный. Начни с одной задачи прямо сейчас.';
-  let rh='';
-  [50,75,100].forEach(lvl=>{
-    const ul=pct>=lvl,items=REWARDS[lvl];
-    const nm={50:'Базовая награда',75:'Хорошая неделя',100:'Идеальная неделя'};
-    const bg={50:'#FFF3CD',75:'#D4EDDA',100:'#D4EDDA'};
-    const tc={50:'#856404',75:'#155724',100:'#1D9E75'};
-    rh+=`<div class="reward-level"><div class="reward-level-header"><span class="reward-level-pct" style="background:${bg[lvl]};color:${tc[lvl]}">${lvl}%+</span><span class="reward-level-name">${nm[lvl]}</span></div>`;
-    if(!ul){rh+=`<div class="reward-locked-msg">🔒 Выполни ${lvl}% задач недели чтобы разблокировать</div>`;}
-    else{rh+=`<div class="reward-items">`;items.forEach(r=>{const ch=cr===r.id;rh+=`<div class="reward-item ${ch?'chosen':''}" onclick="pickReward('${wk}','${r.id}')"><div class="reward-check">${ch?checkSvg():''}</div><div class="reward-text">${r.emoji} ${r.text}</div></div>`;});rh+=`</div>`;}
-    rh+=`</div>`;
-  });
-  return `<div class="weekly-card"><div class="weekly-top"><div><div class="weekly-title">📊 Сводка недели</div><div class="weekly-week">${new Date().toLocaleDateString('ru-RU',{day:'numeric',month:'long',year:'numeric'})}</div></div><div style="text-align:right"><div class="weekly-pct">${pct}%</div><div class="weekly-pct-label">выполнено</div></div></div><div class="weekly-bar-bg"><div class="weekly-bar-fill" style="width:${pct}%"></div></div><div class="weekly-stats"><div class="weekly-stat"><div class="weekly-stat-n">${dc}</div><div class="weekly-stat-l">сделано</div></div><div class="weekly-stat"><div class="weekly-stat-n">${cc}</div><div class="weekly-stat-l">перенесено</div></div><div class="weekly-stat"><div class="weekly-stat-n">${total-dc-cc}</div><div class="weekly-stat-l">в работе</div></div></div><div style="font-size:13px;line-height:1.5;margin-bottom:0">${msg}</div></div><div class="rewards-card"><div class="rewards-title">🎁 Награды недели</div><div class="rewards-sub">Выбери одну и выполни её в эти выходные</div>${rh}</div>`;
+function openE(id){document.getElementById('e-'+id).classList.toggle('open')}
+async function toggleTask(ev,id,xp){
+  ev.stopPropagation();
+  const d=viewDate; // отметку можно поставить и задним числом
+  S.daily[d]=S.daily[d]||{};
+  if(S.daily[d][id]){delete S.daily[d][id];S.xp=Math.max(0,S.xp-xp)}
+  else{S.daily[d][id]=true;S.xp+=xp;stamp('+'+xp+' ✦');
+    if(id==='d-sober'&&!S.soberStart)S.soberStart=d;}
+  if(d===today())checkFullDay();
+  await save();renderDay();renderBadges();renderSober();
 }
-function pickReward(wk,rid){rewardData[wk]=rid;saveReward();renderContent();}
-function renderHeader(){
-  const d=TASKS.filter(t=>done.has(t.id)).length,total=TASKS.length,pct=Math.round(d/total*100);
-  document.getElementById('ofill').style.width=pct+'%';
-  document.getElementById('opct').textContent=pct+'% выполнено · '+d+' из '+total+' задач';
-  document.getElementById('hdate').textContent=new Date().toLocaleDateString('ru-RU',{weekday:'long',day:'numeric',month:'long'});
-}
-function renderTabs(){
-  const tabs=[{label:'📋 Сегодня'},...BLOCKS,{label:'📊 Неделя'}];
-  document.getElementById('tabs').innerHTML=tabs.map((t,i)=>{
-    const ts=i===0?TASKS:i===tabs.length-1?[]:TASKS.filter(x=>x.block===BLOCKS[i-1].id);
-    const cnt=ts.filter(x=>isOpen(x)&&!done.has(x.id)&&!carried.has(x.id)&&reqOk(x)).length;
-    return`<button class="tab ${i===activeTab?'active':''}" onclick="setTab(${i})">${t.label}${cnt>0&&i!==activeTab?`<span class="tab-badge">${cnt}</span>`:''}</button>`;
-  }).join('');
-}
-function renderContent(){
-  const d=dayN();let html='';
-  const wt=BLOCKS.length+1;
-  if(activeTab===wt){
-    html+=weeklySummaryHtml();html+=weightHtml();
-  } else if(activeTab===0){
-    html+=`<div class="money-card"><div class="money-title">Финансовая картина</div><div class="money-row"><span class="money-label">Минимум семье/мес</span><span class="money-amount" style="color:var(--red)">€4 400</span></div><div class="money-row"><span class="money-label">Долг SS</span><span class="money-amount" style="color:var(--red)">€9 816</span></div><div class="money-row"><span class="money-label">Долг личный</span><span class="money-amount" style="color:var(--red)">€5 000</span></div><div class="money-row"><span class="money-label">Долг компания</span><span class="money-amount" style="color:var(--red)">€10 500</span></div><div class="money-row"><span class="money-label">Фредерик (ожидание)</span><span class="money-amount" style="color:var(--green)">+€10-12к</span></div><div class="money-total"><span>Цель года</span><span style="color:var(--green)">€25 000-30 000/мес</span></div></div>`;
-    html+=`<div class="progress-section">`;
-    BLOCKS.forEach(b=>{const all=TASKS.filter(t=>t.block===b.id),dc2=all.filter(t=>done.has(t.id)).length,pct2=all.length?Math.round(dc2/all.length*100):0;html+=`<div class="prog-row"><div class="prog-dot" style="background:${b.color}"></div><span class="prog-label">${b.label}</span><div class="prog-bg"><div class="prog-fill" style="width:${pct2}%;background:${b.color}"></div></div><span class="prog-pct">${pct2}%</span></div>`;});
-    html+=`</div>`;
-    if(isMonday())html+=`<div style="background:#FFF3CD;margin:0 12px 8px;border-radius:14px;padding:12px 14px;border-left:3px solid var(--gold)"><div style="font-size:13px;font-weight:600;color:#856404">⚖️ Понедельник — день взвешивания!</div><div style="font-size:12px;color:#856404;margin-top:3px">Открой вкладку 📊 Неделя — вписать вес и посмотреть сводку</div></div>`;
-    const ct=TASKS.filter(t=>carried.has(t.id)&&!done.has(t.id)&&isOpen(t)&&reqOk(t));
-    if(ct.length){html+=`<div class="section-title">🔄 Переносы</div>`;ct.forEach(t=>{html+=cardHtml(t,true);});}
-    const at=TASKS.filter(t=>isOpen(t)&&t.day<=d&&!done.has(t.id)&&!carried.has(t.id)&&reqOk(t));
-    if(at.length){html+=`<div class="section-title">Активные задачи</div>`;at.forEach(t=>{html+=cardHtml(t,true);});}
-    const dl=TASKS.filter(t=>done.has(t.id)&&isOpen(t));
-    if(dl.length){html+=`<div class="section-title">✅ Выполнено</div>`;dl.forEach(t=>{html+=cardHtml(t,false);});}
-    const ll=TASKS.filter(t=>isOpen(t)&&!reqOk(t)&&!done.has(t.id));
-    if(ll.length){html+=`<div class="section-title">🔒 Ждут предыдущих</div>`;ll.forEach(t=>{html+=cardHtml(t,false);});}
-    const cur=TASKS.filter(t=>isOpen(t)&&t.day<=d&&reqOk(t));
-    const ah=cur.length>0&&cur.every(t=>done.has(t.id)||carried.has(t.id));
-    const hn=TASKS.some(t=>t.day===d+1&&reqOk(t));
-    if(ah&&hn&&!previewOn)html+=`<div class="tomorrow-banner"><h3>🎉 Всё сделано на сегодня!</h3><p>Хочешь уже сейчас увидеть задачи на завтра?</p><button class="tmr-btn" onclick="doPreview()">Показать задачи завтра 👀</button></div>`;
-    if(previewOn){const tmr=TASKS.filter(t=>t.day===d+1&&reqOk(t)&&!done.has(t.id));if(tmr.length){html+=`<div class="section-title" style="color:#2563eb">👀 Завтра (предпросмотр)</div>`;tmr.forEach(t=>{html+=cardHtml(t,false);});}}
-    if(!ct.length&&!at.length&&!dl.length)html+=`<div class="empty-ok"><div>🚀</div><p>День 1 начинается.<br>Задачи открываются автоматически.</p></div>`;
-  } else {
-    const blk=BLOCKS[activeTab-1],bt=TASKS.filter(t=>t.block===blk.id);
-    const av=bt.filter(t=>isOpen(t)&&reqOk(t)&&!done.has(t.id)),db=bt.filter(t=>done.has(t.id)),lb=bt.filter(t=>isOpen(t)&&!reqOk(t)&&!done.has(t.id)),up=bt.filter(t=>!isOpen(t)&&!done.has(t.id));
-    if(av.length){html+=`<div class="section-title">Активные</div>`;av.forEach(t=>{html+=cardHtml(t,true);});}
-    if(lb.length){html+=`<div class="section-title">🔒 Ждут предыдущих</div>`;lb.forEach(t=>{html+=cardHtml(t,false);});}
-    if(up.length){html+=`<div class="section-title">📅 Впереди</div>`;up.forEach(t=>{const dl2=t.day-d;html+=`<div class="task-card locked-card"><div class="task-row"><div class="check-circle locked-c" style="font-size:11px">+${dl2}д</div><div class="task-content"><div class="task-text locked">${t.text}</div><div class="task-footer"><span class="tag" style="background:#F0F0F0;color:#888">${t.tag}</span></div></div></div></div>`;});}
-    if(db.length){html+=`<div class="section-title">✅ Выполнено</div>`;db.forEach(t=>{html+=cardHtml(t,false);});}
-    if(!bt.length)html+=`<div class="empty-ok"><div>📭</div><p>Задач нет</p></div>`;
+function checkFullDay(){
+  if(pctFor(today())>=100&&S.lastFullDay!==today()){
+    const diff=S.lastFullDay?Math.round((new Date(today())-new Date(S.lastFullDay))/86400000):99;
+    S.streak=diff===1?S.streak+1:1;S.lastFullDay=today();
+    stamp('🔥 СТРАНИЦА ЗАКРЫТА · серия '+S.streak);
   }
-  document.getElementById('content').innerHTML=html;
 }
-function tap(id){const t=TASKS.find(x=>x.id===id);if(!t||!reqOk(t))return;if(done.has(id))done.delete(id);else{done.add(id);carried.delete(id);}saveAll();if(done.has(id)){previewOn=false;localStorage.removeItem(K_PREVIEW);}render();}
-function doCarry(e,id){e.stopPropagation();if(carried.has(id))carried.delete(id);else carried.add(id);saveAll();render();}
-function doPreview(){previewOn=true;localStorage.setItem(K_PREVIEW,'1');renderContent();}
-function setTab(i){activeTab=i;renderTabs();renderContent();window.scrollTo(0,140);}
-function render(){renderHeader();renderTabs();renderContent();}
-function confirmStart(){startTs=Date.now();localStorage.setItem(K_START,startTs.toString());document.getElementById('startModal').style.display='none';render();}
-function init(){if(!startTs)document.getElementById('startModal').style.display='flex';render();}
-init();
+async function saveDayNote(){S.notes[viewDate]=document.getElementById('day-note').value;await save();stamp('✒ записано')}
+
+/* ============ МИССИИ ============ */
+function daysTo(due){return Math.ceil((new Date(due)-new Date(today()))/86400000)}
+function missionHTML(m){
+  const st=S.mSteps[m.id]||[],doneSteps=st.filter(Boolean).length,all=!!S.mDone[m.id];
+  const dueStr=m.due?(daysTo(m.due)>=0?'осталось '+daysTo(m.due)+' дн.':'просрочено!'):'';
+  return '<div class="entry'+(all?' done':'')+'" id="e-'+m.id+'">'+
+    '<div class="entry-row">'+
+      '<div class="box" onclick="toggleMission(event,\''+m.id+'\','+m.xp+')"></div>'+
+      '<div style="flex:1" onclick="openE(\''+m.id+'\')"><div class="e-title">'+BLOCKS[m.block].ico+' '+m.title+'</div>'+
+      '<div class="e-meta">'+(m.due?'<span class="'+(daysTo(m.due)<=7?'urgent':'')+'">'+dueStr+'</span> · ':'')+
+        (m.steps?doneSteps+'/'+m.steps.length+' шагов · ':'')+'+'+m.xp+' ✦</div></div>'+
+      '<div class="e-flip" onclick="openE(\''+m.id+'\')">❯</div></div>'+
+    '<div class="e-detail"><div class="note-hint">'+m.hint+'</div>'+
+      (m.steps?m.steps.map((s,i)=>'<div class="step'+(st[i]?' sdone':'')+'" onclick="toggleStep(\''+m.id+'\','+i+')">'+
+        '<div class="sbox"></div><div>'+s+'</div></div>').join(''):'')+
+    '</div></div>';
+}
+function renderMissions(){
+  document.getElementById('tags').innerHTML=
+    '<button class="tag'+(filterBlock==='all'?' on':'')+'" onclick="setFilter(\'all\')">все</button>'+
+    Object.keys(BLOCKS).map(b=>'<button class="tag'+(filterBlock===b?' on':'')+'" onclick="setFilter(\''+b+'\')">'+
+      BLOCKS[b].ico+' '+BLOCKS[b].name.split(' ')[0].toLowerCase()+'</button>').join('');
+  const ms=MISSIONS.filter(m=>filterBlock==='all'||m.block===filterBlock)
+    .sort((a,b)=>(!!S.mDone[a.id]-!!S.mDone[b.id])||((a.due?daysTo(a.due):999)-(b.due?daysTo(b.due):999)));
+  document.getElementById('mission-list').innerHTML=ms.map(missionHTML).join('')||'<div class="empty">пусто</div>';
+}
+function setFilter(b){filterBlock=b;renderMissions()}
+async function toggleStep(mid,i){S.mSteps[mid]=S.mSteps[mid]||[];S.mSteps[mid][i]=!S.mSteps[mid][i];await save();renderMissions();renderDay()}
+async function toggleMission(ev,id,xp){
+  ev.stopPropagation();
+  if(S.mDone[id]){delete S.mDone[id];S.xp=Math.max(0,S.xp-xp)}
+  else{S.mDone[id]=today();S.xp+=xp;stamp('🎯 МИССИЯ ЗАКРЫТА · +'+xp+' ✦')}
+  await save();renderMissions();renderBadges();renderDay();
+}
+
+/* ============ ВЕС / ТРЕЗВОСТЬ ============ */
+async function addWeight(){
+  const v=parseFloat(document.getElementById('w-val').value);
+  if(!v||v<60||v>200)return stamp('введи реальный вес');
+  S.weights.push({d:today(),kg:v});S.weights=S.weights.slice(-60);
+  document.getElementById('w-val').value='';
+  await save();renderWeight();stamp('⚖ '+v+' кг вписано');
+}
+function renderWeight(){
+  const svg=document.getElementById('w-chart'),ws=S.weights;
+  if(!ws.length){svg.innerHTML='<text x="170" y="85" fill="#8a8170" font-size="13" text-anchor="middle" font-family="Caveat">первое взвешивание — в понедельник</text>'}
+  else{
+    const kgs=ws.map(w=>w.kg),min=Math.min(...kgs)-1,max=Math.max(...kgs)+1;
+    const X=i=>ws.length===1?170:15+i*(310/(ws.length-1)),Y=kg=>140-(kg-min)/(max-min)*115;
+    svg.innerHTML='<polyline points="'+ws.map((w,i)=>X(i)+','+Y(w.kg)).join(' ')+'" fill="none" stroke="#A8372A" stroke-width="2.2"/>'+
+      ws.map((w,i)=>'<circle cx="'+X(i)+'" cy="'+Y(w.kg)+'" r="3.4" fill="#A8372A"/>').join('')+
+      '<text x="14" y="16" fill="#8a8170" font-size="11">'+max.toFixed(0)+'</text>'+
+      '<text x="14" y="152" fill="#8a8170" font-size="11">'+min.toFixed(0)+'</text>';
+    const l=ws[ws.length-1],f=ws[0];
+    document.getElementById('w-last').textContent='последнее: '+l.kg+' кг ('+l.d+') · с начала: '+(l.kg-f.kg>0?'+':'')+(l.kg-f.kg).toFixed(1)+' кг';
+  }
+  renderSober();
+}
+function renderSober(){
+  let count=0;
+  if(S.soberStart){
+    let c=new Date(S.soberStart+"T12:00:00");
+    while(ds(c)<=today()){
+      const k=ds(c);
+      if(S.daily[k]&&S.daily[k]['d-sober'])count++;
+      else if(k!==today()){count=0;S.soberStart=null;break}
+      c.setDate(c.getDate()+1);
+    }
+  }
+  S.soberBest=Math.max(S.soberBest||0,count);
+  const st=count>=90?'🏆 90+':count>=30?'🥇 30+':count>=7?'🥈 7+':count>=1?'🥉 старт':'—';
+  document.getElementById('sober-count').textContent='Серия: '+count+' дн. · этап '+st+' · рекорд '+S.soberBest;
+}
+
+/* ============ НЕДЕЛЬНЫЙ ОТЧЁТ + СИНХРОНИЗАЦИЯ С КЛОДОМ ============ */
+function weekKey(){const d=new Date();const day=(d.getDay()+6)%7;d.setDate(d.getDate()-day);return ds(d)} // понедельник недели
+function weekStats(){
+  let done=0,xpW=0;const lines=[];
+  for(let i=0;i<7;i++){
+    const d=shiftDay(weekKey(),i); if(d>today())break;
+    const ts=tasksFor(d),dn=ts.filter(t=>isDoneOn(d,t.id));
+    done+=dn.length;
+    lines.push(fmtDate(d)+': '+dn.length+'/'+ts.length+' ('+pctFor(d)+'%)'+(S.notes[d]?' — «'+S.notes[d]+'»':''));
+  }
+  return {done,lines};
+}
+function renderWeek(){
+  const wk=weekKey(),W=S.weekly[wk]||{};
+  const st=weekStats();
+  const openMs=MISSIONS.filter(m=>!S.mDone[m.id]&&m.due&&daysTo(m.due)<=21);
+  let html='<div class="page-head"><div class="page-date">Недельный разбор</div><div class="page-no">нед. с '+wk.slice(8)+'.'+wk.slice(5,7)+'</div></div>'+
+    '<div class="page-sub">заполняй в воскресенье вечером — потом отправим Клоду</div>'+
+    '<div class="ledger"><h4>Журнал недели</h4>'+st.lines.map(l=>'<div class="lrow"><span>'+l+'</span></div>').join('')+
+      '<div class="lrow"><span>Всего закрыто записей</span><span class="lv g">'+st.done+'</span></div></div>'+
+    q('Что продвинуло к деньгам?','wins',W)+
+    q('Что не получилось и почему?','fails',W)+
+    q('Деньги недели: пришло / ушло / в ожидании','money',W)+
+    q('Главное решение недели','decision',W)+
+    q('Что меняем на следующей неделе?','next',W)+
+    '<button class="btn btn-gold" style="width:100%;margin-top:14px" onclick="saveWeek()">Сохранить разбор</button>'+
+    '<button class="btn btn-ink" style="width:100%;margin-top:8px" onclick="copyForClaude()">📋 Скопировать отчёт для Клода</button>'+
+    '<div class="q-sub" style="margin-top:6px">кнопка соберёт всю неделю в текст — вставь его мне в чат, разберём и скорректируем план</div>'+
+    '<div class="entry-h" style="margin-top:18px">✚ Задачи после разбора с Клодом</div>'+
+    '<div class="q-sub">что решили добавить — впиши сюда, появится на странице дня</div>'+
+    ((S.custom||[]).map((c,i)=>'<div class="lrow" style="display:flex;justify-content:space-between;padding:4px 0">'+
+      '<span style="font-size:.9rem">· '+c.title+'</span><button class="custom-del" onclick="delCustom('+i+')">убрать ✗</button></div>').join(''))+
+    '<div class="addtask-row"><input id="new-task" placeholder="Новая задача недели..."><button class="btn btn-ink" onclick="addCustom()">＋</button></div>';
+  document.getElementById('week-page').innerHTML=html;
+}
+function q(label,key,W){
+  return '<div class="q-label">'+label+'</div><textarea id="wq-'+key+'">'+(W[key]||'')+'</textarea>';
+}
+async function saveWeek(){
+  const wk=weekKey();
+  S.weekly[wk]={wins:gv('wins'),fails:gv('fails'),money:gv('money'),decision:gv('decision'),next:gv('next')};
+  await save();stamp('✒ разбор сохранён');
+}
+function gv(k){const e=document.getElementById('wq-'+k);return e?e.value:''}
+async function copyForClaude(){
+  await saveWeek();
+  const wk=weekKey(),W=S.weekly[wk],st=weekStats();
+  const txt='НЕДЕЛЬНЫЙ ОТЧЁТ — План 2026 (неделя с '+wk+')\n\n'+
+    'ЖУРНАЛ:\n'+st.lines.join('\n')+'\nЗакрыто записей: '+st.done+' · XP: '+S.xp+' · серия: '+S.streak+'\n\n'+
+    'ЧТО ПРОДВИНУЛО К ДЕНЬГАМ:\n'+(W.wins||'—')+'\n\nЧТО НЕ ПОЛУЧИЛОСЬ:\n'+(W.fails||'—')+
+    '\n\nДЕНЬГИ НЕДЕЛИ:\n'+(W.money||'—')+'\n\nГЛАВНОЕ РЕШЕНИЕ:\n'+(W.decision||'—')+
+    '\n\nЧТО МЕНЯЕМ:\n'+(W.next||'—')+
+    '\n\nЗадача Клоду: разбери неделю, дай честную оценку, предложи корректировки задач на следующую неделю с приоритетами.';
+  try{await navigator.clipboard.writeText(txt);stamp('📋 скопировано — вставь Клоду в чат')}
+  catch(e){prompt('Скопируй вручную:',txt)}
+}
+async function addCustom(){
+  const v=document.getElementById('new-task').value.trim();
+  if(!v)return;
+  S.custom=S.custom||[];
+  S.custom.push({id:'c-'+Date.now(),title:v,block:'money',xp:15});
+  document.getElementById('new-task').value='';
+  await save();renderWeek();renderDay();stamp('✚ добавлено в план');
+}
+async function delCustom(i){S.custom.splice(i,1);await save();renderWeek();renderDay()}
+
+/* ============ ОБЩЕЕ ============ */
+function renderBadges(){document.getElementById('b-xp').textContent=S.xp;document.getElementById('b-streak').textContent=S.streak}
+function renderAll(){renderBadges();renderDay();renderMissions();renderWeight();renderWeek()}
+function show(name){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));
+  document.getElementById('s-'+name).classList.add('on');
+  document.querySelectorAll('.ribbon').forEach(b=>b.classList.remove('on'));
+  document.getElementById('r-'+name).classList.add('on');
+  if(name==='day'){viewDate=today();renderDay()}
+  if(name==='missions')renderMissions();
+  if(name==='weight')renderWeight();
+  if(name==='week')renderWeek();
+}
+let stT=null;
+function stamp(m){const t=document.getElementById('stamp');t.textContent=m;t.classList.add('show');
+  clearTimeout(stT);stT=setTimeout(()=>t.classList.remove('show'),1900)}
+load();
 </script>
 </body>
 </html>
